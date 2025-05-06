@@ -114,6 +114,29 @@ Recensioner som hör till specifika böcker:
 
 ---
 
+## 🛠️ Installationer
+För att komma igång med projektet, följ dessa steg:
+
+1. Kloning av projektet
+    - git clone [repo-url]
+    - cd [projektmapp]
+
+2. Installera alla beroenden
+Kör följande kommando för att installera alla nödvändiga paket enligt package.json:
+    - npm install
+
+Exempel på specifika beroenden som används:
+  - Node.js, Express, TypeScript – Backend och typning
+  - dotenv – Hantering av miljövariabler
+  - cors – Hantering av CORS-förfrågningar
+  - mongoose – Koppling till MongoDB
+  - jsonwebtoken – Autentisering med JWT
+  - bcrypt – Hashning av lösenord
+
+💡 Tips: Se till att du har Node.js och npm installerat innan du börjar.
+
+---
+
 ## 📌 Sammanfattning
 
 Book API är ett webbaserat system som ger både administratörer och vanliga användare möjlighet att hantera ett digitalt bibliotek. Genom integration med MongoDB och ett rollbaserat skyddssystem kan projektet enkelt utökas med ytterligare funktioner såsom filtrering, sök eller rollstyrd tillgång.
