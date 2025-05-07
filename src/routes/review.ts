@@ -1,9 +1,11 @@
 import express from 'express';
-import { fetchAllRewievs } from '../controller/reviewController';
+import { fetchAllReviews } from '../controller/reviewController';
+import { fetchReviewById } from '../controller/reviewController';
 
 const router = express.Router();
 
-router.get('/', fetchAllRewievs);
+router.get('/', fetchAllReviews);
+router.get('/:id', fetchReviewById);
 
 
 export default router;
