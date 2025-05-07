@@ -79,7 +79,7 @@ export const createReview = async (req: Request, res: Response) => {
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Uppdatera review med PATCH: http://localhost:3000/review/:id
-export const updateReview = async (req: Request, res: Response) => {
+export const updateReview = async (req: Request, res: Response): Promise<void> => {
   const {name, content, rating} = req.body // Destructur JS Object
 
   if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -109,8 +109,8 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
     );
 
     if (updatedReview.matchedCount == 0) {
-        return res.status(404).json({success: false, message: 'Review not found' });
-       
+        res.status(404).json({success: false, message: 'Review not found' });
+        return 
     }
     res.json({message: 'Review created', data: await Review.findById(req.params.id)});
   } catch (error: unknown) {
