@@ -1,8 +1,19 @@
 import express from 'express';
-const router = express.Router();
+import { 
+  createBook, 
+  deleteBook, 
+  fetchAllBooks, 
+  fetchBook, 
+  updateBook } from '../controller/booksController';
+import { verifyAccessToken } from '../middleware/verifyToken';
+const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('Funkar!');
-});
+router.get('/', fetchAllBooks)
+router.get('/:id', fetchBook)
+
+// Protected endpoints
+router.post('/', verifyAccessToken, createBook)
+router.patch('/:id',verifyAccessToken, updateBook)
+router.delete('/:id',verifyAccessToken, deleteBook)
 
 export default router;
