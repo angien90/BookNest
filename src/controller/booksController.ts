@@ -13,7 +13,7 @@ export const fetchAllBooks = async (_: Request, res: Response) => {
 export const fetchBook = async (req: Request, res: Response) => {
   try {
     // Solution 1
-    const book = await Book.findById(req.params.id).populate('reviews');
+    const book = await Book.findById(req.params.id).populate('review');
     // Solution 2
     // const book = await Book.findOne({_id: req.params.id})
     if (!book) {
