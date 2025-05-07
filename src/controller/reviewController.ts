@@ -37,8 +37,19 @@ export const fetchReviewById = async (req: Request, res: Response) => {
 export const createReview = async (req: Request, res: Response) => {
     const { name, content, rating } = req.body;
 
-    if (!rating || rating < 1 || rating > 5) {
-        res.status(400).json({ success: false, message: "Rating måste vara mellan 1 och 5" });
+    //Validate input
+    if (!name || typeof name !== "string" || name.trim().length === 0) {
+        res.status(400).json({ success: false, message: "Vänligen ange ett namn" });
+        return;
+      }
+    
+      if (!content || typeof content !== "string" || content.trim().length === 0) {
+        res.status(400).json({ success: false, message: "Vänligen ange en recension" });
+        return;
+      }
+
+    if (typeof rating !== "number" || rating < 1 || rating > 5) {
+        res.status(400).json({ success: false, message: "Ange ett betyg mellan 1 och 5" });
         return;
       }
 
@@ -64,8 +75,18 @@ export const createReview = async (req: Request, res: Response) => {
 export const updateReview = async (req: Request, res: Response) => {
   const {name, content, rating} = req.body // Destructur JS Object
 
-  if (!rating || rating < 1 || rating > 5) {
-    res.status(400).json({ success: false, message: "Rating måste vara mellan 1 och 5" });
+  if (!name || typeof name !== "string" || name.trim().length === 0) {
+    res.status(400).json({ success: false, message: "Vänligen ange ett namn" });
+    return;
+  }
+
+  if (!content || typeof content !== "string" || content.trim().length === 0) {
+    res.status(400).json({ success: false, message: "Vänligen ange en recension" });
+    return;
+  }
+
+if (typeof rating !== "number" || rating < 1 || rating > 5) {
+    res.status(400).json({ success: false, message: "Ange ett betyg mellan 1 och 5" });
     return;
   }
 
