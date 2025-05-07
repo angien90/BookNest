@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Review from "../models/Review"; 
+import Book from '../models/Books';
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Hämta alla reviews med GET: http://localhost:3000/review
@@ -36,6 +37,7 @@ export const fetchReviewById = async (req: Request, res: Response) => {
 
 export const createReview = async (req: Request, res: Response) => {
     const { name, content, rating } = req.body;
+    const { book_id } = req.params;
 
     //Validate input
     if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -61,6 +63,11 @@ export const createReview = async (req: Request, res: Response) => {
             created_at: new Date()
         });
         const savedReview = await review.save();
+
+        await Book.findByIdAndUpdate(book_id, {
+          $push: {review: savedReview.id}
+        })
+
         res.status(201).json({ message: 'New review created', data: savedReview });
     } 
     catch (error: unknown) {
