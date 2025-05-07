@@ -14,13 +14,12 @@ app.use(cors({
   credentials: true    // Allows cookies sent to this API
 }));        
 
-
 // Routes
 import bookRouter from './routes/books'
 import userRouter from './routes/user'
 import reviewRouter from './routes/review'
 app.use('/books', bookRouter)
-app.use('/user', userRouter)
+app.use('/users', userRouter)
 app.use('/review', reviewRouter)
 
 // Connect To DB
