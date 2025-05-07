@@ -29,3 +29,26 @@ export const fetchReviewById = async (req: Request, res: Response) => {
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+
+
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+//Skapa ny review med POST: http://localhost:3000/review
+
+export const createReview = async (req: Request, res: Response) => {
+    const { name, content, rating } = req.body;
+
+    try {
+        const review = new Review({ 
+            name: name, 
+            content: content, 
+            rating: rating,
+            created_at: new Date()
+        });
+        const savedReview = await review.save();
+        res.status(201).json({ message: 'New review created', data: savedReview });
+    } 
+    catch (error: unknown) {
+        res.status(500).json({ error: error, message: "Server error" });
+    }
+}
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
