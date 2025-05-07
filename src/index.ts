@@ -16,8 +16,10 @@ app.use(cors({
 // Routes
 import bookRouter from './routes/books'
 import userRouter from './routes/user'
+import reviewRouter from './routes/review'
 app.use('/books', bookRouter)
 app.use('/user', userRouter)
+app.use('/review', reviewRouter)
 
 // Connect To DB
 mongoose.connect(process.env.MONGODB_URL || "");
