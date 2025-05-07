@@ -12,7 +12,7 @@ export const fetchAllBooks = async (_: Request, res: Response) => {
 
 export const fetchBook = async (req: Request, res: Response) => {
   try {
-    const book = await Book.findById(req.params.id).populate('review');
+    const book = await Book.findById(req.params.id).populate('reviews');
     if (!book) {
       res.status(404).json({message: 'Book not found'})
       return;

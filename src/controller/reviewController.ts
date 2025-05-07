@@ -36,8 +36,7 @@ export const fetchReviewById = async (req: Request, res: Response) => {
 //Skapa ny review med POST: http://localhost:3000/review
 
 export const createReview = async (req: Request, res: Response) => {
-    const { name, content, rating } = req.body;
-    const { book_id } = req.params;
+    const { name, content, rating, book_id } = req.body;
 
     //Validate input
     if (!name || typeof name !== "string" || name.trim().length === 0) {
