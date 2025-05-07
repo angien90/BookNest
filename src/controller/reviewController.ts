@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
-import Review from "../models/Review"; 
+import Review from "../models/Review";
+import Book from "../models/Books";
+import mongoose from "mongoose";
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Hämta alla reviews med GET: http://localhost:3000/review
 export const fetchAllReviews = async (req: Request, res: Response) => {
     try {
-        res.json(await Review.find());
-    } 
+        const review = await Review.find();
+        res.json(review);
+    }
+    
     catch (error: unknown) {
         res.status(500).json({ error: error, message: "Server error" });
     }
@@ -30,12 +34,11 @@ export const fetchReviewById = async (req: Request, res: Response) => {
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
-
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Skapa ny review med POST: http://localhost:3000/review
 
 export const createReview = async (req: Request, res: Response) => {
-    const { name, content, rating } = req.body;
+    const { name, content, rating, bookId } = req.body;
 
     //Validate input
     if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -53,14 +56,30 @@ export const createReview = async (req: Request, res: Response) => {
         return;
       }
 
-    try {
+      if (!mongoose.Types.ObjectId.isValid(bookId)) {
+        res.status(400).json({ success: false, message: "Ogiltigt bookId" });
+        return;
+      }
+
+      try {
+        const book = await Book.findById(bookId);
+    
+        if (!book) {
+          res.status(404).json({ success: false, message: "Boken hittades inte" });
+          return;
+        }
+
         const review = new Review({ 
             name: name, 
             content: content, 
             rating: rating,
-            created_at: new Date()
+            created_at: new Date(),
+            book: bookId
         });
         const savedReview = await review.save();
+
+        book.reviews.push(savedReview._id);
+        await book.save();
         res.status(201).json({ message: 'New review created', data: savedReview });
     } 
     catch (error: unknown) {
@@ -69,11 +88,10 @@ export const createReview = async (req: Request, res: Response) => {
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
-
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Uppdatera review med PATCH: http://localhost:3000/review/:id
 export const updateReview = async (req: Request, res: Response) => {
-  const {name, content, rating} = req.body // Destructur JS Object
+  const {name, content, rating, bookId} = req.body // Destructur JS Object
 
   if (!name || typeof name !== "string" || name.trim().length === 0) {
     res.status(400).json({ success: false, message: "Vänligen ange ett namn" });
@@ -90,7 +108,19 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
     return;
   }
 
+  if (!mongoose.Types.ObjectId.isValid(bookId)) {
+    res.status(400).json({ success: false, message: "Ogiltigt bookId" });
+    return;
+  }
+
   try {
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      res.status(404).json({ success: false, message: "Boken hittades inte" });
+      return;
+    }
+
     const updatedReview = await Review.updateOne(
       {_id : req.params.id}, 
       {$set: { 
@@ -103,9 +133,14 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
 
     if (updatedReview.matchedCount == 0) {
         return res.status(404).json({success: false, message: 'Review not found' });
-       
     }
-    res.json({message: 'Review created', data: await Review.findById(req.params.id)});
+
+    const review = await Review.findById(req.params.id);
+    if (!review) {
+        return res.status(404).json({success: false, message: 'Review not found' });
+    }
+
+    res.json({message: 'Review updated', data: await Review.findById(req.params.id)});
   } catch (error: unknown) {
 
     const message = error  instanceof Error ? error.message : 'Unknown error'
@@ -130,4 +165,4 @@ export const deleteReview = async (req: Request, res: Response) => {
       res.status(500).json({error: message})
     }
   }
-  /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/

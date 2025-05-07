@@ -1,14 +1,14 @@
 import 'dotenv/config'
 import express from 'express';
 import cors from 'cors';
-//import cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-//app.use(cookieParser());
+app.use(cookieParser());
 app.use(cors({
   origin: "*",         
   credentials: true    // Allows cookies sent to this API
