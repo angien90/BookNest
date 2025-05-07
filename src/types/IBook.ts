@@ -8,5 +8,4 @@ export interface IBook {
   images: string;
   published_year: number;
   reviews: IReviews[],
-  created_at: Date;
 }
