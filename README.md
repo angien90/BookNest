@@ -108,9 +108,9 @@ Recensioner som hör till specifika böcker:
 
 | Namn                   | GitHub-länk                              |
 |------------------------|-------------------------------------------|
-| Marie Lenvik           | [github.com/angien90](https://github.com/angien90) |
-| Vy Petersson           | [github.com/M-Lenvi](https://github.com/M-Lenvik) |
-| Angelica Nylander      | [github.com/tgvie](https://github.com/tgvie) |
+| Marie Lenvik           | [github.com/M-Lenvi](https://github.com/M-Lenvik) |
+| Vy Petersson           | [github.com/tgvie](https://github.com/tgvie) |
+| Angelica Nylander      | [github.com/angien90](https://github.com/angien90) |
 
 ---
 
