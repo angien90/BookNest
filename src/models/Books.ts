@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { IBook } from "../types/IBook";
 const Schema = mongoose.Schema;
 
-const BookSchema = new Schema({
+const BookSchema = new Schema<IBook>({
   title: {
     type: String,
     required: true
@@ -16,7 +16,7 @@ const BookSchema = new Schema({
     required: true
   },
   genres: {
-    type: Array,
+    type: [String],
     required: true
   },
   images: {
@@ -26,7 +26,8 @@ const BookSchema = new Schema({
   published_year: {
     type: Number,
     required: true
-  }
+  },
+  reviews: [{ type: Schema.Types.ObjectId, ref: 'Reviews' }],
 });
 
 export default mongoose.model('Books', BookSchema);
