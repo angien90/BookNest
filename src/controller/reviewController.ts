@@ -18,7 +18,7 @@ export const fetchAllReviews = async (_: Request, res: Response) => {
 //Hämta enskild review med GET: http://localhost:3000/review/:id
 export const fetchReviewById = async (req: Request, res: Response) => {
     try {
-        const review = await Review.findById(req.params.id).populate('book');
+        const review = await Review.findById(req.params.id);
     if (!review) {
         res.status(404).json({message: 'Review hittades inte'})
         return;
@@ -31,6 +31,7 @@ export const fetchReviewById = async (req: Request, res: Response) => {
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Skapa ny review med POST: http://localhost:3000/review
@@ -54,13 +55,21 @@ export const createReview = async (req: Request, res: Response) => {
       }
 
     try {
+      if (!book_id) {
+        res.status(400).json({ success: false, message: "Ange ett giltigt book_id" });
+        return;
+      }
       const review = new Review({ 
           name: name, 
           content: content, 
           rating: rating,
+          book: book_id
       });
       const savedReview = await review.save();
 
+
+      // Om book_id finns, uppdatera boken
+    if (book_id) {
       const book = await Book.findById(book_id);
       if (!book) {
         res.status(404).json({ success: false, message: "Book not found" });
@@ -69,6 +78,7 @@ export const createReview = async (req: Request, res: Response) => {
       await Book.findByIdAndUpdate(book_id, {
         $push: { reviews: savedReview.id }
       });
+    }
 
       res.status(201).json({ message: 'New review created', data: savedReview });
     } catch (error: unknown) {
@@ -77,6 +87,7 @@ export const createReview = async (req: Request, res: Response) => {
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Uppdatera review med PATCH: http://localhost:3000/review/:id
@@ -98,19 +109,7 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
     return;
   }
 
-  if (!mongoose.Types.ObjectId.isValid(bookId)) {
-    res.status(400).json({ success: false, message: "Ogiltigt bookId" });
-    return;
-  }
-
   try {
-    const book = await Book.findById(bookId);
-
-    if (!book) {
-      res.status(404).json({ success: false, message: "Boken hittades inte" });
-      return;
-    }
-
     const updatedReview = await Review.updateOne(
       {_id : req.params.id}, 
       {$set: { 
@@ -125,8 +124,7 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
         res.status(404).json({success: false, message: 'Review not found' });
         return 
     }
-
-    res.json({message: 'Review updated', data: await Review.findById(req.params.id)});
+    res.json({message: 'Review created', data: await Review.findById(req.params.id)});
   } catch (error: unknown) {
 
     const message = error  instanceof Error ? error.message : 'Unknown error'
@@ -151,4 +149,4 @@ export const deleteReview = async (req: Request, res: Response) => {
       res.status(500).json({error: message})
     }
   }
-/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+  /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
