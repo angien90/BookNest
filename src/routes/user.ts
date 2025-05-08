@@ -6,6 +6,7 @@ import {
   deleteUser
 } from '../controller/usersController';
 import { fetchAllBooks } from '../controller/booksController';
+import { verifyAccessToken } from '../middleware/verifyToken';
 
 const router = express.Router();
 
@@ -13,8 +14,8 @@ const router = express.Router();
 router.get('/', fetchAllUsers)
 router.get('/:id', fetchUserById)
 
-// Protected endpoints (NOT YET)
-router.patch('/:id', updateUser);
-router.delete('/:id', deleteUser);
+// Protected endpoints
+router.patch('/:id', verifyAccessToken, updateUser);
+router.delete('/:id', verifyAccessToken, deleteUser);
 
 export default router;
