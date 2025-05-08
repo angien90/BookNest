@@ -5,6 +5,7 @@ import { createReview } from '../controller/reviewController';
 import { updateReview } from '../controller/reviewController';
 import { deleteReview } from '../controller/reviewController';
 
+//import { verifyAccessToken } from '../middleware/verifyToken';
 const router = express.Router();
 
 router.get('/', fetchAllReviews);
@@ -12,6 +13,9 @@ router.get('/:id', fetchReviewById);
 router.post('/', createReview);
 router.patch('/:id', updateReview);
 router.delete('/:id', deleteReview);
+
+//router.patch('/:id', verifyAccessToken, updateReview);
+//router.delete('/:id', verifyAccessToken, deleteReview);
 
 
 export default router;

@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 //Hämta alla reviews med GET: http://localhost:3000/review
 export const fetchAllReviews = async (req: Request, res: Response) => {
     try {
-        const review = await Review.find();
+        const review = await Review.find().populate('book');;
         res.json(review);
     }
     
@@ -21,7 +21,7 @@ export const fetchAllReviews = async (req: Request, res: Response) => {
 //Hämta enskild review med GET: http://localhost:3000/review/:id
 export const fetchReviewById = async (req: Request, res: Response) => {
     try {
-        const review = await Review.findById(req.params.id);
+        const review = await Review.findById(req.params.id).populate('book');
     if (!review) {
         res.status(404).json({message: 'Review hittades inte'})
         return;
