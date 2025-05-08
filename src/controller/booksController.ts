@@ -25,12 +25,16 @@ export const fetchBook = async (req: Request, res: Response) => {
 }
 
 export const createBook = async (req: Request, res: Response) => {
-  const {content, done} = req.body // Destructur JS Object
+  const {title, description, author, genres, images, published_year} = req.body // Destructur JS Object
 
   try {
     const book = new Book({
-      content: content,
-      done: done,
+      title: title,
+      description: description,
+      author: author,
+      genres: genres,
+      images: images,
+      published_year: published_year
     });
     const savedPun = await book.save();
     res.status(201).json({message: 'Book created', data: savedPun})
@@ -42,14 +46,18 @@ export const createBook = async (req: Request, res: Response) => {
 }
 
 export const updateBook = async (req: Request, res: Response) => {
-  const {content, done} = req.body // Destructur JS Object
+  const {title, description, author, genres, images, published_year} = req.body // Destructur JS Object
 
   try {
     const updatedBook = await Book.updateOne(
       {_id : req.params.id}, 
       {$set: { 
-          content: content,
-          done: done,
+        title: title,
+        description: description,
+        author: author,
+        genres: genres,
+        images: images,
+        published_year: published_year
         }
       }
     );

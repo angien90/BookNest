@@ -6,6 +6,7 @@ import {
   fetchBook, 
   updateBook } from '../controller/booksController';
 import { verifyAccessToken } from '../middleware/verifyToken';
+
 const router = express.Router()
 
 router.get('/', fetchAllBooks)

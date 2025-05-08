@@ -4,12 +4,12 @@ import Book from '../models/Books';
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Hämta alla reviews med GET: http://localhost:3000/review
-export const fetchAllReviews = async (req: Request, res: Response) => {
+export const fetchAllReviews = async (_: Request, res: Response) => {
     try {
         res.json(await Review.find());
-    } 
-    catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+    } catch (error: unknown) {
+      const message = error  instanceof Error ? error.message : 'Server error'
+      res.status(500).json({error: message})
     }
 } 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -26,7 +26,8 @@ export const fetchReviewById = async (req: Request, res: Response) => {
     res.json (review);
     } 
     catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+    const message = error  instanceof Error ? error.message : 'Server error'
+    res.status(500).json({error: message})
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -34,7 +35,6 @@ export const fetchReviewById = async (req: Request, res: Response) => {
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Skapa ny review med POST: http://localhost:3000/review
-
 export const createReview = async (req: Request, res: Response) => {
     const { name, content, rating, book_id } = req.body;
 
@@ -55,22 +55,22 @@ export const createReview = async (req: Request, res: Response) => {
       }
 
     try {
-        const review = new Review({ 
-            name: name, 
-            content: content, 
-            rating: rating,
-            created_at: new Date()
-        });
-        const savedReview = await review.save();
+      const review = new Review({ 
+          name: name, 
+          content: content, 
+          rating: rating,
+          created_at: new Date()
+      });
+      const savedReview = await review.save();
 
-        await Book.findByIdAndUpdate(book_id, {
-          $push: {review: savedReview.id}
-        })
+      await Book.findByIdAndUpdate(book_id, {
+        $push: {reviews: savedReview.id}
+      })
 
-        res.status(201).json({ message: 'New review created', data: savedReview });
-    } 
-    catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+      res.status(201).json({ message: 'New review created', data: savedReview });
+    } catch (error: unknown) {
+      const message = error  instanceof Error ? error.message : 'Server error'
+      res.status(500).json({error: message})
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
