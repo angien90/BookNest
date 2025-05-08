@@ -1,6 +1,7 @@
 export interface IReview {
-    name: string;
-    content: string;
-    rating: number;
-    created_at: Date;
-  }
+  _id?: string;
+  name: string;
+  content: string;
+  rating: number;
+  created_at: Date;
+}

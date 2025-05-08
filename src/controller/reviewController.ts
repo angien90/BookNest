@@ -59,13 +59,17 @@ export const createReview = async (req: Request, res: Response) => {
           name: name, 
           content: content, 
           rating: rating,
-          created_at: new Date()
       });
       const savedReview = await review.save();
 
+      const book = await Book.findById(book_id);
+      if (!book) {
+        res.status(404).json({ success: false, message: "Book not found" });
+        return;
+      }
       await Book.findByIdAndUpdate(book_id, {
-        $push: {reviews: savedReview.id}
-      })
+        $push: { reviews: savedReview.id }
+      });
 
       res.status(201).json({ message: 'New review created', data: savedReview });
     } catch (error: unknown) {

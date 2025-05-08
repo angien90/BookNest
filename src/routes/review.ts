@@ -14,7 +14,7 @@ router.get('/:id', fetchReviewById);
 router.post('/', createReview);
 
 // Protected endpoints
-router.patch('/:id',verifyAccessToken, updateReview)
-router.delete('/:id',verifyAccessToken, deleteReview)
+router.patch('/:id', updateReview)
+router.delete('/:id', deleteReview)
 
 export default router;

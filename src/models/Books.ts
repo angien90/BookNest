@@ -27,7 +27,7 @@ const BookSchema = new Schema<IBook>({
     type: Number,
     required: true
   },
-  reviews: [{ type: Schema.Types.ObjectId, ref: 'Reviews' }]
+  reviews: [{ type: Schema.Types.ObjectId, ref: 'Reviews' }],
 });
 
 export default mongoose.model('Books', BookSchema);
