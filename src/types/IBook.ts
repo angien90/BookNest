@@ -7,5 +7,5 @@ export interface IBook {
   genres: string[];
   images: string;
   published_year: number;
-  reviews: IReview[],
+  reviews: IReview[];
 }

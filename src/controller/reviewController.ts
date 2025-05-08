@@ -1,18 +1,15 @@
 import { Request, Response } from "express";
-import Review from "../models/Review";
-import Book from "../models/Books";
-import mongoose from "mongoose";
+import Review from "../models/Review"; 
+import Book from '../models/Books';
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Hämta alla reviews med GET: http://localhost:3000/review
-export const fetchAllReviews = async (req: Request, res: Response) => {
+export const fetchAllReviews = async (_: Request, res: Response) => {
     try {
-        const review = await Review.find().populate('book');;
-        res.json(review);
-    }
-    
-    catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+        res.json(await Review.find());
+    } catch (error: unknown) {
+      const message = error  instanceof Error ? error.message : 'Server error'
+      res.status(500).json({error: message})
     }
 } 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -29,16 +26,16 @@ export const fetchReviewById = async (req: Request, res: Response) => {
     res.json (review);
     } 
     catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+    const message = error  instanceof Error ? error.message : 'Server error'
+    res.status(500).json({error: message})
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Skapa ny review med POST: http://localhost:3000/review
-
 export const createReview = async (req: Request, res: Response) => {
-    const { name, content, rating, bookId } = req.body;
+    const { name, content, rating, book_id } = req.body;
 
     //Validate input
     if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -56,42 +53,35 @@ export const createReview = async (req: Request, res: Response) => {
         return;
       }
 
-      if (!mongoose.Types.ObjectId.isValid(bookId)) {
-        res.status(400).json({ success: false, message: "Ogiltigt bookId" });
+    try {
+      const review = new Review({ 
+          name: name, 
+          content: content, 
+          rating: rating,
+      });
+      const savedReview = await review.save();
+
+      const book = await Book.findById(book_id);
+      if (!book) {
+        res.status(404).json({ success: false, message: "Book not found" });
         return;
       }
+      await Book.findByIdAndUpdate(book_id, {
+        $push: { reviews: savedReview.id }
+      });
 
-      try {
-        const book = await Book.findById(bookId);
-    
-        if (!book) {
-          res.status(404).json({ success: false, message: "Boken hittades inte" });
-          return;
-        }
-
-        const review = new Review({ 
-            name: name, 
-            content: content, 
-            rating: rating,
-            created_at: new Date(),
-            book: bookId
-        });
-        const savedReview = await review.save();
-
-        book.reviews.push(savedReview._id);
-        await book.save();
-        res.status(201).json({ message: 'New review created', data: savedReview });
-    } 
-    catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+      res.status(201).json({ message: 'New review created', data: savedReview });
+    } catch (error: unknown) {
+      const message = error  instanceof Error ? error.message : 'Server error'
+      res.status(500).json({error: message})
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Uppdatera review med PATCH: http://localhost:3000/review/:id
-export const updateReview = async (req: Request, res: Response) => {
-  const {name, content, rating, bookId} = req.body // Destructur JS Object
+export const updateReview = async (req: Request, res: Response): Promise<void> => {
+  const {name, content, rating} = req.body // Destructur JS Object
 
   if (!name || typeof name !== "string" || name.trim().length === 0) {
     res.status(400).json({ success: false, message: "Vänligen ange ett namn" });
@@ -132,12 +122,8 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
     );
 
     if (updatedReview.matchedCount == 0) {
-        return res.status(404).json({success: false, message: 'Review not found' });
-    }
-
-    const review = await Review.findById(req.params.id);
-    if (!review) {
-        return res.status(404).json({success: false, message: 'Review not found' });
+        res.status(404).json({success: false, message: 'Review not found' });
+        return 
     }
 
     res.json({message: 'Review updated', data: await Review.findById(req.params.id)});
