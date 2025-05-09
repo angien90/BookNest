@@ -1,0 +1,55 @@
+/* Function */
+@function pxtorem($px) {
+  @return $px / 16px * 1rem;
+}
+
+/* Primary colors */
+$creamwhite: #FFF7E3;
+$green: #4F705D;
+
+/*Secondary color*/
+$warmorange: #F08D2E;
+$darkgreen: #383838;
+
+/* Hover colors */
+$green: #4F705D;
+$creamwhite: #FFF7E3;
+
+/* Fonts */
+$heading-font: "Luckiest Guy", sans-serif;
+$body-font: "Quicksand", sans-serif;
+
+/* Default spacing */
+$spacing: 25px;
+
+/* Buttons */
+@mixin primary-button {
+  display:block;
+  margin: 0 auto;
+  cursor: pointer;
+  width: 150px;
+  min-height: 45px;
+  border: none;
+  border-radius: 7px;
+  background-color: $warmorange;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: $darkgreen;
+  font-family: $heading-font;
+  font-weight: bold;
+  font-size: pxtorem(16px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  margin-top: $spacing;
+  margin-bottom: $spacing;
+
+  &:hover {
+    background-color: $green;
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(2px);
+  }
+}
