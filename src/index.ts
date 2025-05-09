@@ -14,14 +14,15 @@ app.use(cors({
   credentials: true    // Allows cookies sent to this API
 }));        
 
-
 // Routes
 import bookRouter from './routes/books'
-import userRouter from './routes/user'
+import userRouter from './routes/users'
 import reviewRouter from './routes/review'
+import authRouter from './routes/auth'
 app.use('/books', bookRouter)
-app.use('/user', userRouter)
+app.use('/users', userRouter)
 app.use('/review', reviewRouter)
+app.use('/auth', authRouter)
 
 // Connect To DB
 mongoose.connect(process.env.MONGODB_URL || "");

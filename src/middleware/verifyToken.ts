@@ -2,15 +2,18 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken'
 
 export const verifyAccessToken = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.cookies.accessToken)
-  if (req.cookies.accessToken === undefined) {
-    res.sendStatus(401)
+  const token = req.cookies.accessToken;
+
+  if (!token) {
+    res.status(401).json({ error: '⚠️ Access token missing' });
     return;
   }
  
-  jwt.verify(req.cookies.accessToken, process.env.JWT_SECRET || "", function(err: jwt.VerifyErrors | null) {
+  const JWT_SECRET = process.env.JWT_SECRET;
+
+  jwt.verify(token, JWT_SECRET || "", function(err: jwt.VerifyErrors | null) {
     if (err) {
-      res.sendStatus(403)
+      res.status(403).json({ error : '❌ Invalid or expired token' });
       return;
     }
 
