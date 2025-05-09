@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import Review from "../models/Review"; 
+import Book from '../models/Books';
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Hämta alla reviews med GET: http://localhost:3000/review
-export const fetchAllReviews = async (req: Request, res: Response) => {
+export const fetchAllReviews = async (_: Request, res: Response) => {
     try {
         res.json(await Review.find());
-    } 
-    catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+    } catch (error: unknown) {
+      const message = error  instanceof Error ? error.message : 'Server error'
+      res.status(500).json({error: message})
     }
 } 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -25,7 +26,8 @@ export const fetchReviewById = async (req: Request, res: Response) => {
     res.json (review);
     } 
     catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+    const message = error  instanceof Error ? error.message : 'Server error'
+    res.status(500).json({error: message})
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -33,9 +35,8 @@ export const fetchReviewById = async (req: Request, res: Response) => {
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Skapa ny review med POST: http://localhost:3000/review
-
 export const createReview = async (req: Request, res: Response) => {
-    const { name, content, rating } = req.body;
+    const { name, content, rating, book_id } = req.body;
 
     //Validate input
     if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -54,17 +55,26 @@ export const createReview = async (req: Request, res: Response) => {
       }
 
     try {
-        const review = new Review({ 
-            name: name, 
-            content: content, 
-            rating: rating,
-            created_at: new Date()
-        });
-        const savedReview = await review.save();
-        res.status(201).json({ message: 'New review created', data: savedReview });
-    } 
-    catch (error: unknown) {
-        res.status(500).json({ error: error, message: "Server error" });
+      const review = new Review({ 
+          name: name, 
+          content: content, 
+          rating: rating,
+      });
+      const savedReview = await review.save();
+
+      const book = await Book.findById(book_id);
+      if (!book) {
+        res.status(404).json({ success: false, message: "Book not found" });
+        return;
+      }
+      await Book.findByIdAndUpdate(book_id, {
+        $push: { reviews: savedReview.id }
+      });
+
+      res.status(201).json({ message: 'New review created', data: savedReview });
+    } catch (error: unknown) {
+      const message = error  instanceof Error ? error.message : 'Server error'
+      res.status(500).json({error: message})
     }
 }
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -72,7 +82,7 @@ export const createReview = async (req: Request, res: Response) => {
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Uppdatera review med PATCH: http://localhost:3000/review/:id
-export const updateReview = async (req: Request, res: Response) => {
+export const updateReview = async (req: Request, res: Response): Promise<void> => {
   const {name, content, rating} = req.body // Destructur JS Object
 
   if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -102,8 +112,8 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
     );
 
     if (updatedReview.matchedCount == 0) {
-        return res.status(404).json({success: false, message: 'Review not found' });
-       
+        res.status(404).json({success: false, message: 'Review not found' });
+        return 
     }
     res.json({message: 'Review created', data: await Review.findById(req.params.id)});
   } catch (error: unknown) {
