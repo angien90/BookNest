@@ -141,17 +141,34 @@ if (typeof rating !== "number" || rating < 1 || rating > 5) {
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Delete review med DELETE: http://localhost:3000/review/:id
 export const deleteReview = async (req: Request, res: Response) => {
-    try {
-      const deletedReview = await Review.deleteOne({_id : req.params.id});
-  
-      if (deletedReview.deletedCount === 0) {
-        res.status(404).json({success: false, message: 'Review not found' });
-        return 
-      }
-      res.json({message: 'Review deleted'})
-    } catch (error: unknown) {
-      const message = error  instanceof Error ? error.message : 'Unknown error'
-      res.status(500).json({error: message})
+  try {
+    const review = await Review.findById(req.params.id);
+
+    if (!review) {
+      res.status(404).json({ success: false, message: "Review not found" });
+      return;
     }
+
+    const book = review.book;
+
+    // Ta bort review
+    const deletedReview = await Review.deleteOne({ _id: req.params.id });
+
+    if (deletedReview.deletedCount === 0) {
+      res.status(404).json({ success: false, message: "Review not found" });
+      return;
+    }
+
+    // Ta bort kopplingen till review i book
+    if (book) {
+      await Book.findByIdAndUpdate(book, { $pull: { reviews: req.params.id } });
+    }
+
+    res.json({ message: 'Review deleted' });
+
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    res.status(500).json({ error: message });
   }
+};
   /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
