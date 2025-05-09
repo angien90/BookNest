@@ -39,3 +39,43 @@ export const registerUser = async (req: Request, res: Response) => {
         res.status(500).json({ error: message });
     }
 }
+
+/* ----- LOGIN USER ----- */
+export const loginUser = async (req: Request, res: Response) => {
+    try {
+        const { username, password } = req.body;
+
+        // Missing username and or password
+        if (!username || !password) {
+            res.status(400).json({ error: '⚠️ Username and password required' });
+            return;
+        }
+
+        // Wrong username
+        const user = await User.findOne({ username });
+        if (!user) {
+            res.status(401).json({ error : '❌ Username not found' });
+            return;
+        }
+
+        // Wrong password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            res.status(401).json({ error: '❌ Invalid password' });
+            return;
+        }
+
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        res.cookie('accessToken', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 3600000
+        });
+
+        res.status(200).json({ message: '✅ Logged in successfully' });
+    } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        res.status(500).json({ error: message });
+    }
+}
