@@ -19,7 +19,7 @@ const ReviewSchema = new Schema<IReview>({
     type: Date,
     default: Date.now
   },
-//  book: { type: Schema.Types.ObjectId, ref: "Book", required: true }
+  book: [{ type: Schema.Types.ObjectId, ref: 'Books' }],
 });
 
 export default mongoose.model('Reviews', ReviewSchema);

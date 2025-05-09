@@ -6,7 +6,12 @@ import Book from '../models/Books';
 //Hämta alla reviews med GET: http://localhost:3000/review
 export const fetchAllReviews = async (_: Request, res: Response) => {
     try {
-        res.json(await Review.find());
+      const reviews = await Review.find().populate('book');
+      if (!reviews) {
+        res.status(404).json({message: 'Book not found'})
+        return;
+      }
+      res.json(reviews);
     } catch (error: unknown) {
       const message = error  instanceof Error ? error.message : 'Server error'
       res.status(500).json({error: message})
@@ -18,7 +23,7 @@ export const fetchAllReviews = async (_: Request, res: Response) => {
 //Hämta enskild review med GET: http://localhost:3000/review/:id
 export const fetchReviewById = async (req: Request, res: Response) => {
     try {
-        const review = await Review.findById(req.params.id);
+        const review = await Review.findById(req.params.id).populate('book');
     if (!review) {
         res.status(404).json({message: 'Review hittades inte'})
         return;

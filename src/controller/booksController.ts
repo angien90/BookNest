@@ -3,7 +3,7 @@ import Book from '../models/Books';
 
 export const fetchAllBooks = async (_: Request, res: Response) => {
   try {
-    res.json(await Book.find());
+    res.json(await Book.find().populate('reviews'));
   } catch(error: unknown) {
     const message = error  instanceof Error ? error.message : 'Unknown error'
     res.status(500).json({error: message})
