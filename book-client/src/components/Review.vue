@@ -112,9 +112,26 @@ const clearForm = () => {
 
 <template>
     <aside class="review" v-if="isLoaded">
+
+        Bild
+        {{ props.image }}
+
+        <article class="book">
+            Tillfälligt: {{ props.bookId }} <br>
+
+            <h2>BokTitel {{ props.title }}</h2>
+            <p>
+                Författare: {{ props.author }} <br>
+                Utgivningsår: {{ props.published_year }} <br>
+                Genre: {{ props.genres }} <br>
+                Beskrivning: {{ props.description }} <br>
+            </p>
+        </article>
+
         <article class="review_form">
             <h2>Recensioner</h2>
-            <p>Vad tyckte du om boken? Lämna gärna en recension till nästa läsare. <br> 
+            <p>Vad tyckte du om boken? <br>
+                Lämna gärna en recension till nästa läsare. <br> 
                 Men kom ihåg, inga spoilers!</p>
 
             <form @submit.prevent="createReview" class="review_form">
@@ -148,10 +165,12 @@ const clearForm = () => {
                 <div class="line"></div>
                 
                 <div class="review_by_user">
-                    <p>Så här tyckte {{ reviews.name }} om boken:<br>
-                        {{ reviews.content }}</p>
-                    <!--    <p>{{ reviews.name }} gav boken {{ reviews.rating }} av 5 i betyg. </p> -->
-                    
+                    <div class="content">
+                        <p>Så här tyckte {{ reviews.name }} om boken:<br>
+                            {{ reviews.content }}</p>
+                        <!--    <p>{{ reviews.name }} gav boken {{ reviews.rating }} av 5 i betyg. </p> -->
+                    </div>
+
                     <div class="stars">
                         <div v-for="index in 5" :key="index" 
                             class="star":class="{'filled': index <= reviews.rating}">
@@ -180,17 +199,30 @@ const clearForm = () => {
 
     article {
         background-color: $green;
-        padding: 10px;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+                    inset -4px -4px 8px rgba(0, 0, 0, 0.2);
         margin: 10px 0;
         width: 100%;
         max-width: 388px;
+        padding: 20px;
+
+        label {
+            display: block;
+            font-family: $p;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 10px 0 5px 0;
+        }
 
         .review_by_user{
             display: flex;
             flex-direction: column;
             margin: 10px 0;
+
+            .content{
+                font-weight: bold;
+            }
         }
     }
 
@@ -220,23 +252,38 @@ const clearForm = () => {
     }
 
     h2{
+        display: flex;
+        justify-content: center;
         font-family: $H1;
+        color: $creamwhite;
+        font-size: $mobile_font_size_H2;
     }
 
     h3{
         font-family: $H1;
+        color: $creamwhite;
+        font-size: $mobile_font_size_H3;
     }
 
     p{
         font-family: $p;
+        color: $creamwhite;
+        font-size: $mobile_font_size_p;
     }
-    
+
     .buttons{
-        font-family: $button_font;
         display: flex;
         justify-content: space-around;
-        width: 80%;
+        width: 100%;
+        gap: 10px;
         margin-top: 20px;
+        padding: 0 10px;
+
+        button{
+            flex: 1;
+            max-width: 150px;
+            @include primary-button;
+        }
     }
 }
 </style>

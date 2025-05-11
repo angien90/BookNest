@@ -26,8 +26,14 @@ $H1: 'Luckiest Guy', sans-serif;
 $H2: 'Luckiest Guy', sans-serif;
 $H3: 'Fredoka', sans-serif;
 $p: 'Quicksand', sans-serif;
-$button_font: 'Luckiest Guy', sans-serif;
 $link_font: 'Quicksand', sans-serif;
+
+/* Mobile Font Sizes */
+$mobile_font_size_H1: 2rem;   // 32px
+$mobile_font_size_H2: 2rem;   // 32px
+$mobile_font_size_H3: 1.25rem; // 20px
+$mobile_font_size_p: 1rem;        // 16px
+$mobile_font_size_link: 1rem;        // 16px
 
 /* Buttons */
 @mixin primary-button {
