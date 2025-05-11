@@ -21,6 +21,14 @@ $body-font: "Quicksand", sans-serif;
 /* Default spacing */
 $spacing: 25px;
 
+/*Font styles*/
+$H1: 'Luckiest Guy', sans-serif;
+$H2: 'Luckiest Guy', sans-serif;
+$H3: 'Fredoka', sans-serif;
+$p: 'Quicksand', sans-serif;
+$button_font: 'Luckiest Guy', sans-serif;
+$link_font: 'Quicksand', sans-serif;
+
 /* Buttons */
 @mixin primary-button {
   display:block;

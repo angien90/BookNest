@@ -112,7 +112,7 @@ const clearForm = () => {
 
 <template>
     <aside class="review" v-if="isLoaded">
-        <article class="review__form">
+        <article class="review_form">
             <h2>Recensioner</h2>
             <p>Vad tyckte du om boken? Lämna gärna en recension till nästa läsare. <br> 
                 Men kom ihåg, inga spoilers!</p>
@@ -121,15 +121,15 @@ const clearForm = () => {
                 <div v-if="error" class="error">{{ error }}</div>
                 <div v-if="success" class="success">{{ success }}</div>
                 
-                <label for="name">Ditt namn</label>
+                <label for="name"><p>Ditt namn</p></label>
                 <input type="text" id="name" v-model="name" 
                     placeholder="Ange ditt namn..." required/>
 
-                <label for="content">Din recension</label>
+                <label for="content"><p>Din recension</p></label>
                 <textarea id="content" v-model="content" 
                     placeholder="Skriv din recension här..." required></textarea>
 
-                <label for="rating">Sätt betyg (1-5)</label>
+                <label for="rating"><p>Sätt betyg (1-5)</p></label>
                 <input type="number" id="rating" v-model="rating" 
                     min="1" max="5" placeholder="1-5"
                     required/>
@@ -141,60 +141,103 @@ const clearForm = () => {
             </form>
         </article>
 
-        <article class="review__list">
+        <article class="review_list">
             <h3>Vad tyckte andra om (bokens titel) {{ props.bookId }}?</h3>
 
             <div v-for="reviews in review" :key="review._id">
                 <div class="line"></div>
-                <p>Så här tyckte {{ reviews.name }} om boken:<br>
-                    {{ reviews.content }}</p>
-                <!--    <p>{{ reviews.name }} gav boken {{ reviews.rating }} av 5 i betyg. </p> -->
                 
-                <div class="stars">
-                    <div v-for="index in 5" :key="index" 
-                        class="star":class="{'filled': index <= reviews.rating}">
+                <div class="review_by_user">
+                    <p>Så här tyckte {{ reviews.name }} om boken:<br>
+                        {{ reviews.content }}</p>
+                    <!--    <p>{{ reviews.name }} gav boken {{ reviews.rating }} av 5 i betyg. </p> -->
+                    
+                    <div class="stars">
+                        <div v-for="index in 5" :key="index" 
+                            class="star":class="{'filled': index <= reviews.rating}">
+                        </div>
                     </div>
+
+                    <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
                 </div>
 
-                <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
             </div>
         </article>
     </aside>   
 </template>
 
 <style scoped lang="scss">
-article {
-    background-color: $green;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    width: 100%;
+
+.review {
+    background-color: $creamwhite;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 408px;
-}
+    height: auto; 
+    padding: 5px;
 
-.stars {
-  display: flex;
-  justify-content: flex-start;
+    article {
+        background-color: $green;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 10px 0;
+        width: 100%;
+        max-width: 388px;
 
-    .star {
-        width: 20px;
-        height: 20px;
-        background-color: #FFF7E3;
-        margin-right: 5px;
-        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        .review_by_user{
+            display: flex;
+            flex-direction: column;
+            margin: 10px 0;
+        }
     }
 
-    .star.filled {
-        background-color: #F08D2E;
-    }
-}
+    .stars {
+        display: flex;
+        justify-content: flex-start;
+        margin: 10px 0;
 
-.line {
-    width: 100%;
-    height: 1px;
-    background-color: #000;
-    margin: 10px 0;
+        .star {
+            width: 20px;
+            height: 20px;
+            background-color: $creamwhite;
+            margin-right: 5px;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .star.filled {
+            background-color: $warmorange;
+        }
+    }
+
+    .line {
+        width: 100%;
+        height: 1px;
+        background-color: $darkgreen;
+        margin: 10px 0;
+    }
+
+    h2{
+        font-family: $H1;
+    }
+
+    h3{
+        font-family: $H1;
+    }
+
+    p{
+        font-family: $p;
+    }
+    
+    .buttons{
+        font-family: $button_font;
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+        margin-top: 20px;
+    }
 }
 </style>
 
