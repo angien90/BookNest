@@ -63,8 +63,11 @@ const toggleMenu = () => {
 .logo-heading img,
 .logo-heading h1 {
   margin: 0 auto;
-  margin-bottom: 20px;
   text-align: center;
+
+  @media (min-width: 768px) {
+    margin-bottom: 20px;
+  }
 }
 
 img {
