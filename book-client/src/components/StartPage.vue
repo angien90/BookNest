@@ -51,6 +51,7 @@
         <span class="material-symbols-outlined">sort_by_alpha</span>
       </button>
     </div>
+
     <h2>Alla böcker</h2>
     <span class="card-section">
     <div>
@@ -70,7 +71,32 @@
       <p>hämta data + filtrering</p>
     </div>
     </span>
-  </section>
+    </section>
+
+    <section class="card">
+      <h2>Lägg till en ny bok</h2>
+      <form class="book-form">
+        <label for="title"><p>Titel</p></label>
+        <input type="text" id="title" v-model="titel" placeholder="Ange titel på boken" required/>
+
+        <label for="description"><p>Beskrivning</p></label>
+        <input type="text" id="description" v-model="description" placeholder="Beskriv boken kort" required/>
+
+        <label for="author"><p>Författare</p></label>
+        <input type="text" id="author" v-model="författare" placeholder="Ange författare på boken" required/>
+
+        <label for="genres"><p>Genres</p></label>
+        <input type="text" id="genres" v-model="genres" placeholder="Ange genres på boken" required/>
+
+        <label for="images"><p>Bild</p></label>
+        <input type="text" id="images" v-model="images" placeholder="Ange sökväg till bild på boken" required/>
+
+        <label for="published_year"><p>Publiseringsår</p></label>
+        <input type="text" id="published_year" v-model="published_year" placeholder="Ange året då boken skrevs" required/>
+      </form>
+      
+      <Button class="button" buttonText="Lägg till" />
+    </section>
   </main>
 </template>
 
