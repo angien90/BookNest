@@ -108,6 +108,37 @@ const clearForm = () => {
     success.value = null;
 };
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+//Delete a review by id
+
+
+
+
+const deleteReview = async (reviewId) => {
+  const confirmation = window.confirm("Är du säker på att du vill ta bort recensionen?");
+
+  if (!confirmation) {
+    return; // Avbryt om användaren inte bekräftar
+  }
+
+  try {
+    const response = await fetch(`${API_URL}review/${reviewId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Något gick fel vid borttagning av recension.");
+    }
+
+    // Uppdatera recensionerna efter borttagning
+    fetchReviews();
+  } catch (error) {
+    console.error("Error deleting review:", error);
+  }
+};
+
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 </script>
 
 <template>
@@ -179,7 +210,9 @@ const clearForm = () => {
 
                     <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
                 </div>
-
+                <div class="buttons">
+        <button @click="deleteReview(reviews._id)">Ta bort</button>
+      </div>
             </div>
         </article>
     </aside>   
@@ -271,6 +304,7 @@ const clearForm = () => {
         font-size: $mobile_font_size_p;
     }
 
+    
     .buttons{
         display: flex;
         justify-content: space-around;
