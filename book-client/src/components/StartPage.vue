@@ -2,6 +2,14 @@
 </script>
 
 <template>
+<header>
+
+</header>
+
+<main>
+
+</main>
+
   <footer>
 
         <h2>Vår startpage</h2>
