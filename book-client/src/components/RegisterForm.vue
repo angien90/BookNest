@@ -1,8 +1,8 @@
 <script setup></script>
 
 <template>
-  <div class="login-container">
-    <h2>Logga in</h2>
+  <div class="register-container">
+    <h2>Registrera dig</h2>
     <form>
       <label for="username">Användarnamn</label>
       <input v-model="username" id="username" type="text" required />
@@ -13,12 +13,12 @@
       <button class="login-btn" type="submit">Logga in</button>
     </form>
 
-      <RouterLink to="registerpage" class="register-link">Registrera dig</RouterLink>
+    <RouterLink to="loginpage" class="login-link">Har du konto? Logga in</RouterLink>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.login-container {
+.register-container {
   background-color: $green;
   padding: $spacing;
   border-radius: pxtorem(10px);
@@ -26,7 +26,7 @@
   margin: $spacing auto;
   color: $creamwhite;
 
-  h2, .register-link {
+  h2, .login-link {
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -62,7 +62,7 @@
     }
   }
 
-  .register-link {
+  .login-link {
     font-family: $link_font;
     color: $creamwhite;
     font-weight: bold;
