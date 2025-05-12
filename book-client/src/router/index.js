@@ -6,7 +6,8 @@ import RegisterView from "../views/RegisterView.vue";
 
 const routes = [
   { path: "/", component: HomeView },
-  { path: "/bookpage", component: BookView },
+//  { path: "/bookpage", component: BookView },
+  { path: "/bookpage/:bookId", component: BookView },
   { path: "/loginpage", component: LoginView },
   { path: "/registerpage", component: RegisterView },
 ];
