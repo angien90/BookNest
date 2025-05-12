@@ -13,7 +13,7 @@
       <button class="login-btn" type="submit">Logga in</button>
     </form>
 
-      <RouterLink to="RegisterView" class="register-link">Registrera dig</RouterLink>
+      <RouterLink to="registerpage" class="register-link">Registrera dig</RouterLink>
   </div>
 </template>
 
