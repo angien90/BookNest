@@ -4,9 +4,13 @@ import Book from '../models/Books';
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Hämta alla reviews med GET: http://localhost:3000/review
-export const fetchAllReviews = async (_: Request, res: Response) => {
+export const fetchAllReviews = async (req: Request, res: Response) => {
     try {
-      const reviews = await Review.find().populate('book');
+      const { book } = req.query;
+
+      const query = book ? { book } : {};
+      const reviews = await Review.find(query).populate('book');
+
       if (!reviews) {
         res.status(404).json({message: 'Book not found'})
         return;
@@ -17,6 +21,8 @@ export const fetchAllReviews = async (_: Request, res: Response) => {
       res.status(500).json({error: message})
     }
 } 
+
+
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
