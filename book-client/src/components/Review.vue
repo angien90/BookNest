@@ -227,35 +227,6 @@ const cancelDelete = () => {
             </p>
         </article>
 
-        <article class="review_form">
-            <h2>Recensioner</h2>
-            <p>Vad tyckte du om boken? <br>
-                Lämna gärna en recension till nästa läsare. <br> 
-                Men kom ihåg, inga spoilers!</p>
-
-            <form @submit.prevent="createReview" class="review_form">
-                <div v-if="error" class="error">{{ error }}</div>
-                <div v-if="success" class="success">{{ success }}</div>
-                
-                <label for="name"><p>Ditt namn</p></label>
-                <input type="text" id="name" v-model="name" 
-                    placeholder="Ange ditt namn..." required/>
-
-                <label for="content"><p>Din recension</p></label>
-                <textarea id="content" v-model="content" 
-                    placeholder="Skriv din recension här..." required></textarea>
-
-                <label for="rating"><p>Sätt betyg (1-5)</p></label>
-                <input type="number" id="rating" v-model="rating" 
-                    min="1" max="5" placeholder="1-5"
-                    required/>
-
-                <div class="buttons">
-                    <button type="submit">Skicka recension</button>
-                    <button type="button" @click="clearForm">Avbryt</button>
-                </div>
-            </form>
-        </article>
 
         <article class="review_list">
             <h3>Vad tyckte andra om (bokens titel) {{ props.bookId }}?</h3>  
@@ -289,6 +260,37 @@ const cancelDelete = () => {
                     </div>
                 </div>
             </div>
+        </article>
+
+
+        <article class="review_form">
+            <h2>Vad tyckte du om (bokens titel)?</h2>
+            <p>Kanske höll du med någon annan läsare. Kanske har du en helt annan åsikt. <br>
+                Lämna gärna en recension till nästa läsare. <br> 
+                Men kom ihåg, inga spoilers!</p>
+
+            <form @submit.prevent="createReview" class="review_form">
+                <div v-if="error" class="error">{{ error }}</div>
+                <div v-if="success" class="success">{{ success }}</div>
+                
+                <label for="name"><p>Ditt namn</p></label>
+                <input type="text" id="name" v-model="name" 
+                    placeholder="Ange ditt namn..." required/>
+
+                <label for="content"><p>Din recension</p></label>
+                <textarea id="content" v-model="content" 
+                    placeholder="Skriv din recension här..." required></textarea>
+
+                <label for="rating"><p>Sätt betyg (1-5)</p></label>
+                <input type="number" id="rating" v-model="rating" 
+                    min="1" max="5" placeholder="1-5"
+                    required/>
+
+                <div class="buttons">
+                    <button type="submit">Skicka recension</button>
+                    <button type="button" @click="clearForm">Avbryt</button>
+                </div>
+            </form>
         </article>
     </aside>  
 
