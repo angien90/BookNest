@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch, toRefs } from 'vue';
 import { useRoute } from "vue-router";
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   bookId: {
@@ -12,6 +13,16 @@ const props = defineProps({
 const API_URL = import.meta.env.VITE_API_URL;
 const review = ref ([]);
 const isLoaded = ref(false);
+
+const updateReviewId = ref(null);
+const updateMode = ref(false);
+const updateName = ref("");
+const updateContent = ref("");
+const updateRating = ref("");
+
+const deleteModalVisible = ref(false);
+const reviewToDelete = ref(null);
+
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Get reviews by bookId from API
@@ -31,6 +42,7 @@ const fetchReviews = async() => {
 
     catch (error) {
         console.error('Error fetching reviews:', error);
+        console.log("Received bookId prop:", props.bookId);
     }
 };
 
@@ -110,33 +122,89 @@ const clearForm = () => {
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
-//Delete a review by id
+//Update a review by bookId
+const startUpdate = (review) => {
+  updateMode.value = true;
+  updateReviewId.value = review._id;
+  updateName.value = review.name;
+  updateContent.value = review.content;
+  updateRating.value = review.rating;
+};
 
+const cancelUpdate = () => {
+  updateMode.value = false;
+  updateReviewId.value = null;
+  updateName.value = "";
+  updateContent.value = "";
+  updateRating.value = "";
+};
 
-
-
-const deleteReview = async (reviewId) => {
-  const confirmation = window.confirm("Är du säker på att du vill ta bort recensionen?");
-
-  if (!confirmation) {
-    return; // Avbryt om användaren inte bekräftar
-  }
-
+const updateReview = async () => {
   try {
-    const response = await fetch(`${API_URL}review/${reviewId}`, {
-      method: "DELETE",
+    const response = await fetch(`${API_URL}review/${updateReviewId.value}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: updateName.value,
+        content: updateContent.value,
+        rating: parseInt(updateRating.value)
+      })
     });
 
-    if (!response.ok) {
-      throw new Error("Något gick fel vid borttagning av recension.");
+    if (response.ok) {
+      const updatedReview = await response.json();
+      const index = review.value.findIndex(r => r._id === updateReviewId.value);
+      if (index !== -1) {
+        review.value[index] = updatedReview;
+      }
+      cancelUpdate();
     }
-
-    // Uppdatera recensionerna efter borttagning
-    fetchReviews();
   } catch (error) {
-    console.error("Error deleting review:", error);
+    console.error("Error updating review:", error);
   }
 };
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+//Check if the user is logged in
+
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+//Delete a review by bookId
+const deleteReview = (reviewId) => {
+  reviewToDelete.value = reviewId;
+  deleteModalVisible.value = true;
+};
+
+const confirmDelete = async () => {
+    try {
+        const response = await fetch(`${API_URL}review/${reviewToDelete.value}`, {
+            method: "DELETE",
+        });
+    
+        //Deletes review
+        if (response.ok) {
+            review.value = review.value.filter(r => r._id !== reviewToDelete.value);
+            deleteModalVisible.value = false;
+        }
+        
+        else {
+            console.error("Failed to delete the review.", error);
+        }
+    } 
+    
+    catch (error) {
+        console.error("Error deleting review:", error);
+    }
+};
+
+const cancelDelete = () => {
+  deleteModalVisible.value = false;
+};
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 </script>
@@ -196,6 +264,7 @@ const deleteReview = async (reviewId) => {
                 <div class="line"></div>
                 
                 <div class="review_by_user">
+
                     <div class="content">
                         <p>Så här tyckte {{ reviews.name }} om boken:<br>
                             {{ reviews.content }}</p>
@@ -206,21 +275,46 @@ const deleteReview = async (reviewId) => {
                         <div v-for="index in 5" :key="index" 
                             class="star":class="{'filled': index <= reviews.rating}">
                         </div>
+
+
+                        <div class="content" v-if="updateMode && updateReviewId === reviews._id">
+                        <input type="text" v-model="updateName" placeholder="Ditt namn" />
+                        <textarea v-model="updateContent" placeholder="Din recension"></textarea>
+                        <input type="number" v-model="updateRating" min="1" max="5" placeholder="Betyg" />
+                        <div class="buttons">
+                            <button @click="updateReview">Spara</button>
+                            <button @click="cancelUpdate">Avbryt</button>
+                        </div>
+                    </div>
+
+                    
                     </div>
 
                     <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
                 </div>
-                <div class="buttons">
-        <button @click="deleteReview(reviews._id)">Ta bort</button>
-      </div>
+  
+                <div class="buttons" v-if="!(updateMode && updateReviewId === reviews._id)">
+                  <button @click="deleteReview(reviews._id)">Ta bort</button>
+                  <button @click="startUpdate(reviews)">Uppdatera</button>
+                </div>
             </div>
         </article>
-    </aside>   
+    </aside>  
+
+    <div v-if="deleteModalVisible" class="modal-overlay">
+        <div class="modal">
+            <p>Är du säker på att du vill ta bort recensionen?</p>
+            <div class="buttons">
+                <button @click="confirmDelete">Ja</button>
+                <button @click="cancelDelete">Nej</button>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 <style scoped lang="scss">
-
-.review {
+.review{
     background-color: $creamwhite;
     display: flex; 
     flex-direction: column;
@@ -230,7 +324,7 @@ const deleteReview = async (reviewId) => {
     height: auto; 
     padding: 5px;
 
-    article {
+    article{
         background-color: $green;
         border-radius: 8px;
         box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
@@ -240,7 +334,7 @@ const deleteReview = async (reviewId) => {
         max-width: 388px;
         padding: 20px;
 
-        label {
+        label{
             display: block;
             font-family: $p;
             font-weight: bold;
@@ -259,12 +353,12 @@ const deleteReview = async (reviewId) => {
         }
     }
 
-    .stars {
+    .stars{
         display: flex;
         justify-content: flex-start;
         margin: 10px 0;
 
-        .star {
+        .star{
             width: 20px;
             height: 20px;
             background-color: $creamwhite;
@@ -272,12 +366,12 @@ const deleteReview = async (reviewId) => {
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
 
-        .star.filled {
+        .star.filled{
             background-color: $warmorange;
         }
     }
 
-    .line {
+    .line{
         width: 100%;
         height: 1px;
         background-color: $darkgreen;
@@ -304,7 +398,6 @@ const deleteReview = async (reviewId) => {
         font-size: $mobile_font_size_p;
     }
 
-    
     .buttons{
         display: flex;
         justify-content: space-around;
@@ -320,6 +413,37 @@ const deleteReview = async (reviewId) => {
         }
     }
 }
+
+.modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    .modal{
+        background-color: $green;
+        border-radius: 8px;
+        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+                    inset -4px -4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 300px;
+        max-width: 90%;
+        text-align: center;
+
+        button{
+            flex: 1;
+            max-width: 150px;
+            @include primary-button;
+        }
+    }
+}
 </style>
+
 
 
