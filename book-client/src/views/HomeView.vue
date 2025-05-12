@@ -1,4 +1,5 @@
 <script setup>
+import Header from "../components/Header.vue";
 import StartPage from "../components/StartPage.vue";
 import Footer from "../components/Footer.vue";
 </script>
@@ -6,6 +7,7 @@ import Footer from "../components/Footer.vue";
 <template>
   
   <main>
+    <Header />
     <StartPage />
     <Footer />
   </main>
