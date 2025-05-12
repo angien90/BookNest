@@ -215,7 +215,7 @@ const cancelDelete = () => {
         Bild
         {{ props.image }}
 
-        <article class="book">
+        <article class="review_container book">
             Tillfälligt: {{ props.bookId }} <br>
 
             <h2>BokTitel {{ props.title }}</h2>
@@ -258,44 +258,35 @@ const cancelDelete = () => {
         </article>
 
         <article class="review_list">
-            <h3>Vad tyckte andra om (bokens titel) {{ props.bookId }}?</h3>
-
-            <div v-for="reviews in review" :key="review._id">
+            <h3>Vad tyckte andra om (bokens titel) {{ props.bookId }}?</h3>  
+            <div v-for="reviews in review" :key="reviews._id" class="review_by_user">
                 <div class="line"></div>
-                
-                <div class="review_by_user">
-
-                    <div class="content">
-                        <p>Så här tyckte {{ reviews.name }} om boken:<br>
-                            {{ reviews.content }}</p>
-                        <!--    <p>{{ reviews.name }} gav boken {{ reviews.rating }} av 5 i betyg. </p> -->
-                    </div>
-
+                <div class="content" v-if="!(updateMode && updateReviewId === reviews._id)">
+                    <p>Så här tyckte {{ reviews.name }} om boken:<br>
+                        {{ reviews.content }}
+                    </p>
                     <div class="stars">
                         <div v-for="index in 5" :key="index" 
-                            class="star":class="{'filled': index <= reviews.rating}">
-                        </div>
-
-
-                        <div class="content" v-if="updateMode && updateReviewId === reviews._id">
-                        <input type="text" v-model="updateName" placeholder="Ditt namn" />
-                        <textarea v-model="updateContent" placeholder="Din recension"></textarea>
-                        <input type="number" v-model="updateRating" min="1" max="5" placeholder="Betyg" />
-                        <div class="buttons">
-                            <button @click="updateReview">Spara</button>
-                            <button @click="cancelUpdate">Avbryt</button>
+                            class="star" :class="{ filled: index <= reviews.rating }">
                         </div>
                     </div>
-
-                    
-                    </div>
-
                     <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
+
+                    <div class="buttons">
+                        <button @click="deleteReview(reviews._id)">Ta bort</button>
+                        <button @click="startUpdate(reviews)">Uppdatera</button>
+                    </div>
                 </div>
-  
-                <div class="buttons" v-if="!(updateMode && updateReviewId === reviews._id)">
-                  <button @click="deleteReview(reviews._id)">Ta bort</button>
-                  <button @click="startUpdate(reviews)">Uppdatera</button>
+
+                <div class="uppdate" v-if="updateMode && updateReviewId === reviews._id">
+                    <input type="text" v-model="updateName" placeholder="Ditt namn" />
+                    <textarea v-model="updateContent" placeholder="Din recension"></textarea>
+                    <input type="number" v-model="updateRating" min="1" max="5" placeholder="Betyg" />
+
+                    <div class="buttons">
+                        <button @click="updateReview">Spara</button>
+                        <button @click="cancelUpdate">Avbryt</button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -314,26 +305,32 @@ const cancelDelete = () => {
 </template>
 
 <style scoped lang="scss">
-.review{
+main {
+  margin-bottom: 20px;
+}
+
+aside{
     background-color: $creamwhite;
     display: flex; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 408px;
+    max-width: 100%;
     height: auto; 
     padding: 5px;
+    
 
     article{
         background-color: $green;
+        position: relative;
         border-radius: 8px;
         box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
                     inset -4px -4px 8px rgba(0, 0, 0, 0.2);
-        margin: 10px 0;
+        margin: 10px 20px;
         width: 100%;
-        max-width: 388px;
-        padding: 20px;
-
+        padding: 10px 20px;  // Ökat padding för mer luft
+        max-width: 800px; // Maxbredd för större skärmar
+  
         label{
             display: block;
             font-family: $p;
@@ -353,6 +350,8 @@ const cancelDelete = () => {
         }
     }
 
+
+
     .stars{
         display: flex;
         justify-content: flex-start;
@@ -370,6 +369,43 @@ const cancelDelete = () => {
             background-color: $warmorange;
         }
     }
+
+.content {
+    display: flex; 
+    flex-direction: column; 
+    width: 100%;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.review_by_user {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    
+}
+
+.uppdate {
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+
+    input, 
+    textarea {
+        width: 100%; 
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid $darkgreen;
+    }
+}
+
+
+
 
     .line{
         width: 100%;
@@ -400,11 +436,11 @@ const cancelDelete = () => {
 
     .buttons{
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between; // Gör så att knapparna ligger närmare varandra
         width: 100%;
         gap: 10px;
         margin-top: 20px;
-        padding: 0 10px;
+        padding: 0 20px; // Lite mer utrymme på sidorna
 
         button{
             flex: 1;
@@ -442,7 +478,40 @@ const cancelDelete = () => {
             @include primary-button;
         }
     }
+
+        @media (min-width: 768px) {
+        article {
+            width: 90%; // Minskar bredden för att få mer luft i kanterna på medelstora skärmar
+            padding: 30px; // Mer padding för större utrymme
+        }
+
+        .review_form,
+        .review_list {
+            max-width: 800px;  // Sätter maxbredd för att centrera och ge mer utrymme
+        }
+
+        .buttons {
+            justify-content: flex-start; // Lägger knapparna närmare varandra
+        }
+    }
+
+    @media (min-width: 1024px) {
+        article {
+            padding: 40px; // Mer luft vid större skärmar
+        }
+
+        .review_form,
+        .review_list {
+            max-width: 900px; // Ännu större maxbredd
+        }
+
+        .buttons {
+            justify-content: flex-start; // Knapparna kommer närmare varandra
+        }
+    }
 }
+
+
 </style>
 
 
