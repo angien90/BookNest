@@ -95,7 +95,10 @@
         <input type="text" id="published_year" v-model="published_year" placeholder="Ange året då boken skrevs" required/>
       </form>
       
-      <Button class="button" buttonText="Lägg till" />
+      <div class="buttons">
+        <button type="submit">Lägg till boken</button>
+        <button type="button" @click="clearForm">Avbryt</button>
+      </div>
     </section>
   </main>
 </template>
@@ -185,5 +188,40 @@ p {
 /* Möjlig hover-effekt för ikonerna */
 .material-symbols-outlined:hover {
   font-size: 30px; 
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  font-family: $H1;
+  color: $creamwhite;
+  font-size: $mobile_font_size_H2;
+}
+
+h3 {
+  font-family: $H1;
+  color: $creamwhite;
+  font-size: $mobile_font_size_H3;
+}
+
+p {
+  font-family: $p;
+  color: $creamwhite;
+  font-size: $mobile_font_size_p;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 0 10px;
+
+  button {
+    flex: 1;
+    max-width: 150px;
+    @include primary-button;
+  }
 }
 </style>
