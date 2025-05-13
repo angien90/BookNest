@@ -1,4 +1,18 @@
 <script setup>
+import { onMounted } from 'vue';
+
+let books = [];
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost:3000/books')
+    const data = await response.json();
+    console.log(data)
+    books = data;
+  } catch(error) {
+    console.log(error)
+  }
+})
 </script>
 
 <template>
@@ -6,37 +20,43 @@
     <section class="card">
       <h2>Månadens tips</h2>
       <div class="card-section">
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
+      <section v-for="book in books" :key="book.book_id" class="card-section div">
+        <article>
+          <div>
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+            <h3>Titel:</h3>
+            <p>{{ book.title }}</p>
+            <h3>Författare:</h3>
+            <p>{{ book.author }}</p>
+            <h3>År:</h3>
+            <p>{{ book.published_year }}</p>
+            <h3>Genres:</h3>
+            <p>{{ book.genres.join(', ') }}</p>
+          </div>
+        </article>
+      </section>
       </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-    </div>
     </section>
 
     <section class="card">
       <h2>Nyheter</h2>
       <div class="card-section">
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
+      <section v-for="book in books" :key="book.book_id" class="card-section div">
+        <article>
+          <div>
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+            <h3>Titel:</h3>
+            <p>{{ book.title }}</p>
+            <h3>Författare:</h3>
+            <p>{{ book.author }}</p>
+            <h3>År:</h3>
+            <p>{{ book.published_year }}</p>
+            <h3>Genres:</h3>
+            <p>{{ book.genres.join(', ') }}</p>
+          </div>
+        </article>
+      </section>
       </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-    </div>
     </section>
 
     <section class="card">
@@ -53,53 +73,29 @@
     </div>
 
     <h2>Alla böcker</h2>
+    <div class="addbook">
+      <RouterLink to="/addbook">Lägg till en bok</RouterLink>
+    </div>
+    
     <div class="card-section">
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
+      <section v-for="book in books" :key="book.book_id" class="card-section div">
+        <article>
+          <div>
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+            <h3>Titel:</h3>
+            <p>{{ book.title }}</p>
+            <h3>Författare:</h3>
+            <p>{{ book.author }}</p>
+            <h3>År:</h3>
+            <p>{{ book.published_year }}</p>
+            <h3>Genres:</h3>
+            <p>{{ book.genres.join(', ') }}</p>
+          </div>
+        </article>
+      </section>
     </div>
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
-    </div>
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
-    </div>
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
-    </div>
-  </div>
-    </section>
+</section>
 
-    <section class="card">
-      <h2>Lägg till en ny bok</h2>
-      <form>
-        <label for="title"><p>Titel</p></label>
-        <input class="book-form" type="text" id="title" v-model="title" placeholder="Ange titel på boken" required/>
-
-        <label for="description"><p>Beskrivning</p></label>
-        <input class="book-form" type="text" id="description" v-model="description" placeholder="Beskriv boken kort" required/>
-
-        <label for="author"><p>Författare</p></label>
-        <input class="book-form" type="text" id="author" v-model="författare" placeholder="Ange författare på boken" required/>
-
-        <label for="genres"><p>Genres</p></label>
-        <input class="book-form" type="text" id="genres" v-model="genres" placeholder="Ange genres på boken" required/>
-
-        <label for="images"><p>Bild</p></label>
-        <input class="book-form" type="text" id="images" v-model="images" placeholder="Ange sökväg till bild på boken" required/>
-
-        <label for="published_year"><p>Publiseringsår</p></label>
-        <input class="book-form" type="text" id="published_year" v-model="published_year" placeholder="Ange året då boken skrevs" required/>
-      
-        <div class="buttons">
-          <button type="submit">Lägg till</button>
-          <button type="button" @click="clearForm">Avbryt</button>
-        </div>
-      </form>
-    </section>
   </main>
 </template>
 
@@ -128,9 +124,14 @@ h2 {
 
 .card-section {
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: space-around; 
-  gap: 20px; 
+  flex-wrap: wrap;
+  justify-content: center; 
+  padding: 10px 10px;
+
+  @media (min-width: 768px) {
+    justify-content: space-around; 
+    padding: 10px 50px;
+  }
 }
 
 .card-section div {
@@ -142,27 +143,34 @@ h2 {
   align-items: center;        
   text-align: center; 
   color: $creamwhite;
+}
 
-  @media (min-width: 600px) {
-    width: calc(50% - 20px);
-  }
-
-  @media (min-width: 900px) {
-    width: calc(33.33% - 20px);
-  }
+  article {
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
 }
 
 img {
-  width: 90%;
+  width: 50%;
   height: auto;
 
   @media (min-width: 768px) {
-  width: 60%; 
+  height: 250px;
+  width: auto;
+
   }
 }
 
+h3 {
+  font-family: $H3;
+}
+
 p {
-  font-family: $body-font;  
+  width: 100%; 
+  font-family: $p;
+  margin: 0;
+  margin-bottom: 10px; 
 }
 
 /* Filterbar */
@@ -194,41 +202,40 @@ p {
   color: $creamwhite; 
 }
 
-/* Möjlig hover-effekt för ikonerna */
+/* Hover-effekt för ikonerna */
 .material-symbols-outlined:hover {
   font-size: 30px; 
 }
 
 
-
-h3 {
-  font-family: $H1;
-  color: $creamwhite;
-  font-size: $mobile_font_size_H3;
-}
-
-p {
-  font-family: $p;
-  color: $creamwhite;
-  font-size: $mobile_font_size_p;
-}
-
-.book-form {
-  @include default-input;
-}
-
-.buttons {
+/* Länk för att lägga till en ny bok */
+.addbook {
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  gap: 10px;
-  margin-top: 20px;
-  padding: 0 10px;
+  justify-content: center;
+  margin: 20px;
+  margin-right: 0px;
+  margin-top: 0;
 
-  button {
-    flex: 1;
-    max-width: 150px;
-    @include primary-button;
+  @media (min-width: 768px) {
+      justify-content: flex-end;
+    }
+
+  a {
+    text-decoration: none;
+    background-color: $green;
+    color: $creamwhite;
+    border-radius: 8px;
+    font-family: $link_font;
+    font-size: $mobile_font_size_link;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
   }
 }
 </style>

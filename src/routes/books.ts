@@ -13,7 +13,7 @@ router.get('/', fetchAllBooks)
 router.get('/:id', fetchBook)
 
 // Protected endpoints
-router.post('/', verifyAccessToken, createBook)
+router.post('/', createBook)
 router.patch('/:id',verifyAccessToken, updateBook)
 router.delete('/:id',verifyAccessToken, deleteBook)
 
