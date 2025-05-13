@@ -23,7 +23,7 @@ onMounted(async () => {
       <section v-for="book in books" :key="book.book_id" class="card-section div">
         <article>
           <div>
-            <img :src="book.images" alt="Book Image" />
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -44,7 +44,7 @@ onMounted(async () => {
       <section v-for="book in books" :key="book.book_id" class="card-section div">
         <article>
           <div>
-            <img :src="book.images" alt="Book Image" />
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -81,7 +81,7 @@ onMounted(async () => {
       <section v-for="book in books" :key="book.book_id" class="card-section div">
         <article>
           <div>
-            <img :src="book.images" alt="Book Image" />
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -152,11 +152,13 @@ h2 {
 }
 
 img {
-  width: 90%;
+  width: 50%;
   height: auto;
 
   @media (min-width: 768px) {
-  width: 60%; 
+  height: 250px;
+  width: auto;
+
   }
 }
 
@@ -167,7 +169,8 @@ h3 {
 p {
   width: 100%; 
   font-family: $p;
-  margin: 0; 
+  margin: 0;
+  margin-bottom: 10px; 
 }
 
 /* Filterbar */
