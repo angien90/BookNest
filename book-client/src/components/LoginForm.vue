@@ -25,6 +25,9 @@
   width: pxtorem(300px);
   margin: $spacing auto;
   color: $creamwhite;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2),
+              inset 0 -2px 4px rgba(255, 255, 255, 0.1),
+              0 2px 6px rgba(0, 0, 0, 0.15);
 
   h2, .register-link {
     display: flex;
@@ -48,13 +51,8 @@
     margin-top: $spacing;
 
     input {
-        outline: none;
-        border: none;
-        margin-bottom: pxtorem(10px);
-        border-radius: pxtorem(5px);
-        width: pxtorem(200px);
-        background-color: $creamwhite;
-        padding: 7px;
+      @include default-input;
+      height: 40px;
     }
 
     button {
