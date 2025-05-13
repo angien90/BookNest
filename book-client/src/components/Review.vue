@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, toRefs } from 'vue';
+import { ref, onMounted, watch, toRefs, computed } from 'vue';
 import { useRoute } from "vue-router";
 import { defineProps, defineEmits } from 'vue';
 
@@ -20,6 +20,26 @@ const updateContent = ref("");
 const updateRating = ref("");
 const deleteModalVisible = ref(false);
 const reviewToDelete = ref(null);
+
+const book = ref({});
+
+/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
+//Get books
+const fetchBook = async () => {
+  if (!props.bookId) {
+    console.warn("Book ID är undefined. Inget API-anrop görs.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}books/${props.bookId}`);
+    const data = await response.json();
+    console.log("hämtar ", data)
+    book.value = data;
+  } catch (error) {
+    console.error("Error fetching book:", error);
+  }
+};
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Get reviews by bookId from API
@@ -52,13 +72,28 @@ const formatDate = (dateString) => {
     });
 };
 
-onMounted(fetchReviews);
+onMounted(() => {
+    fetchReviews();
+    fetchBook();
+});
 
 watch(() => props.bookId, (newBookId, oldBookId) => {
     if (newBookId !== oldBookId) {
         fetchReviews();
+        fetchBook();
     }
 });
+
+const formattedDescription = computed(() => {
+  const paragraphs = book.value.description
+    .split('\n')
+    .filter(p => p.trim() !== '')  // Ta bort tomma rader
+    .map(p => `<p>${p.trim()}</p>`); // Lägg varje rad i <p> taggar
+
+  return paragraphs.join('');
+});
+
+
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -211,19 +246,16 @@ const cancelDelete = () => {
 <template>
     <aside class="review" v-if="isLoaded">
 
-        Bild
-        {{ props.image }}
+        <img :src="'/images/' + book.image" :alt="book.title">
 
         <article class="review_container book">
             <div class="review_book">
-                Tillfälligt: {{ props.bookId }}
-
-                <h2>BokTitel {{ props.title }}</h2>
+                <h2>{{ book.title }}</h2>
                 <p>
-                    Författare: {{ props.author }} <br>
-                    Utgivningsår: {{ props.published_year }} <br>
-                    Genre: {{ props.genres }} <br>
-                    Beskrivning: {{ props.description }} <br>
+                    Författare: {{ book.author }} <br>
+                    Utgivningsår: {{ book.published_year }} <br>
+                    Genre: {{ book.genres }} <br>
+                    Beskrivning:<p v-html="formattedDescription"></p> <br>
                 </p>
             </div>
         </article>
@@ -231,13 +263,13 @@ const cancelDelete = () => {
 <!--*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*-->
 
         <article class="review_list">
-            <h3>Vad tyckte andra om (bokens titel) {{ props.bookId }}?</h3>  
+            <h3>Vad tyckte andra om "{{ book.title }}"?</h3>  
             <div class="review_by_user" v-for="reviews in review" :key="reviews._id">
                 <div class="line"></div>
 
                 <div class="user_review">
                     <div class="content">
-                        <p>Så här tyckte {{ reviews.name }} om boken:<br>
+                        <p>Så här tyckte {{ reviews.name }} om "{{ book.title }}":<br>
                             {{ reviews.content }}
                         </p>
                         <div class="stars">
@@ -275,12 +307,14 @@ const cancelDelete = () => {
 <!--*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*-->
 
         <article class="review_form">
-            <h2>Vad tyckte du om (bokens titel)?</h2>
-            <p>Kanske höll du med någon annan läsare. Kanske har du en helt annan åsikt. <br>
+            <h2>Vad tyckte du om "{{ book.title }}"?</h2>
+
+
+            <div class="new_review">
+                <p>Kanske höll du med någon annan läsare. Kanske har du en helt annan åsikt. <br>
                 Lämna gärna en recension till nästa läsare. <br> 
                 Men kom ihåg, inga spoilers!</p>
 
-            <div class="new_review">
                 <form class="form" @submit.prevent="createReview">
                     <div v-if="error" class="error">{{ error }}</div>
                     <div v-if="success" class="success">{{ success }}</div>
@@ -350,6 +384,7 @@ aside{
             flex-direction: column;
             gap: 10px;
             width: 100%;
+            padding-left: 10%;
         }
 
         .review_by_user{
@@ -449,6 +484,7 @@ aside{
             display: flex;
             flex-direction: column;
             margin: 10px 0;
+            padding-left: 10%;
 
             .form {
                 display: flex; 
