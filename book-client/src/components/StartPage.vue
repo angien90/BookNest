@@ -122,7 +122,7 @@ h2 {
   font-family: $H1;
   color: $creamwhite;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: $letter_spacing_H2;
   font-size: $mobile_font_size_H2;
 }
 

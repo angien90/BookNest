@@ -35,6 +35,9 @@ $mobile_font_size_H3: 1.25rem; // 20px
 $mobile_font_size_p: 1rem; // 16px
 $mobile_font_size_link: 1rem; // 16px
 
+/* Letter spacing */
+$letter_spacing_H2: 2px;
+
 /* Buttons */
 @mixin primary-button {
   display: block;
