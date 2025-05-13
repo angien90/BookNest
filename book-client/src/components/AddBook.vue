@@ -1,7 +1,8 @@
 <script setup>
-    import {reactive } from 'vue';
+    import { reactive, ref } from 'vue';
 
     const API_URL = import.meta.env.VITE_API_URL;
+    
     const form = reactive({
         "title": "",
         "description": "",
@@ -10,6 +11,15 @@
         "images": "",
         "published_year": ""
         })
+
+        const successMessage = ref('');
+        const errorMessage = ref('');
+
+        const clearForm = () => {
+        Object.keys(form).forEach(key => {
+            form[key] = "";
+            })
+        }
 
         const submit = async () => {
             try {
@@ -21,11 +31,21 @@
                     body: JSON.stringify(form)
                 })
 
-        } catch(error) {
-        console.log(error)
-    }
-}
-</script> 
+            if (!response.ok) {
+            throw new Error("Något gick fel!");
+            }
+
+            successMessage.value = "Boken har lagts till!";
+            errorMessage.value = "";
+            clearForm();
+
+        } catch (error) {
+            console.error(error);
+            successMessage.value = "";
+            errorMessage.value = "Kunde inte spara boken. Försök igen.";
+        }
+        };
+</script>
 
 <template>
   <main>
@@ -49,12 +69,15 @@
         <input class="book-form" type="text" id="images" v-model="form.images" placeholder="Ange sökväg till bild på boken" required/>
 
         <label for="published_year"><p>Publiseringsår</p></label>
-        <input class="book-form" type="text" id="published_year" v-model="form.published_year" placeholder="Ange året då boken skrevs" required/>
+        <input class="book-form" type="number" id="published_year" v-model="form.published_year" placeholder="Ange året då boken skrevs" required/>
       
         <div class="buttons">
           <button type="submit">Lägg till</button>
           <button type="button" @click="clearForm">Avbryt</button>
         </div>
+
+        <div v-if="successMessage" class="success">{{ successMessage }}</div>
+        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
       </form>
     </section>
   </main>
@@ -109,5 +132,21 @@ h2 {
     max-width: 150px;
     @include primary-button;
   }
+}
+
+.success {
+  color: green;
+  background-color: #e6ffe6;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.error {
+  color: red;
+  background-color: #ffe6e6;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 </style>
