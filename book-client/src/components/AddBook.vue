@@ -23,16 +23,16 @@
 
         const submit = async () => {
             try {
-                await fetch(API_URL + '/', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(form)
-                })
+                await fetch(API_URL + '/books', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(form)
+            });
 
             if (!response.ok) {
-            throw new Error("Något gick fel!");
+                throw new Error("Något gick fel!");
             }
 
             successMessage.value = "Boken har lagts till!";
@@ -44,7 +44,7 @@
             successMessage.value = "";
             errorMessage.value = "Kunde inte spara boken. Försök igen.";
         }
-        };
+    };
 </script>
 
 <template>
@@ -115,6 +115,11 @@ h2 {
   font-size: $mobile_font_size_H2;
 }
 
+p {
+    color: $creamwhite;
+    font-family: $body-font;
+}
+
 .book-form {
   @include default-input;
 }
@@ -134,19 +139,22 @@ h2 {
   }
 }
 
+/* Errormeddelande */
 .success {
-  color: green;
-  background-color: #e6ffe6;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+    color: green;
+    background-color: #e6ffe6;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 .error {
-  color: red;
-  background-color: #ffe6e6;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+    color: red;
+    background-color: #ffe6e6;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 </style>

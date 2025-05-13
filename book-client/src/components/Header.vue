@@ -11,7 +11,7 @@ const toggleMenu = () => {
 <template>
   <header class="header">
     <div class="logo-heading">
-      <img src="../assets/logo_big.webp" alt="Logo" />
+      <img src="/assets/logo_big.webp" alt="Logo" />
       <h1><span class="first">Book</span><span class="second">Nest</span></h1>
     </div>
 

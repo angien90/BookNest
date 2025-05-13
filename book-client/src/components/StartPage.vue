@@ -1,4 +1,18 @@
 <script setup>
+import { onMounted } from 'vue';
+
+let books = [];
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost:3000/books')
+    const data = await response.json();
+    console.log(data)
+    books = data;
+  } catch(error) {
+    console.log(error)
+  }
+})
 </script>
 
 <template>
@@ -6,37 +20,43 @@
     <section class="card">
       <h2>Månadens tips</h2>
       <div class="card-section">
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
+      <section v-for="book in books" :key="book.book_id" class="card-section div">
+        <article>
+          <div>
+            <img :src="book.images" alt="Book Image" />
+            <h3>Titel:</h3>
+            <p>{{ book.title }}</p>
+            <h3>Författare:</h3>
+            <p>{{ book.author }}</p>
+            <h3>År:</h3>
+            <p>{{ book.published_year }}</p>
+            <h3>Genres:</h3>
+            <p>{{ book.genres.join(', ') }}</p>
+          </div>
+        </article>
+      </section>
       </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-    </div>
     </section>
 
     <section class="card">
       <h2>Nyheter</h2>
       <div class="card-section">
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
+      <section v-for="book in books" :key="book.book_id" class="card-section div">
+        <article>
+          <div>
+            <img :src="book.images" alt="Book Image" />
+            <h3>Titel:</h3>
+            <p>{{ book.title }}</p>
+            <h3>Författare:</h3>
+            <p>{{ book.author }}</p>
+            <h3>År:</h3>
+            <p>{{ book.published_year }}</p>
+            <h3>Genres:</h3>
+            <p>{{ book.genres.join(', ') }}</p>
+          </div>
+        </article>
+      </section>
       </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-      <div>
-        <img src="../assets/logo_small.png">
-        <p>hämta data</p>
-      </div>
-    </div>
     </section>
 
     <section class="card">
@@ -56,25 +76,26 @@
     <div class="addbook">
       <RouterLink to="/addbook">Lägg till en bok</RouterLink>
     </div>
+    
     <div class="card-section">
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
+      <section v-for="book in books" :key="book.book_id" class="card-section div">
+        <article>
+          <div>
+            <img :src="book.images" alt="Book Image" />
+            <h3>Titel:</h3>
+            <p>{{ book.title }}</p>
+            <h3>Författare:</h3>
+            <p>{{ book.author }}</p>
+            <h3>År:</h3>
+            <p>{{ book.published_year }}</p>
+            <h3>Genres:</h3>
+            <p>{{ book.genres.join(', ') }}</p>
+          </div>
+        </article>
+      </section>
     </div>
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
-    </div>
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
-    </div>
-    <div>
-      <img src="../assets/logo_small.png">
-      <p>hämta data + filtrering</p>
-    </div>
-    </div>
-    </section>
+</section>
+
   </main>
 </template>
 
@@ -103,9 +124,14 @@ h2 {
 
 .card-section {
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: space-around; 
-  gap: 20px; 
+  flex-wrap: wrap;
+  justify-content: center; 
+  padding: 10px 10px;
+
+  @media (min-width: 768px) {
+    justify-content: space-around; 
+    padding: 10px 50px;
+  }
 }
 
 .card-section div {
@@ -117,14 +143,12 @@ h2 {
   align-items: center;        
   text-align: center; 
   color: $creamwhite;
+}
 
-  @media (min-width: 600px) {
-    width: calc(50% - 20px);
-  }
-
-  @media (min-width: 900px) {
-    width: calc(33.33% - 20px);
-  }
+  article {
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
 }
 
 img {
@@ -136,8 +160,14 @@ img {
   }
 }
 
+h3 {
+  font-family: $H3;
+}
+
 p {
-  font-family: $body-font;  
+  width: 100%; 
+  font-family: $p;
+  margin: 0; 
 }
 
 /* Filterbar */
