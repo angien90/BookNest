@@ -254,8 +254,9 @@ const cancelDelete = () => {
                     </div>
                 </div>
 
-                <div class="uppdate_user_review">
-                    <div class="user_uppdate" v-if="updateMode && updateReviewId === reviews._id">
+                <div class="user_uppdate">
+                    <div class="uppdate_user_review"v-if="updateMode && updateReviewId === reviews._id">
+                    
                         <div class="uppdate">
                             <input type="text" v-model="updateName" placeholder="Ditt namn" />
                             <textarea v-model="updateContent" placeholder="Din recension"></textarea>
@@ -419,9 +420,14 @@ aside{
         }
 
         .uppdate_user_review{
+                            background-color: $creamwhite;
             display: flex;
             flex-direction: column;
+            border-radius: 8px;
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+                        inset -4px -4px 8px rgba(0, 0, 0, 0.2);
             margin: 10px 0;
+            padding: 20px;
 
             .uppdate {
                 display: flex; 
@@ -482,31 +488,27 @@ button{
     @include primary-button;
 }
 
+h2{
+    display: flex;
+    justify-content: center;
+    font-family: $H1;
+    color: $creamwhite;
+    font-size: $mobile_font_size_H2;
+    text-align: center;
+}
 
+h3{
+    font-family: $H1;
+    color: $creamwhite;
+    font-size: $mobile_font_size_H3;
+    text-align: center;
+}
 
-    h2{
-        display: flex;
-        justify-content: center;
-        font-family: $H1;
-        color: $creamwhite;
-        font-size: $mobile_font_size_H2;
-        text-align: center;
-    }
-
-    h3{
-        font-family: $H1;
-        color: $creamwhite;
-        font-size: $mobile_font_size_H3;
-        text-align: center;
-    }
-
-    p{
-        font-family: $p;
-        color: $creamwhite;
-        font-size: $mobile_font_size_p;
-    }
-
-
+p{
+    font-family: $p;
+    color: $creamwhite;
+    font-size: $mobile_font_size_p;
+}
 
 
 .modal-overlay{
@@ -515,7 +517,7 @@ button{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 247, 227, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -541,13 +543,13 @@ button{
 
 
 @media (min-width: 800px) {
-  aside {
+    aside {
     padding: 20px;
   
 
-  article {
-    max-width: 90%;
-    padding: 30px;
+    article {
+        max-width: 90%;
+        padding: 30px;
 
         .review_by_user{
             .user_review{
@@ -570,16 +572,15 @@ button{
                 }
             }
 
-            .uppdate_user_review {
-                background-color: $creamwhite;
-                width: 50%;
+            .user_uppdate {
+                width: 60%;
                 display: flex;
                 flex-direction: row;
-                margin-left: 25%;
+                margin-left: 15%;
             }
         }
 
-                .new_review{
+        .new_review{
             display: flex;
             flex-direction: column;
             margin: 10px 0;
@@ -600,10 +601,6 @@ button{
         }
     }
 }
-
-  .modal-overlay .modal {
-    width: 400px;
-  }
 }
 </style>
 
