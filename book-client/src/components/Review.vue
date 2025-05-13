@@ -13,16 +13,13 @@ const props = defineProps({
 const API_URL = import.meta.env.VITE_API_URL;
 const review = ref ([]);
 const isLoaded = ref(false);
-
 const updateReviewId = ref(null);
 const updateMode = ref(false);
 const updateName = ref("");
 const updateContent = ref("");
 const updateRating = ref("");
-
 const deleteModalVisible = ref(false);
 const reviewToDelete = ref(null);
-
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Get reviews by bookId from API
@@ -56,10 +53,11 @@ const formatDate = (dateString) => {
 };
 
 onMounted(fetchReviews);
+
 watch(() => props.bookId, (newBookId, oldBookId) => {
-  if (newBookId !== oldBookId) {
-    fetchReviews();
-  }
+    if (newBookId !== oldBookId) {
+        fetchReviews();
+    }
 });
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
@@ -124,52 +122,55 @@ const clearForm = () => {
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Update a review by bookId
 const startUpdate = (review) => {
-  updateMode.value = true;
-  updateReviewId.value = review._id;
-  updateName.value = review.name;
-  updateContent.value = review.content;
-  updateRating.value = review.rating;
+    updateMode.value = true;
+    updateReviewId.value = review._id;
+    updateName.value = review.name;
+    updateContent.value = review.content;
+    updateRating.value = review.rating;
 };
 
 const cancelUpdate = () => {
-  updateMode.value = false;
-  updateReviewId.value = null;
-  updateName.value = "";
-  updateContent.value = "";
-  updateRating.value = "";
+    updateMode.value = false;
+    updateReviewId.value = null;
+    updateName.value = "";
+    updateContent.value = "";
+    updateRating.value = "";
 };
 
 const updateReview = async () => {
-  try {
-    const response = await fetch(`${API_URL}review/${updateReviewId.value}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: updateName.value,
-        content: updateContent.value,
-        rating: parseInt(updateRating.value)
-      })
-    });
+    try {
+        const response = await fetch(`${API_URL}review/${updateReviewId.value}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            
+            body: JSON.stringify({
+                name: updateName.value,
+                content: updateContent.value,
+                rating: parseInt(updateRating.value)
+            })
+        });
 
-    if (response.ok) {
-      const updatedReview = await response.json();
-      const index = review.value.findIndex(r => r._id === updateReviewId.value);
-      if (index !== -1) {
-        review.value[index] = updatedReview;
-      }
-      cancelUpdate();
+        if (response.ok) {
+            const updatedReview = await response.json();
+            const index = review.value.findIndex(r => r._id === updateReviewId.value);
+            
+            if (index !== -1) {
+                review.value[index] = updatedReview;
+            }
+            cancelUpdate();
+        }
+    } 
+    
+    catch (error) {
+        console.error("Error updating review:", error);
     }
-  } catch (error) {
-    console.error("Error updating review:", error);
-  }
 };
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 //Check if the user is logged in
-
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
@@ -205,8 +206,6 @@ const cancelDelete = () => {
   deleteModalVisible.value = false;
 };
 /*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
-
-/*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*/
 </script>
 
 <template>
@@ -228,6 +227,7 @@ const cancelDelete = () => {
                 </p>
             </div>
         </article>
+
 <!--*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*-->
 
         <article class="review_list">
@@ -297,12 +297,13 @@ const cancelDelete = () => {
                     <input type="number" id="rating" v-model="rating" 
                         min="1" max="5" placeholder="1-5"
                         required/>
-                </form>
 
-                <div class="buttons">
-                    <button type="submit">Skicka recension</button>
-                    <button type="button" @click="clearForm">Avbryt</button>
-                </div>        
+
+                    <div class="buttons">
+                        <button type="submit">Skicka recension</button>
+                        <button type="button" @click="clearForm">Avbryt</button>
+                    </div>                  
+                </form>      
             </div>
         </article>
     </aside>  
@@ -316,7 +317,6 @@ const cancelDelete = () => {
             </div>
         </div>
     </div>
-
 </template>
 
 <style scoped lang="scss">
@@ -334,7 +334,6 @@ aside{
     height: auto; 
     padding: 5px;
     
-
     article{
         background-color: $green;
         position: relative;
@@ -345,16 +344,6 @@ aside{
         width: 100%;
         padding: 10px 20px;
         max-width: 800px;
-  
-        /*
-        label{
-            display: block;
-            font-family: $p;
-            font-weight: bold;
-            font-size: 16px;
-            margin: 10px 0 5px 0;
-        }
-        */
         
         .review_book{
             display: flex;
@@ -420,7 +409,7 @@ aside{
         }
 
         .uppdate_user_review{
-                            background-color: $creamwhite;
+            background-color: $creamwhite;
             display: flex;
             flex-direction: column;
             border-radius: 8px;
