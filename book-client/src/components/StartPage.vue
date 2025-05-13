@@ -5,7 +5,7 @@
   <main>
     <section class="card">
       <h2>Månadens tips</h2>
-      <span class="card-section">
+      <div class="card-section">
       <div>
         <img src="../assets/logo_small.png">
         <p>hämta data</p>
@@ -18,12 +18,12 @@
         <img src="../assets/logo_small.png">
         <p>hämta data</p>
       </div>
-      </span>
+    </div>
     </section>
 
     <section class="card">
       <h2>Nyheter</h2>
-      <span class="card-section">
+      <div class="card-section">
       <div>
         <img src="../assets/logo_small.png">
         <p>hämta data</p>
@@ -36,24 +36,24 @@
         <img src="../assets/logo_small.png">
         <p>hämta data</p>
       </div>
-      </span>
+    </div>
     </section>
 
     <section class="card">
     <div class="header-controls">
       <button class="filter-icon">
-        <span class="material-symbols-outlined">search</span>
+        <span class="material-symbols-outlined" aria-label="search icon">search</span>
       </button>
       <button class="filter-icon">
-        <span class="material-symbols-outlined">sort</span>
+        <span class="material-symbols-outlined" aria-label="sort icon">sort</span>
       </button>
       <button class="filter-icon">
-        <span class="material-symbols-outlined">sort_by_alpha</span>
+        <span class="material-symbols-outlined" aria-label="icon for sort by alpha">sort_by_alpha</span>
       </button>
     </div>
 
     <h2>Alla böcker</h2>
-    <span class="card-section">
+    <div class="card-section">
     <div>
       <img src="../assets/logo_small.png">
       <p>hämta data + filtrering</p>
@@ -70,35 +70,35 @@
       <img src="../assets/logo_small.png">
       <p>hämta data + filtrering</p>
     </div>
-    </span>
+  </div>
     </section>
 
     <section class="card">
       <h2>Lägg till en ny bok</h2>
-      <form class="book-form">
+      <form>
         <label for="title"><p>Titel</p></label>
-        <input type="text" id="title" v-model="titel" placeholder="Ange titel på boken" required/>
+        <input class="book-form" type="text" id="title" v-model="title" placeholder="Ange titel på boken" required/>
 
         <label for="description"><p>Beskrivning</p></label>
-        <input type="text" id="description" v-model="description" placeholder="Beskriv boken kort" required/>
+        <input class="book-form" type="text" id="description" v-model="description" placeholder="Beskriv boken kort" required/>
 
         <label for="author"><p>Författare</p></label>
-        <input type="text" id="author" v-model="författare" placeholder="Ange författare på boken" required/>
+        <input class="book-form" type="text" id="author" v-model="författare" placeholder="Ange författare på boken" required/>
 
         <label for="genres"><p>Genres</p></label>
-        <input type="text" id="genres" v-model="genres" placeholder="Ange genres på boken" required/>
+        <input class="book-form" type="text" id="genres" v-model="genres" placeholder="Ange genres på boken" required/>
 
         <label for="images"><p>Bild</p></label>
-        <input type="text" id="images" v-model="images" placeholder="Ange sökväg till bild på boken" required/>
+        <input class="book-form" type="text" id="images" v-model="images" placeholder="Ange sökväg till bild på boken" required/>
 
         <label for="published_year"><p>Publiseringsår</p></label>
-        <input type="text" id="published_year" v-model="published_year" placeholder="Ange året då boken skrevs" required/>
-      </form>
+        <input class="book-form" type="text" id="published_year" v-model="published_year" placeholder="Ange året då boken skrevs" required/>
       
-      <div class="buttons">
-        <button type="submit">Lägg till boken</button>
-        <button type="button" @click="clearForm">Avbryt</button>
-      </div>
+        <div class="buttons">
+          <button type="submit">Lägg till</button>
+          <button type="button" @click="clearForm">Avbryt</button>
+        </div>
+      </form>
     </section>
   </main>
 </template>
@@ -119,10 +119,11 @@ main {
 h2 {
   text-align: center;
   text-transform: uppercase;
-  font-family: $heading-font;
+  font-family: $H1;
   color: $creamwhite;
-  font-weight: 32px;
+  font-weight: 700;
   letter-spacing: 2px;
+  font-size: $mobile_font_size_H2;
 }
 
 .card-section {
@@ -133,7 +134,7 @@ h2 {
 }
 
 .card-section div {
-  width: calc(33.33% - 20px);
+  width: 100%;
   box-sizing: border-box;
   display: flex;   
   flex-direction: column;            
@@ -141,6 +142,14 @@ h2 {
   align-items: center;        
   text-align: center; 
   color: $creamwhite;
+
+  @media (min-width: 600px) {
+    width: calc(50% - 20px);
+  }
+
+  @media (min-width: 900px) {
+    width: calc(33.33% - 20px);
+  }
 }
 
 img {
@@ -190,13 +199,7 @@ p {
   font-size: 30px; 
 }
 
-h2 {
-  display: flex;
-  justify-content: center;
-  font-family: $H1;
-  color: $creamwhite;
-  font-size: $mobile_font_size_H2;
-}
+
 
 h3 {
   font-family: $H1;
@@ -208,6 +211,10 @@ p {
   font-family: $p;
   color: $creamwhite;
   font-size: $mobile_font_size_p;
+}
+
+.book-form {
+  @include default-input;
 }
 
 .buttons {
