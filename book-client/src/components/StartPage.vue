@@ -53,6 +53,9 @@
     </div>
 
     <h2>Alla böcker</h2>
+    <div class="addbook">
+      <RouterLink to="/addbook">Lägg till en bok</RouterLink>
+    </div>
     <div class="card-section">
     <div>
       <img src="../assets/logo_small.png">
@@ -70,35 +73,7 @@
       <img src="../assets/logo_small.png">
       <p>hämta data + filtrering</p>
     </div>
-  </div>
-    </section>
-
-    <section class="card">
-      <h2>Lägg till en ny bok</h2>
-      <form>
-        <label for="title"><p>Titel</p></label>
-        <input class="book-form" type="text" id="title" v-model="title" placeholder="Ange titel på boken" required/>
-
-        <label for="description"><p>Beskrivning</p></label>
-        <input class="book-form" type="text" id="description" v-model="description" placeholder="Beskriv boken kort" required/>
-
-        <label for="author"><p>Författare</p></label>
-        <input class="book-form" type="text" id="author" v-model="författare" placeholder="Ange författare på boken" required/>
-
-        <label for="genres"><p>Genres</p></label>
-        <input class="book-form" type="text" id="genres" v-model="genres" placeholder="Ange genres på boken" required/>
-
-        <label for="images"><p>Bild</p></label>
-        <input class="book-form" type="text" id="images" v-model="images" placeholder="Ange sökväg till bild på boken" required/>
-
-        <label for="published_year"><p>Publiseringsår</p></label>
-        <input class="book-form" type="text" id="published_year" v-model="published_year" placeholder="Ange året då boken skrevs" required/>
-      
-        <div class="buttons">
-          <button type="submit">Lägg till</button>
-          <button type="button" @click="clearForm">Avbryt</button>
-        </div>
-      </form>
+    </div>
     </section>
   </main>
 </template>
@@ -194,41 +169,40 @@ p {
   color: $creamwhite; 
 }
 
-/* Möjlig hover-effekt för ikonerna */
+/* Hover-effekt för ikonerna */
 .material-symbols-outlined:hover {
   font-size: 30px; 
 }
 
 
-
-h3 {
-  font-family: $H1;
-  color: $creamwhite;
-  font-size: $mobile_font_size_H3;
-}
-
-p {
-  font-family: $p;
-  color: $creamwhite;
-  font-size: $mobile_font_size_p;
-}
-
-.book-form {
-  @include default-input;
-}
-
-.buttons {
+/* Länk för att lägga till en ny bok */
+.addbook {
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  gap: 10px;
-  margin-top: 20px;
-  padding: 0 10px;
+  justify-content: center;
+  margin: 20px;
+  margin-right: 0px;
+  margin-top: 0;
 
-  button {
-    flex: 1;
-    max-width: 150px;
-    @include primary-button;
+  @media (min-width: 768px) {
+      justify-content: flex-end;
+    }
+
+  a {
+    text-decoration: none;
+    background-color: $green;
+    color: $creamwhite;
+    border-radius: 8px;
+    font-family: $link_font;
+    font-size: $mobile_font_size_link;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
   }
 }
 </style>
