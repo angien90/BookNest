@@ -4,19 +4,19 @@
 }
 
 /* Primary colors */
-$creamwhite: #FFF7E3;
-$green: #4F705D;
+$creamwhite: #fff7e3;
+$green: #4f705d;
 
 /*Secondary color*/
-$warmorange: #F08D2E;
+$warmorange: #f08d2e;
 $darkgreen: #383838;
 
 /* Hover colors */
-$green: #4F705D;
+$green: #4f705d;
 
 /* Fonts */
-$heading-font: "Luckiest Guy", sans-serif;
-$body-font: "Quicksand", sans-serif;
+$heading-font: 'Luckiest Guy', sans-serif;
+$body-font: 'Quicksand', sans-serif;
 
 /* Default spacing */
 $spacing: 25px;
@@ -29,40 +29,51 @@ $p: 'Quicksand', sans-serif;
 $link_font: 'Quicksand', sans-serif;
 
 /* Mobile Font Sizes */
-$mobile_font_size_H1: 2rem;   // 32px
-$mobile_font_size_H2: 2rem;   // 32px
+$mobile_font_size_H1: 2rem; // 32px
+$mobile_font_size_H2: 2rem; // 32px
 $mobile_font_size_H3: 1.25rem; // 20px
-$mobile_font_size_p: 1rem;        // 16px
-$mobile_font_size_link: 1rem;        // 16px
+$mobile_font_size_p: 1rem; // 16px
+$mobile_font_size_link: 1rem; // 16px
 
 /* Buttons */
 @mixin primary-button {
-  display:block;
+  display: block;
   margin: 0 auto;
   cursor: pointer;
   width: 150px;
   min-height: 45px;
   border: none;
-  border-radius: 7px;
+  border-radius: 10px;
   background-color: $warmorange;
   text-align: center;
-  justify-content: center;
-  align-items: center;
   text-decoration: none;
   color: $darkgreen;
   font-family: $heading-font;
-  font-weight: bold;
-  font-size: pxtorem(16px);
+  font-weight: 200;
+  font-size: pxtorem(20px);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
-  margin-top: $spacing;
-  margin-bottom: $spacing;
+  margin-block: $spacing;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: $green;
+    background-color: #ffa733;
+    transform: scale(1.03);
   }
 
   &:active {
     box-shadow: none;
     transform: translateY(2px);
   }
+}
+
+/* Inputs */
+@mixin default-input {
+  outline: none;
+  border: none;
+  margin-bottom: pxtorem(10px);
+  border-radius: pxtorem(5px);
+  width: 100%;
+  background-color: $creamwhite;
+  padding: pxtorem(10px) pxtorem(15px);
+  color: $darkgreen;
 }
