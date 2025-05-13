@@ -297,12 +297,13 @@ const cancelDelete = () => {
                     <input type="number" id="rating" v-model="rating" 
                         min="1" max="5" placeholder="1-5"
                         required/>
-                </form>
 
-                <div class="buttons">
-                    <button type="submit">Skicka recension</button>
-                    <button type="button" @click="clearForm">Avbryt</button>
-                </div>        
+
+                    <div class="buttons">
+                        <button type="submit">Skicka recension</button>
+                        <button type="button" @click="clearForm">Avbryt</button>
+                    </div>                  
+                </form>      
             </div>
         </article>
     </aside>  
