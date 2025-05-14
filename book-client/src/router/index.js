@@ -4,6 +4,7 @@ import BookView from "../views/BookView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import AddBooksView from "../views/AddBooksView.vue";
+import AdminPanelBookView from "../views/AdminPanelBookView.vue";
 
 const routes = [
   { path: "/", component: HomeView },
@@ -11,6 +12,7 @@ const routes = [
   { path: "/loginpage", component: LoginView },
   { path: "/registerpage", component: RegisterView },
   { path: "/addbook", component: AddBooksView },
+  { path: "/adminpanelbooks", component: AdminPanelBookView },
 ];
 
 const router = createRouter({

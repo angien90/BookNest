@@ -1,26 +1,49 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 
-let books = [];
+const tipBooks = ref([]);
+const newsBooks = ref([]);
+const books = ref([]);
+
+/* Månadens tips */
+const tipIds = [
+  '681a50fe1e028ec32ca8a32e',  
+  '681a531a0079c7a5fb29c29a',
+  '681a531a0079c7a5fb29c29e'
+];
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:3000/books')
+    const response = await fetch('http://localhost:3000/books');
     const data = await response.json();
-    console.log(data)
-    books = data;
-  } catch(error) {
-    console.log(error)
+
+    // Alla böcker
+    books.value = data; 
+
+    // Månadens tips
+    tipBooks.value = books.value.filter(book => tipIds.includes(book._id));
+
+    // Nyheter: sortera på created_at (senaste först) och ta de 3 första
+    newsBooks.value = [...books.value]
+      .filter(book => book.created_at) 
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(0, 3);
+
+  } catch (error) {
+    console.log("Fel vid hämtning av böcker:", error);
   }
-})
+});
 </script>
+
 
 <template>
   <main>
-    <section class="card">
+    <section class="card" id="tips">
       <h2>Månadens tips</h2>
       <div class="card-section">
-      <section v-for="book in books" :key="book.book_id" class="card-section div">
+      <section v-for="book in tipBooks" :key="book._id" class="card-section div">
+        <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -34,14 +57,16 @@ onMounted(async () => {
             <p>{{ book.genres.join(', ') }}</p>
           </div>
         </article>
+        </RouterLink>
       </section>
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" id="news">
       <h2>Nyheter</h2>
       <div class="card-section">
-      <section v-for="book in books" :key="book.book_id" class="card-section div">
+      <section v-for="book in newsBooks" :key="book._id" class="card-section div">
+        <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -55,11 +80,13 @@ onMounted(async () => {
             <p>{{ book.genres.join(', ') }}</p>
           </div>
         </article>
+        </RouterLink>
       </section>
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" id="allbooks">
+    <h2>Alla böcker</h2>
     <div class="header-controls">
       <button class="filter-icon">
         <span class="material-symbols-outlined" aria-label="search icon">search</span>
@@ -71,14 +98,13 @@ onMounted(async () => {
         <span class="material-symbols-outlined" aria-label="icon for sort by alpha">sort_by_alpha</span>
       </button>
     </div>
-
-    <h2>Alla böcker</h2>
-    <div class="addbook">
-      <RouterLink to="/addbook">Lägg till en bok</RouterLink>
+    <div class="adminpanel">
+      <RouterLink to="/adminpanelbooks">Hantera böcker</RouterLink>
     </div>
     
     <div class="card-section">
-      <section v-for="book in books" :key="book.book_id" class="card-section div">
+      <section v-for="book in books" :key="book._id" class="card-section div">
+        <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -92,6 +118,7 @@ onMounted(async () => {
             <p>{{ book.genres.join(', ') }}</p>
           </div>
         </article>
+        </RouterLink>
       </section>
     </div>
 </section>
@@ -125,24 +152,35 @@ h2 {
 .card-section {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
-  padding: 10px 10px;
+  justify-content: center;
+  gap: 20px; 
 
   @media (min-width: 768px) {
-    justify-content: space-around; 
-    padding: 10px 50px;
+    justify-content: space-evenly; 
   }
 }
 
 .card-section div {
-  width: 100%;
+  width: 400px; 
   box-sizing: border-box;
-  display: flex;   
-  flex-direction: column;            
-  justify-content: center;     
-  align-items: center;        
-  text-align: center; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   color: $creamwhite;
+  padding: 15px;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 10px;
+  }
 }
 
   article {
@@ -152,31 +190,50 @@ h2 {
 }
 
 img {
-  width: 50%;
+  width: 30%;
+  max-width: 200px; 
   height: auto;
+  border-radius: 8px; 
+  margin-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow:
+    -10px 0 6px -2px rgba(0, 0, 0, 0.5),  /* vänster sida */
+    0 6px 6px -2px rgba(0, 0, 0, 0.5);   /* undersida */
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow:
+      -8px 0 8px -2px rgba(0, 0, 0, 0.6),
+      0 8px 8px -2px rgba(0, 0, 0, 0.6);
+  }
 
   @media (min-width: 768px) {
   height: 250px;
   width: auto;
-
   }
 }
 
 h3 {
   font-family: $H3;
+  font-size: 1.2em; 
+  margin-bottom: 8px; 
+  color: $creamwhite;
 }
 
 p {
-  width: 100%; 
+  width: 100%;
   font-family: $p;
   margin: 0;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
+  font-size: $body-font; 
+  color: $creamwhite;
+  line-height: 1.5;
 }
 
 /* Filterbar */
 .header-controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   padding: 0;
   margin-right: -10px;
@@ -184,6 +241,7 @@ p {
 
   @media (min-width: 768px) {
       position: absolute;
+      justify-content: flex-end;
       z-index: 10; 
       gap: 10px;
       right: 20px;
@@ -191,9 +249,11 @@ p {
     }
 }
 
+/* Filtrerings ikonerna */
 .filter-icon {
   background: transparent;
-  border: none; 
+  border: none;
+  cursor: pointer; 
 }
 
 .material-symbols-outlined {
@@ -202,14 +262,12 @@ p {
   color: $creamwhite; 
 }
 
-/* Hover-effekt för ikonerna */
 .material-symbols-outlined:hover {
   font-size: 30px; 
 }
 
-
 /* Länk för att lägga till en ny bok */
-.addbook {
+.adminpanel {
   display: flex;
   justify-content: center;
   margin: 20px;

@@ -5,7 +5,15 @@ const menuOpen = ref(false);
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
-};
+}
+
+const scrollToSection = (id) => {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+  }
+  menuOpen.value = false
+}
 </script>
 
 <template>
@@ -34,10 +42,9 @@ const toggleMenu = () => {
     <!-- Mobile-menu -->
     <nav v-if="menuOpen" class="mobile-menu">
       <ul>
-        <li>Månadens tips</li>
-        <li>Nyheter</li>
-        <li>Alla böcker</li>
-        <li>Adminpanelen</li>
+        <li @click="scrollToSection('tips')">Månadens tips</li>
+        <li @click="scrollToSection('news')">Nyheter</li>
+        <li @click="scrollToSection('allbooks')">Alla böcker</li>
       </ul>
     </nav>
   </header>
