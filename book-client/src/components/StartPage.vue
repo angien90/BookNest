@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const tipBooks = ref([]);
 const newsBooks = ref([]);
@@ -42,6 +43,7 @@ onMounted(async () => {
       <h2>Månadens tips</h2>
       <div class="card-section">
       <section v-for="book in tipBooks" :key="book._id" class="card-section div">
+        <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -55,6 +57,7 @@ onMounted(async () => {
             <p>{{ book.genres.join(', ') }}</p>
           </div>
         </article>
+        </RouterLink>
       </section>
       </div>
     </section>
@@ -63,6 +66,7 @@ onMounted(async () => {
       <h2>Nyheter</h2>
       <div class="card-section">
       <section v-for="book in newsBooks" :key="book._id" class="card-section div">
+        <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -76,6 +80,7 @@ onMounted(async () => {
             <p>{{ book.genres.join(', ') }}</p>
           </div>
         </article>
+        </RouterLink>
       </section>
       </div>
     </section>
@@ -99,6 +104,7 @@ onMounted(async () => {
     
     <div class="card-section">
       <section v-for="book in books" :key="book._id" class="card-section div">
+        <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -112,6 +118,7 @@ onMounted(async () => {
             <p>{{ book.genres.join(', ') }}</p>
           </div>
         </article>
+        </RouterLink>
       </section>
     </div>
 </section>
