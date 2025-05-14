@@ -1,10 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router';
 
 const tipBooks = ref([]);
 const newsBooks = ref([]);
 const books = ref([]);
+const searchText = ref('');
+const selectedGenre = ref('Alla');
+
 
 /* Månadens tips */
 const tipIds = [
@@ -12,6 +15,18 @@ const tipIds = [
   '681a531a0079c7a5fb29c29a',
   '681a531a0079c7a5fb29c29e'
 ];
+
+/* Sök och sortering */
+const filteredBooks = computed(() => {
+  return books.value.filter(book => {
+    const matchesSearch = book.title.toLowerCase().includes(searchText.value.toLowerCase()) ||
+                          book.author.toLowerCase().includes(searchText.value.toLowerCase());
+
+    const matchesGenre = selectedGenre.value === 'Alla' || book.genres.includes(selectedGenre.value);
+
+    return matchesSearch && matchesGenre;
+  });
+});
 
 onMounted(async () => {
   try {
@@ -42,7 +57,7 @@ onMounted(async () => {
     <section class="card" id="tips">
       <h2>Månadens tips</h2>
       <div class="card-section">
-      <section v-for="book in tipBooks" :key="book._id" class="card-section div">
+      <section v-for="book in tipBooks" :key="book._id" class="card-section">
         <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
@@ -87,23 +102,42 @@ onMounted(async () => {
 
     <section class="card" id="allbooks">
     <h2>Alla böcker</h2>
-    <div class="header-controls">
-      <button class="filter-icon">
-        <span class="material-symbols-outlined" aria-label="search icon">search</span>
-      </button>
-      <button class="filter-icon">
-        <span class="material-symbols-outlined" aria-label="sort icon">sort</span>
-      </button>
-      <button class="filter-icon">
-        <span class="material-symbols-outlined" aria-label="icon for sort by alpha">sort_by_alpha</span>
-      </button>
-    </div>
+
     <div class="adminpanel">
       <RouterLink to="/adminpanelbooks">Hantera böcker</RouterLink>
     </div>
+
+    <div class="filter-bar">
+      <input
+        type="text"
+        v-model="searchText"
+        placeholder="Sök titel eller författare"
+        class="filter-input"
+      />
+
+      <select v-model="selectedGenre" class="filter-select">
+        <option>Alla</option>
+        <option>Barn</option>
+        <option>Deckare</option>
+        <option>Drama</option>
+        <option>Classic</option>
+        <option>Dystopi</option>
+        <option>Historical</option>
+        <option>Fantasy</option>
+        <option>Klassiker</option>
+        <option>Literary Fiction</option>
+        <option>Philosophy</option>
+        <option>Romantik</option>
+        <option>Science Fiction</option>
+        <option>Svensk litteratur</option>
+        <option>Young Adult</option>
+        <option>Äventyr</option>
+        <!-- Lägg till fler genrer här -->
+      </select>
+    </div>
     
     <div class="card-section">
-      <section v-for="book in books" :key="book._id" class="card-section div">
+      <section v-for="book in filteredBooks" :key="book._id" class="card-section div">
         <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
@@ -208,7 +242,7 @@ img {
   }
 
   @media (min-width: 768px) {
-  height: 250px;
+  height: 200px;
   width: auto;
   }
 }
@@ -231,39 +265,27 @@ p {
 }
 
 /* Filterbar */
-.header-controls {
+.filter-bar {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px;
   align-items: center;
-  padding: 0;
-  margin-right: -10px;
-  gap: 0; 
 
   @media (min-width: 768px) {
-      position: absolute;
-      justify-content: flex-end;
-      z-index: 10; 
-      gap: 10px;
-      right: 20px;
-      top: 10px;
-    }
+    flex-direction: row;
+    justify-content: center;
+  }
 }
 
-/* Filtrerings ikonerna */
-.filter-icon {
-  background: transparent;
+.filter-input,
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 6px;
   border: none;
-  cursor: pointer; 
-}
-
-.material-symbols-outlined {
-  font-size: 25px;
-  font-variation-settings: "wght" 700;
-  color: $creamwhite; 
-}
-
-.material-symbols-outlined:hover {
-  font-size: 30px; 
+  font-size: 1rem;
+  background-color: $creamwhite;
+  font-family: $body_font;
 }
 
 /* Länk för att lägga till en ny bok */
