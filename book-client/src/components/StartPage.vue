@@ -1,39 +1,69 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
 
+const route = useRoute();
 const tipBooks = ref([]);
 const newsBooks = ref([]);
 const books = ref([]);
+const searchText = ref('');
+const selectedGenre = ref('Alla');
+const genres = ref([]); // Lista för alla tillgängliga kategorier
 
-/* Månadens tips */
 const tipIds = [
-  '681a50fe1e028ec32ca8a32e',  
+  '681a50fe1e028ec32ca8a32e',
   '681a531a0079c7a5fb29c29a',
   '681a531a0079c7a5fb29c29e'
 ];
+
+const filteredBooks = computed(() => {
+  return books.value.filter(book => {
+    const matchesSearch =
+      book.title.toLowerCase().includes(searchText.value.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchText.value.toLowerCase());
+
+    const matchesGenre =
+      selectedGenre.value === 'Alla' || book.genres.includes(selectedGenre.value);
+
+    return matchesSearch && matchesGenre;
+  });
+});
 
 onMounted(async () => {
   try {
     const response = await fetch('http://localhost:3000/books');
     const data = await response.json();
 
-    // Alla böcker
-    books.value = data; 
+    books.value = data;
 
-    // Månadens tips
+    // Extrahera un lista med unika genrer
+    genres.value = [...new Set(books.value.flatMap(book => book.genres))];
+
     tipBooks.value = books.value.filter(book => tipIds.includes(book._id));
 
-    // Nyheter: sortera på created_at (senaste först) och ta de 3 första
     newsBooks.value = [...books.value]
-      .filter(book => book.created_at) 
+      .filter(book => book.created_at)
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .slice(0, 3);
 
+    // Scrolla först EFTER data och DOM är klar
+    const scrollTo = route.query.scrollTo;
+    if (scrollTo) {
+      nextTick(() => {
+        setTimeout(() => {
+          const el = document.getElementById(scrollTo);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 300);
+      });
+    }
   } catch (error) {
     console.log("Fel vid hämtning av böcker:", error);
   }
 });
+
 </script>
 
 
@@ -42,7 +72,7 @@ onMounted(async () => {
     <section class="card" id="tips">
       <h2>Månadens tips</h2>
       <div class="card-section">
-      <section v-for="book in tipBooks" :key="book._id" class="card-section div">
+      <section v-for="book in tipBooks" :key="book._id" class="card-section">
         <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
@@ -87,23 +117,27 @@ onMounted(async () => {
 
     <section class="card" id="allbooks">
     <h2>Alla böcker</h2>
-    <div class="header-controls">
-      <button class="filter-icon">
-        <span class="material-symbols-outlined" aria-label="search icon">search</span>
-      </button>
-      <button class="filter-icon">
-        <span class="material-symbols-outlined" aria-label="sort icon">sort</span>
-      </button>
-      <button class="filter-icon">
-        <span class="material-symbols-outlined" aria-label="icon for sort by alpha">sort_by_alpha</span>
-      </button>
-    </div>
+
     <div class="adminpanel">
       <RouterLink to="/adminpanelbooks">Hantera böcker</RouterLink>
     </div>
+
+    <div class="filter-bar">
+      <input
+        type="text"
+        v-model="searchText"
+        placeholder="Sök titel eller författare"
+        class="filter-input"
+      />
+
+      <select v-model="selectedGenre" class="filter-select">
+        <option>Alla</option>
+        <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
+      </select>
+    </div>
     
     <div class="card-section">
-      <section v-for="book in books" :key="book._id" class="card-section div">
+      <section v-for="book in filteredBooks" :key="book._id" class="card-section div">
         <RouterLink :to="`/bookpage/${book._id}`">
         <article>
           <div>
@@ -208,7 +242,7 @@ img {
   }
 
   @media (min-width: 768px) {
-  height: 250px;
+  height: 200px;
   width: auto;
   }
 }
@@ -231,39 +265,27 @@ p {
 }
 
 /* Filterbar */
-.header-controls {
+.filter-bar {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px;
   align-items: center;
-  padding: 0;
-  margin-right: -10px;
-  gap: 0; 
 
   @media (min-width: 768px) {
-      position: absolute;
-      justify-content: flex-end;
-      z-index: 10; 
-      gap: 10px;
-      right: 20px;
-      top: 10px;
-    }
+    flex-direction: row;
+    justify-content: center;
+  }
 }
 
-/* Filtrerings ikonerna */
-.filter-icon {
-  background: transparent;
+.filter-input,
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 6px;
   border: none;
-  cursor: pointer; 
-}
-
-.material-symbols-outlined {
-  font-size: 25px;
-  font-variation-settings: "wght" 700;
-  color: $creamwhite; 
-}
-
-.material-symbols-outlined:hover {
-  font-size: 30px; 
+  font-size: 1rem;
+  background-color: $creamwhite;
+  font-family: $body_font;
 }
 
 /* Länk för att lägga till en ny bok */
