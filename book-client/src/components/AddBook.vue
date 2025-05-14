@@ -49,9 +49,9 @@
 
 <template>
   <main>
-    <RouterLink to="/"><span class="material-symbols-outlined">arrow_back</span></RouterLink>
+    <RouterLink to="/adminpanelbooks"><span class="material-symbols-outlined">arrow_back</span></RouterLink>
   <section class="card">
-      <h2>Lägg till en ny bok</h2>
+      <h2>Skapa en ny bok</h2>
       <form @submit.prevent="submit">
         <label for="title"><p>Titel</p></label>
         <input class="book-form" type="text" id="title" v-model="form.title" placeholder="Ange titel på boken" required/>
@@ -93,7 +93,7 @@ main {
     color: $green;
     font-weight: 700;
     font-size: 2rem;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-left: 20px;
 }
 

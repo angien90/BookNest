@@ -93,8 +93,8 @@ onMounted(async () => {
         <span class="material-symbols-outlined" aria-label="icon for sort by alpha">sort_by_alpha</span>
       </button>
     </div>
-    <div class="addbook">
-      <RouterLink to="/addbook">Lägg till en bok</RouterLink>
+    <div class="adminpanel">
+      <RouterLink to="/adminpanelbooks">Hantera böcker</RouterLink>
     </div>
     
     <div class="card-section">
@@ -154,7 +154,6 @@ h2 {
 }
 
 .card-section div {
-  
   width: 400px; 
   box-sizing: border-box;
   display: flex;
@@ -261,7 +260,7 @@ p {
 }
 
 /* Länk för att lägga till en ny bok */
-.addbook {
+.adminpanel {
   display: flex;
   justify-content: center;
   margin: 20px;
