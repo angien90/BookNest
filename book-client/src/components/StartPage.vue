@@ -38,7 +38,7 @@ onMounted(async () => {
 
 <template>
   <main>
-    <section class="card">
+    <section class="card" id="tips">
       <h2>Månadens tips</h2>
       <div class="card-section">
       <section v-for="book in tipBooks" :key="book._id" class="card-section div">
@@ -59,7 +59,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" id="news">
       <h2>Nyheter</h2>
       <div class="card-section">
       <section v-for="book in newsBooks" :key="book._id" class="card-section div">
@@ -80,7 +80,8 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" id="allbooks">
+    <h2>Alla böcker</h2>
     <div class="header-controls">
       <button class="filter-icon">
         <span class="material-symbols-outlined" aria-label="search icon">search</span>
@@ -92,8 +93,6 @@ onMounted(async () => {
         <span class="material-symbols-outlined" aria-label="icon for sort by alpha">sort_by_alpha</span>
       </button>
     </div>
-
-    <h2>Alla böcker</h2>
     <div class="addbook">
       <RouterLink to="/addbook">Lägg till en bok</RouterLink>
     </div>
@@ -228,7 +227,7 @@ p {
 /* Filterbar */
 .header-controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   padding: 0;
   margin-right: -10px;
@@ -236,6 +235,7 @@ p {
 
   @media (min-width: 768px) {
       position: absolute;
+      justify-content: flex-end;
       z-index: 10; 
       gap: 10px;
       right: 20px;
