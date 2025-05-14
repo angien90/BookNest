@@ -12,7 +12,7 @@ const routes = [
   { path: "/loginpage", component: LoginView },
   { path: "/registerpage", component: RegisterView },
   { path: "/addbook", component: AddBooksView },
-  { path: "/adminpanelbooks", component: AdminPanelBookView, meta: { requiresAuth: true } },
+  { path: "/adminpanelbooks", component: AdminPanelBookView/*, meta: { requiresAuth: true } */},
 ];
 
 // ✅ Skapa router först
