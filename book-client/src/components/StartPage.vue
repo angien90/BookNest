@@ -73,7 +73,7 @@ onMounted(async () => {
       <h2>Månadens tips</h2>
       <div class="card-section">
       <section v-for="book in tipBooks" :key="book._id" class="card-section">
-        <RouterLink :to="`/bookpage/${book._id}`">
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -96,7 +96,7 @@ onMounted(async () => {
       <h2>Nyheter</h2>
       <div class="card-section">
       <section v-for="book in newsBooks" :key="book._id" class="card-section div">
-        <RouterLink :to="`/bookpage/${book._id}`">
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -138,7 +138,7 @@ onMounted(async () => {
     
     <div class="card-section">
       <section v-for="book in filteredBooks" :key="book._id" class="card-section div">
-        <RouterLink :to="`/bookpage/${book._id}`">
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -317,5 +317,10 @@ p {
       transform: scale(0.98);
     }
   }
+}
+
+.booklink {
+  text-decoration: none;
+  color: inherit;
 }
 </style>
