@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 
 const tipBooks = ref([]);
 const newsBooks = ref([]);
-const books = ref([]); // Reaktiv variabel för böcker
+const books = ref([]);
 
 /* Månadens tips */
 const tipIds = [
@@ -17,33 +17,23 @@ onMounted(async () => {
     const response = await fetch('http://localhost:3000/books');
     const data = await response.json();
 
-    console.log("Alla böcker från API:", JSON.parse(JSON.stringify(data))); // Logga den hämtade datan, plattad
-
     // Alla böcker
-    books.value = data;
+    books.value = data; 
 
     // Månadens tips
     tipBooks.value = books.value.filter(book => tipIds.includes(book._id));
 
-    // Kontrollera om böckerna har created_at innan vi filtrerar
-    const booksWithCreatedAt = books.value.filter(book => book.created_at);
-    console.log("Böcker som har created_at:", JSON.parse(JSON.stringify(booksWithCreatedAt)));
-
     // Nyheter: sortera på created_at (senaste först) och ta de 3 första
     newsBooks.value = [...books.value]
-      .filter(book => book.created_at) // Filtrera böcker med created_at
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sortera på created_at
+      .filter(book => book.created_at) 
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .slice(0, 3);
-
-    // Logga resultatet efter filtrering och sortering
-    console.log("Nyhetsböcker efter filtrering och sortering:", JSON.parse(JSON.stringify(newsBooks.value))); // Logga resultatet, plattad
 
   } catch (error) {
     console.log("Fel vid hämtning av böcker:", error);
   }
 });
 </script>
-
 
 
 <template>
@@ -156,24 +146,36 @@ h2 {
 .card-section {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
-  padding: 10px 10px;
+  justify-content: center;
+  gap: 20px; 
 
   @media (min-width: 768px) {
-    justify-content: space-around; 
-    padding: 10px 50px;
+    justify-content: space-evenly; 
   }
 }
 
 .card-section div {
-  width: 100%;
+  
+  width: 400px; 
   box-sizing: border-box;
-  display: flex;   
-  flex-direction: column;            
-  justify-content: center;     
-  align-items: center;        
-  text-align: center; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   color: $creamwhite;
+  padding: 15px;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 10px;
+  }
 }
 
   article {
@@ -183,25 +185,44 @@ h2 {
 }
 
 img {
-  width: 50%;
+  width: 30%;
+  max-width: 200px; 
   height: auto;
+  border-radius: 8px; 
+  margin-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow:
+    -10px 0 6px -2px rgba(0, 0, 0, 0.5),  /* vänster sida */
+    0 6px 6px -2px rgba(0, 0, 0, 0.5);   /* undersida */
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow:
+      -8px 0 8px -2px rgba(0, 0, 0, 0.6),
+      0 8px 8px -2px rgba(0, 0, 0, 0.6);
+  }
 
   @media (min-width: 768px) {
   height: 250px;
   width: auto;
-
   }
 }
 
 h3 {
   font-family: $H3;
+  font-size: 1.2em; 
+  margin-bottom: 8px; 
+  color: $creamwhite;
 }
 
 p {
-  width: 100%; 
+  width: 100%;
   font-family: $p;
   margin: 0;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
+  font-size: $body-font; 
+  color: $creamwhite;
+  line-height: 1.5;
 }
 
 /* Filterbar */
@@ -222,9 +243,11 @@ p {
     }
 }
 
+/* Filtrerings ikonerna */
 .filter-icon {
   background: transparent;
-  border: none; 
+  border: none;
+  cursor: pointer; 
 }
 
 .material-symbols-outlined {
@@ -233,11 +256,9 @@ p {
   color: $creamwhite; 
 }
 
-/* Hover-effekt för ikonerna */
 .material-symbols-outlined:hover {
   font-size: 30px; 
 }
-
 
 /* Länk för att lägga till en ny bok */
 .addbook {
