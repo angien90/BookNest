@@ -12,7 +12,7 @@ const scrollToSection = (id) => {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' })
   }
-  menuOpen.value = false
+  menuOpen.value = false 
 }
 </script>
 
@@ -85,7 +85,6 @@ img {
   max-width: 500px;
 
   @media (min-width: 768px) {
-    width: 50%;
     max-width: 800px;
   }
 }
@@ -107,7 +106,7 @@ h1 {
   height: auto;
   flex-shrink: 0;
   font-family: $heading-font;
-  font-size: 2rem;
+  font-size: $mobile_font_size_H1;
   margin: 0 0 5px 0;
   z-index: 1;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -118,7 +117,7 @@ h1 {
 
   @media (min-width: 1280px) {
     margin-left: 9.5rem;
-    font-size: pxtorem(128px);
+    font-size: pxtorem(100px);
     font-style: normal;
     font-weight: 400;
     line-height: 0.54;
