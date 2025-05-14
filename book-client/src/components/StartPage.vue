@@ -1,28 +1,30 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
 
+const route = useRoute();
 const tipBooks = ref([]);
 const newsBooks = ref([]);
 const books = ref([]);
 const searchText = ref('');
 const selectedGenre = ref('Alla');
+const genres = ref([]); // Lista för alla tillgängliga kategorier
 
-
-/* Månadens tips */
 const tipIds = [
-  '681a50fe1e028ec32ca8a32e',  
+  '681a50fe1e028ec32ca8a32e',
   '681a531a0079c7a5fb29c29a',
   '681a531a0079c7a5fb29c29e'
 ];
 
-/* Sök och sortering */
 const filteredBooks = computed(() => {
   return books.value.filter(book => {
-    const matchesSearch = book.title.toLowerCase().includes(searchText.value.toLowerCase()) ||
-                          book.author.toLowerCase().includes(searchText.value.toLowerCase());
+    const matchesSearch =
+      book.title.toLowerCase().includes(searchText.value.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchText.value.toLowerCase());
 
-    const matchesGenre = selectedGenre.value === 'Alla' || book.genres.includes(selectedGenre.value);
+    const matchesGenre =
+      selectedGenre.value === 'Alla' || book.genres.includes(selectedGenre.value);
 
     return matchesSearch && matchesGenre;
   });
@@ -33,22 +35,35 @@ onMounted(async () => {
     const response = await fetch('http://localhost:3000/books');
     const data = await response.json();
 
-    // Alla böcker
-    books.value = data; 
+    books.value = data;
 
-    // Månadens tips
+    // Extrahera un lista med unika genrer
+    genres.value = [...new Set(books.value.flatMap(book => book.genres))];
+
     tipBooks.value = books.value.filter(book => tipIds.includes(book._id));
 
-    // Nyheter: sortera på created_at (senaste först) och ta de 3 första
     newsBooks.value = [...books.value]
-      .filter(book => book.created_at) 
+      .filter(book => book.created_at)
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .slice(0, 3);
 
+    // Scrolla först EFTER data och DOM är klar
+    const scrollTo = route.query.scrollTo;
+    if (scrollTo) {
+      nextTick(() => {
+        setTimeout(() => {
+          const el = document.getElementById(scrollTo);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 300);
+      });
+    }
   } catch (error) {
     console.log("Fel vid hämtning av böcker:", error);
   }
 });
+
 </script>
 
 
@@ -117,22 +132,7 @@ onMounted(async () => {
 
       <select v-model="selectedGenre" class="filter-select">
         <option>Alla</option>
-        <option>Barn</option>
-        <option>Deckare</option>
-        <option>Drama</option>
-        <option>Classic</option>
-        <option>Dystopi</option>
-        <option>Historical</option>
-        <option>Fantasy</option>
-        <option>Klassiker</option>
-        <option>Literary Fiction</option>
-        <option>Philosophy</option>
-        <option>Romantik</option>
-        <option>Science Fiction</option>
-        <option>Svensk litteratur</option>
-        <option>Young Adult</option>
-        <option>Äventyr</option>
-        <!-- Lägg till fler genrer här -->
+        <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
       </select>
     </div>
     
