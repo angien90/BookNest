@@ -1,26 +1,57 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
-let books = [];
+const tipBooks = ref([]);
+const newsBooks = ref([]);
+const books = ref([]); // Reaktiv variabel för böcker
+
+/* Månadens tips */
+const tipIds = [
+  '681a50fe1e028ec32ca8a32e',  
+  '681a531a0079c7a5fb29c29a',
+  '681a531a0079c7a5fb29c29e'
+];
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:3000/books')
+    const response = await fetch('http://localhost:3000/books');
     const data = await response.json();
-    console.log(data)
-    books = data;
-  } catch(error) {
-    console.log(error)
+
+    console.log("Alla böcker från API:", JSON.parse(JSON.stringify(data))); // Logga den hämtade datan, plattad
+
+    // Alla böcker
+    books.value = data;
+
+    // Månadens tips
+    tipBooks.value = books.value.filter(book => tipIds.includes(book._id));
+
+    // Kontrollera om böckerna har created_at innan vi filtrerar
+    const booksWithCreatedAt = books.value.filter(book => book.created_at);
+    console.log("Böcker som har created_at:", JSON.parse(JSON.stringify(booksWithCreatedAt)));
+
+    // Nyheter: sortera på created_at (senaste först) och ta de 3 första
+    newsBooks.value = [...books.value]
+      .filter(book => book.created_at) // Filtrera böcker med created_at
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sortera på created_at
+      .slice(0, 3);
+
+    // Logga resultatet efter filtrering och sortering
+    console.log("Nyhetsböcker efter filtrering och sortering:", JSON.parse(JSON.stringify(newsBooks.value))); // Logga resultatet, plattad
+
+  } catch (error) {
+    console.log("Fel vid hämtning av böcker:", error);
   }
-})
+});
 </script>
+
+
 
 <template>
   <main>
     <section class="card">
       <h2>Månadens tips</h2>
       <div class="card-section">
-      <section v-for="book in books" :key="book.book_id" class="card-section div">
+      <section v-for="book in tipBooks" :key="book._id" class="card-section div">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -41,7 +72,7 @@ onMounted(async () => {
     <section class="card">
       <h2>Nyheter</h2>
       <div class="card-section">
-      <section v-for="book in books" :key="book.book_id" class="card-section div">
+      <section v-for="book in newsBooks" :key="book._id" class="card-section div">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -78,7 +109,7 @@ onMounted(async () => {
     </div>
     
     <div class="card-section">
-      <section v-for="book in books" :key="book.book_id" class="card-section div">
+      <section v-for="book in books" :key="book._id" class="card-section div">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">

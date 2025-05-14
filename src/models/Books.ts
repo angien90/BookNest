@@ -28,6 +28,10 @@ const BookSchema = new Schema<IBook>({
     required: true
   },
   reviews: [{ type: Schema.Types.ObjectId, ref: 'Reviews' }],
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 export default mongoose.model('Books', BookSchema);
