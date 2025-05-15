@@ -68,8 +68,8 @@ export const loginUser = async (req: Request, res: Response) => {
         const token = jwt.sign({ id: user._id, is_admin: user.is_admin }, JWT_SECRET, { expiresIn: '1h' });
         res.cookie('accessToken', token, {
             httpOnly: true,
-            secure: true /*process.env.NODE_ENV === 'production'*/,
-            sameSite: 'none' /*'strict'*/,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'none',
             maxAge: 3600000
         });
 
