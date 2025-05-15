@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 const books = ref([]);
 const searchText = ref('');
 const selectedGenre = ref('Alla');
-const genres = ref([]); // Lista för alla tillgängliga kategorier
+const genres = ref([]); 
 const router = useRouter();
 
 const filteredBooks = computed(() => {
@@ -41,7 +41,7 @@ onMounted(async () => {
 
 <template>
   <main>
-    <RouterLink to="/">
+    <RouterLink to="/" aria-label="Gå tillbaka till startsidan">
       <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
     </RouterLink>
 
@@ -53,14 +53,17 @@ onMounted(async () => {
       <h2>Alla böcker</h2>
 
       <div class="filter-bar">
+        <label for="search">Sök titel eller författare</label>
         <input
+          id="search"
           type="text"
           v-model="searchText"
           placeholder="Sök titel eller författare"
           class="filter-input"
         />
 
-        <select v-model="selectedGenre" class="filter-select">
+        <label for="genre">Välj genre</label>
+        <select id="genre" v-model="selectedGenre" class="filter-select">
           <option>Alla</option>
           <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
         </select>

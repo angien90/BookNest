@@ -73,20 +73,20 @@ onMounted(async () => {
       <h2>Månadens tips</h2>
       <div class="card-section">
       <section v-for="book in tipBooks" :key="book._id" class="card-section">
-        <RouterLink :to="`/bookpage/${book._id}`" class="booklink">
-        <article>
-          <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
-            <h3>Titel:</h3>
-            <p>{{ book.title }}</p>
-            <h3>Författare:</h3>
-            <p>{{ book.author }}</p>
-            <h3>År:</h3>
-            <p>{{ book.published_year }}</p>
-            <h3>Genres:</h3>
-            <p>{{ book.genres.join(', ') }}</p>
-          </div>
-        </article>
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
+          <article>
+            <div>
+              <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+              <h3>Titel:</h3>
+              <p>{{ book.title }}</p>
+              <h3>Författare:</h3>
+              <p>{{ book.author }}</p>
+              <h3>År:</h3>
+              <p>{{ book.published_year }}</p>
+              <h3>Genres:</h3>
+              <p>{{ book.genres.join(', ') }}</p>
+            </div>
+          </article>
         </RouterLink>
       </section>
       </div>
@@ -96,7 +96,7 @@ onMounted(async () => {
       <h2>Nyheter</h2>
       <div class="card-section">
       <section v-for="book in newsBooks" :key="book._id" class="card-section div">
-        <RouterLink :to="`/bookpage/${book._id}`" class="booklink">
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
@@ -123,22 +123,29 @@ onMounted(async () => {
     </div>
 
     <div class="filter-bar">
-      <input
-        type="text"
-        v-model="searchText"
-        placeholder="Sök titel eller författare"
-        class="filter-input"
-      />
+      <div class="filter-group">
+        <label for="search-input">Sök titel eller författare</label>
+        <input
+          id="search-input"
+          type="text"
+          v-model="searchText"
+          placeholder="Sök titel eller författare"
+          class="filter-input"
+        />
+      </div>
 
-      <select v-model="selectedGenre" class="filter-select">
-        <option>Alla</option>
-        <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
-      </select>
+      <div class="filter-group">
+        <label for="genre-select">Välj genre</label>
+        <select id="genre-select" v-model="selectedGenre" class="filter-select">
+          <option>Alla</option>
+          <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
+        </select>
+      </div>
     </div>
     
     <div class="card-section">
       <section v-for="book in filteredBooks" :key="book._id" class="card-section div">
-        <RouterLink :to="`/bookpage/${book._id}`" class="booklink">
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">

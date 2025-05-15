@@ -49,11 +49,11 @@
 
 <template>
   <main>
-    <RouterLink to="/adminpanelbooks"><span class="material-symbols-outlined">arrow_back</span></RouterLink>
+    <RouterLink to="/adminpanelbooks" aria-label="Gå tillbaka till bokpanelen"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span></RouterLink>
   <section class="card">
       <h2>Skapa en ny bok</h2>
       <form @submit.prevent="submit">
-        <label for="title"><p>Titel</p></label>
+        <label for="title">Titel</label>
         <input class="book-form" type="text" id="title" v-model="form.title" placeholder="Ange titel på boken" required/>
 
         <label for="description"><p>Beskrivning</p></label>
