@@ -123,9 +123,8 @@ button {
 }
 
 .error {
-  color: red;
-  font-weight: bold;
-  margin-top: 10px;
-  text-align: center;
+  width: fit-content;
+  padding: 5px 20px;
+  margin: 0 auto;
 }
 </style>
