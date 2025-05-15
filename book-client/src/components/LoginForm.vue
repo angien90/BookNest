@@ -69,9 +69,7 @@ const login = async () => {
   background-color: $green;
   padding: $spacing;
   border-radius: pxtorem(10px);
-  width: 100%;
-  max-width: pxtorem(300px);
-  margin: $spacing auto;
+  margin: 10px $spacing;
   color: $creamwhite;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2),
               inset 0 -2px 4px rgba(255, 255, 255, 0.1),
@@ -87,6 +85,10 @@ const login = async () => {
     font-family: $H2;
     font-weight: 200;
     font-size: $mobile_font_size_H1;
+
+     @media (min-width: 768px) {
+      font-size: 3rem;
+    }
   }
 
   form {
@@ -114,6 +116,10 @@ const login = async () => {
     color: $creamwhite;
     font-weight: bold;
     text-decoration: underline;
+
+    @media (min-width: 768px) {
+      font-size: pxtorem(24px);
+    }
   }
 }
 </style>
