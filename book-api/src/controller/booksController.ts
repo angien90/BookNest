@@ -25,7 +25,7 @@ export const fetchBook = async (req: Request, res: Response) => {
 }
 
 export const createBook = async (req: Request, res: Response) => {
-  const {title, description, author, genres, images, published_year} = req.body 
+  const {title, description, author, genres, image, published_year} = req.body 
 
   try {
     const book = new Book({
@@ -33,7 +33,7 @@ export const createBook = async (req: Request, res: Response) => {
       description: description,
       author: author,
       genres: genres,
-      images: images,
+      image: image,
       published_year: published_year,
     });
     const savedBook = await book.save();
@@ -46,7 +46,7 @@ export const createBook = async (req: Request, res: Response) => {
 }
 
 export const updateBook = async (req: Request, res: Response) => {
-  const {title, description, author, genres, images, published_year} = req.body
+  const {title, description, author, genres, image, published_year} = req.body
 
   try {
     const updatedBook = await Book.updateOne(
@@ -56,7 +56,7 @@ export const updateBook = async (req: Request, res: Response) => {
         description: description,
         author: author,
         genres: genres,
-        images: images,
+        image: image,
         published_year: published_year,
         }
       }

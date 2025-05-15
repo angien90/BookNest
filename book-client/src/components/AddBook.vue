@@ -7,8 +7,8 @@
         "title": "",
         "description": "",
         "author": "",
-        "genres": [],
-        "images": "",
+        "genres": "",
+        "image": "",
         "published_year": ""
         })
 
@@ -68,8 +68,6 @@
   <section class="card">
       <h2>Skapa en ny bok</h2>
       <form @submit.prevent="submit">
-        <div v-if="successMessage" class="success">{{ successMessage }}</div>
-        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
         <label for="title"><p>Titel</p></label>
         <input class="book-form" type="text" id="title" v-model="form.title" placeholder="Ange titel på boken" required/>
 
@@ -82,12 +80,15 @@
         <label for="genres"><p>Genres</p></label>
         <input class="book-form" type="text" id="genres" v-model="form.genres" placeholder="Ange genres på boken" required/>
 
-        <label for="images"><p>Bild</p></label>
-        <input class="book-form" type="text" id="images" v-model="form.images" placeholder="Ange sökväg till bild på boken" required/>
+        <label for="image"><p>Bild</p></label>
+        <input class="book-form" type="text" id="image" v-model="form.image" placeholder="Ange sökväg till bild på boken" required/>
 
         <label for="published_year"><p>Publiseringsår</p></label>
         <input class="book-form" type="number" id="published_year" v-model="form.published_year" placeholder="Ange året då boken skrevs" required/>
-      
+        
+        <div v-if="successMessage" class="success">{{ successMessage }}</div>
+        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+        
         <div class="buttons">
           <button type="submit">Lägg till</button>
           <button type="button" @click="clearForm">Avbryt</button>
@@ -160,7 +161,7 @@ p, input {
     background-color: #e6ffe6;
     text-align: center;
     padding: 10px;
-    margin-bottom: 30px;
+    margin-top: 30px;
     border-radius: 5px;
 }
 
@@ -169,7 +170,7 @@ p, input {
     background-color: #ffe6e6;
     text-align: center;
     padding: 10px;
-    margin-bottom: 30px;
+    margin-top: 30px;
     border-radius: 5px;
 }
 </style>

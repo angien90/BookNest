@@ -17,13 +17,18 @@ const routes = [
   { path: "/adminpanelusers", component: AdminUserView, meta: { requiresAuth: true } }
 ];
 
-// ✅ Skapa router först
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  }
 });
 
-// ✅ Använd router i beforeEach EFTER att den är skapad
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem('isLoggedIn');
 
