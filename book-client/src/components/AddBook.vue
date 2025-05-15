@@ -62,7 +62,7 @@
 
 <template>
   <main>
-    <RouterLink to="/" aria-label="Gå tillbaka till startsidan">
+    <RouterLink to="/adminpanelbooks" aria-label="Gå tillbaka till startsidan">
       <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
     </RouterLink>
   <section class="card">
