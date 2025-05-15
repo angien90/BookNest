@@ -31,12 +31,18 @@ const login = async () => {
       return;
     }
 
-    router.push('/#');
+    // ✅ Spara inloggning
+    localStorage.setItem('isLoggedIn', 'true');
+
+    // ✅ Omdirigera till adminpanelen
+    router.push('/adminpanelbooks');
+    
   } catch (err) {
     console.error('Login error:', err);
     error.value = 'Kunde inte logga in. Försök igen.';
   }
 };
+
 
 </script>
 
