@@ -53,7 +53,7 @@ onMounted(async () => {
       <h2>Alla böcker</h2>
 
       <div class="filter-bar">
-        <label for="search">Sök titel eller författare</label>
+        <label for="search" class="sr-only">Sök</label>
         <input
           id="search"
           type="text"
@@ -62,7 +62,7 @@ onMounted(async () => {
           class="filter-input"
         />
 
-        <label for="genre">Välj genre</label>
+        <label for="search" class="sr-only">Välj genre</label>
         <select id="genre" v-model="selectedGenre" class="filter-select">
           <option>Alla</option>
           <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
@@ -128,6 +128,17 @@ h2 {
   font-weight: 700;
   letter-spacing: $letter_spacing_H2;
   font-size: $mobile_font_size_H2;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .card-section {

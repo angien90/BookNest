@@ -53,7 +53,7 @@
   <section class="card">
       <h2>Skapa en ny bok</h2>
       <form @submit.prevent="submit">
-        <label for="title">Titel</label>
+        <label for="title"><p>Titel</p></label>
         <input class="book-form" type="text" id="title" v-model="form.title" placeholder="Ange titel på boken" required/>
 
         <label for="description"><p>Beskrivning</p></label>
@@ -122,6 +122,7 @@ p {
 
 .book-form {
   @include default-input;
+  width: 100%;
 }
 
 .buttons {

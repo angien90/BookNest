@@ -124,7 +124,7 @@ onMounted(async () => {
 
     <div class="filter-bar">
       <div class="filter-group">
-        <label for="search-input">Sök titel eller författare</label>
+        <label for="search" class="sr-only">Sök</label>
         <input
           id="search-input"
           type="text"
@@ -135,7 +135,7 @@ onMounted(async () => {
       </div>
 
       <div class="filter-group">
-        <label for="genre-select">Välj genre</label>
+        <label for="search" class="sr-only">Välj genre</label>
         <select id="genre-select" v-model="selectedGenre" class="filter-select">
           <option>Alla</option>
           <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
@@ -293,6 +293,17 @@ p {
   font-size: 1rem;
   background-color: $creamwhite;
   font-family: $body_font;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Länk för att lägga till en ny bok */
