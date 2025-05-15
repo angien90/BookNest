@@ -33,8 +33,15 @@ function scrollAfterNavigation(id) {
 <template>
   <header class="header">
     <div class="logo-heading">
+<<<<<<< HEAD
       <img src="/assets/logo_big.webp" alt="Logo" width="300" height="400"/>
       <h1><span class="first">Book</span><span class="second">Nest</span></h1>
+=======
+      <slot name="logo">
+        <img src="/assets/logo_big.webp" alt="Logo" />
+        <h1><span class="first">Book</span><span class="second">Nest</span></h1>
+      </slot>
+>>>>>>> 9f520988ce00096f59536f0c9f7a5a6c65c638f0
     </div>
 
     <!-- Menu -->
@@ -54,7 +61,11 @@ function scrollAfterNavigation(id) {
 
         <!-- Ikongubbe (höger) -->
         <RouterLink to="loginpage">
+<<<<<<< HEAD
           <button class="user-icon" aria-label="Gå till inloggningssidan">
+=======
+          <button class="user-icon" aria-label="Logga in">
+>>>>>>> 9f520988ce00096f59536f0c9f7a5a6c65c638f0
             <span class="material-symbols-outlined user-icon">person</span>
           </button>
         </RouterLink>

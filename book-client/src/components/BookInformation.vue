@@ -9,7 +9,6 @@ console.log("Book ID:", bookId);
 </script>
 
 <template>
- <h1>BookInformation</h1>
  <Review v-if="bookId && bookId.length > 0" :bookId="bookId" />
 </template>
 
