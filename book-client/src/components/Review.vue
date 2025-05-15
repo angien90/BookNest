@@ -279,7 +279,6 @@ const cancelDelete = () => {
                     <span class="text_marker">Genre: </span> {{ book.genres ? book.genres.join(', ') : 'Ingen genre tillgänglig' }}
                 </p>
                 <p>
-                    
                     <span class="text_marker">Beskrivning: </span><div v-html="formattedDescription"></div>
                 </p>
             </div>
