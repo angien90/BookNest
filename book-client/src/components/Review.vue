@@ -264,8 +264,9 @@ const cancelDelete = () => {
     </div>
 
     <aside class="review" v-if="isLoaded">
-        <article class="review_container book">    
-            <RouterLink to="/"> <img src="/assets/arrow_back_24dp_FFF7E3_FILL0_wght400_GRAD0_opsz24.png" alt="bakåtpil" loading="lazy" style="width: 100%; max-width: 50px; height: auto;"  />
+        <article class="review_container book" aria-label="Gå tillbaka till startsidan">    
+            <RouterLink to="/"> 
+                <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
             </RouterLink>
             <div class="review_book">
                 <h2>{{ book.title }}</h2>
@@ -394,7 +395,13 @@ const cancelDelete = () => {
   background-color: #fff7e3;
   padding: 20px;
 }
-
+#arrow_back {
+    color: $creamwhite;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-top: 30px;
+    margin-left: 20px;
+}
 .book_image {
   width: 100%;
   max-height: 200px;
