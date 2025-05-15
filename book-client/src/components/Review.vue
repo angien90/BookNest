@@ -286,6 +286,15 @@ const cancelDelete = () => {
 
         <article class="review_list">
             <h3>Vad tyckte andra om "{{ book.title }}"?</h3>  
+
+            <div class="review_by_user" v-if="review.length === 0">
+                <div class="user_review">
+                    <div class="content">
+                        <p>Det finns inga recensioner än</p>
+                    </div>
+                </div>
+            </div>
+                
             <div class="review_by_user" v-for="reviews in review" :key="reviews._id">
                 <div class="line"></div>
 
@@ -419,7 +428,8 @@ aside{
             flex-direction: column;
             gap: 10px;
             width: 100%;
-            padding-left: 10%;
+            padding-left: 0;            
+            padding-right: 0;
         }
 
         .review_by_user{
@@ -444,10 +454,6 @@ aside{
                     display: flex; 
                     flex-direction: column;
                     width: 100%;
-                    gap: 15px;
-                    padding: 10px;
-                    padding-left: 10%;
-                    box-sizing: border-box;
 
                     .stars{
                         display: flex;
@@ -511,7 +517,6 @@ aside{
                 gap: 10px;
                 margin-top: 20px;
                 padding: 0 20px; // Lite mer utrymme på sidorna
-
             }
         }
 
@@ -519,12 +524,12 @@ aside{
             display: flex;
             flex-direction: column;
             margin: 10px 0;
-            padding-left: 10%;
+            padding-left: 0;
 
             .form {
                 display: flex; 
                 flex-direction: column; 
-                width: 80%;
+                width: 100%;
                 gap: 10px;
                 padding: 10px;
                 box-sizing: border-box;
@@ -634,6 +639,10 @@ p{
         max-width: 90%;
         padding: 30px;
 
+        .review_book {
+            padding-left: 14%;            
+            padding-right: 14%;
+        }
         .review_by_user{
             .user_review{
                 display: flex;
@@ -667,6 +676,7 @@ p{
             display: flex;
             flex-direction: column;
             margin: 10px 0;
+            padding-left: 14%;
 
             .form {
                 display: flex; 
