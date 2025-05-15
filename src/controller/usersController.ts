@@ -5,13 +5,19 @@ import bcrypt from 'bcrypt';
 // GET all users
 export const fetchAllUsers = async (req: Request, res: Response) => {
     try {
-        const users = await User.find();
+    const anyReq = req as any;
 
-        res.status(200).json(users);
-    } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
-        res.status(500).json({ error: message });
+    if (!anyReq.user?.is_admin) {
+      res.status(403).json({ error: 'Access denied' });
+      return;
     }
+
+    const users = await User.find({}, 'username password is_admin created_at');
+    res.json(users);
+  } catch (error) {
+    console.error('Failed to fetch users:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 };
 
 // GET specific user

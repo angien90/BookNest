@@ -45,12 +45,21 @@ function scrollAfterNavigation(id) {
         <div class="bar"></div>
       </button>
 
-      <!-- Ikongubbe (höger) -->
-      <RouterLink to="loginpage">
-        <button class="user-icon">
-          <span class="material-symbols-outlined user-icon">person</span>
-        </button>
-      </RouterLink>
+      <div>
+        <RouterLink to="adminpanelusers">
+          <button class="admin-icon">
+            <span class="material-symbols-outlined admin-icon"
+              >folder_supervised</span>
+          </button>
+        </RouterLink>
+
+        <!-- Ikongubbe (höger) -->
+        <RouterLink to="loginpage">
+          <button class="user-icon">
+            <span class="material-symbols-outlined user-icon">person</span>
+          </button>
+        </RouterLink>
+      </div>
     </div>
 
     <!-- Mobile-menu -->
@@ -156,11 +165,12 @@ h1 {
 }
 
 // Navbar
-.user-icon {
+.user-icon,
+.admin-icon {
   background: transparent;
   border: none;
   cursor: pointer;
-  width: 45px;
+  width: 55px;
 }
 
 .material-symbols-outlined {
