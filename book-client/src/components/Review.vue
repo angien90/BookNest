@@ -86,6 +86,7 @@ watch(() => props.bookId, (newBookId, oldBookId) => {
 });
 
 const formattedDescription = computed(() => {
+    if (!book.value.description) return 'Beskrivning saknas';
   const paragraphs = book.value.description
     .split('\n')
     .filter(p => p.trim() !== '')  // Ta bort tomma rader
@@ -253,6 +254,7 @@ const cancelDelete = () => {
                     :src="'/fed24d-grupp15/public/images/' + book.image" 
                     :alt="book.title"
                     class="book_image"
+                    loading="lazy"
                 />
             </template>
             <template #extra>
@@ -263,7 +265,7 @@ const cancelDelete = () => {
 
     <aside class="review" v-if="isLoaded">
         <article class="review_container book">    
-            <RouterLink to="/"> <img src="/assets/arrow_back_24dp_FFF7E3_FILL0_wght400_GRAD0_opsz24.png" alt="bakåtpil" style="width: 100%; max-width: 50px; height: auto;"  />
+            <RouterLink to="/"> <img src="/assets/arrow_back_24dp_FFF7E3_FILL0_wght400_GRAD0_opsz24.png" alt="bakåtpil" loading="lazy" style="width: 100%; max-width: 50px; height: auto;"  />
             </RouterLink>
             <div class="review_book">
                 <h2>{{ book.title }}</h2>
@@ -273,11 +275,12 @@ const cancelDelete = () => {
                 <p>
                     <span class="text_marker">Utgivningsår:</span> {{ book.published_year }}
                 </p>
-                <p>
-                    <span class="text_marker">Genre: </span> {{ book.genres.join(', ')  }}
+                <p v-if="book.genres">
+                    <span class="text_marker">Genre: </span> {{ book.genres ? book.genres.join(', ') : 'Ingen genre tillgänglig' }}
                 </p>
                 <p>
-                    <span class="text_marker">Beskrivning: </span> <span v-html="formattedDescription"></span>
+                    
+                    <span class="text_marker">Beskrivning: </span><div v-html="formattedDescription"></div>
                 </p>
             </div>
         </article>
@@ -315,8 +318,8 @@ const cancelDelete = () => {
                     </div>
 
                     <div class="buttons" v-if="!(updateMode && updateReviewId === reviews._id)">
-                        <button @click="startUpdate(reviews)">Uppdatera</button>
-                        <button @click="deleteReview(reviews._id)">Ta bort</button>
+                        <button @click="startUpdate(reviews)" :aria-label="'Uppdatera recension från ' + reviews.name">Uppdatera</button>
+                        <button @click="deleteReview(reviews._id)" :aria-label="'Ta bort recension från ' + reviews.name">Ta bort</button>
                     </div>
                 </div>
 
@@ -330,8 +333,8 @@ const cancelDelete = () => {
                         </div>
 
                         <div class="buttons">
-                            <button @click="updateReview">Spara</button>
-                            <button @click="cancelUpdate">Avbryt</button>
+                            <button @click="updateReview" aria-label="Spara uppdaterad recension">Spara</button>
+                            <button @click="cancelUpdate" aria-label="Avbryt uppdatering av recension">Avbryt</button>
                         </div>                
                     </div>
                 </div>
@@ -368,8 +371,8 @@ const cancelDelete = () => {
 
 
                     <div class="buttons">
-                        <button type="submit">Skicka recension</button>
-                        <button type="button" @click="clearForm">Avbryt</button>
+                        <button type="submit" aria-label="Skicka recension">Skicka recension</button>
+                        <button type="button" @click="clearForm" aria-label="Avbryt uppdatering av recension">Avbryt</button>
                     </div>                  
                 </form>      
             </div>
@@ -380,8 +383,8 @@ const cancelDelete = () => {
         <div class="modal">
             <span class="text_marker">Är du säker på att du vill ta bort recensionen?</span>
             <div class="buttons">
-                <button @click="confirmDelete">Ja</button>
-                <button @click="cancelDelete">Nej</button>
+                <button @click="confirmDelete" aria-label="Bekräfta borttagning av recension">Ja</button>
+                <button @click="cancelDelete" aria-label="Avbryt borttagning av recension">Nej</button>
             </div>
         </div>
     </div>

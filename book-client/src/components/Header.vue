@@ -41,7 +41,7 @@ function scrollAfterNavigation(id) {
 
     <!-- Menu -->
     <div class="header-controls">
-      <button :class="['menu-icon', { open: menuOpen }]" @click="toggleMenu">
+      <button :class="['menu-icon', { open: menuOpen }]" @click="toggleMenu" aria-label="Öppna meny">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
@@ -57,7 +57,7 @@ function scrollAfterNavigation(id) {
 
         <!-- Ikongubbe (höger) -->
         <RouterLink to="loginpage">
-          <button class="user-icon">
+          <button class="user-icon" aria-label="Logga in">
             <span class="material-symbols-outlined user-icon">person</span>
           </button>
         </RouterLink>
