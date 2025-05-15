@@ -11,10 +11,10 @@ import { verifyAccessToken } from '../middleware/verifyToken';
 const router = express.Router();
 
 // Base endpoints
-router.get('/', fetchAllUsers)
-router.get('/:id', fetchUserById)
+router.get('/:id', fetchUserById);
 
 // Protected endpoints
+router.get('/', verifyAccessToken, fetchAllUsers);
 router.patch('/:id', verifyAccessToken, updateUser);
 router.delete('/:id', verifyAccessToken, deleteUser);
 
