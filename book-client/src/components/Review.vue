@@ -1,4 +1,5 @@
 <script setup>
+import Header from './Header.vue';
 import { ref, onMounted, watch, toRefs, computed } from 'vue';
 import { useRoute } from "vue-router";
 import { defineProps, defineEmits } from 'vue';
@@ -85,6 +86,7 @@ watch(() => props.bookId, (newBookId, oldBookId) => {
 });
 
 const formattedDescription = computed(() => {
+    if (!book.value.description) return 'Beskrivning saknas';
   const paragraphs = book.value.description
     .split('\n')
     .filter(p => p.trim() !== '')  // Ta bort tomma rader
@@ -137,7 +139,8 @@ const createReview = async () => {
 
         success.value = "Recensionen har skickats!";
         clearForm();
-    } 
+        window.location.reload();
+    }
     
     catch (error) {
         error.value = "Kunde inte skicka recension. Försök igen senare.";
@@ -244,18 +247,40 @@ const cancelDelete = () => {
 </script>
 
 <template>
+    <div class="custom_header">
+        <Header>
+            <template #logo>
+                <img 
+                    :src="'/fed24d-grupp15/public/images/' + book.image" 
+                    :alt="book.title"
+                    class="book_image"
+                    loading="lazy"
+                />
+            </template>
+            <template #extra>
+                <RouterLink to="/" class="back-link">Tillbaka</RouterLink>
+            </template>
+        </Header>
+    </div>
+
     <aside class="review" v-if="isLoaded">
-
-        <img :src="'/images/' + book.image" :alt="book.title">
-
-        <article class="review_container book">
+        <article class="review_container book">    
+            <RouterLink to="/"> <img src="/assets/arrow_back_24dp_FFF7E3_FILL0_wght400_GRAD0_opsz24.png" alt="bakåtpil" loading="lazy" style="width: 100%; max-width: 50px; height: auto;"  />
+            </RouterLink>
             <div class="review_book">
                 <h2>{{ book.title }}</h2>
                 <p>
-                    Författare: {{ book.author }} <br>
-                    Utgivningsår: {{ book.published_year }} <br>
-                    Genre: {{ book.genres }} <br>
-                    Beskrivning:<p v-html="formattedDescription"></p> <br>
+                    <span class="text_marker">Författare: </span>{{ book.author }}
+                </p>
+                <p>
+                    <span class="text_marker">Utgivningsår:</span> {{ book.published_year }}
+                </p>
+                <p v-if="book.genres">
+                    <span class="text_marker">Genre: </span> {{ book.genres ? book.genres.join(', ') : 'Ingen genre tillgänglig' }}
+                </p>
+                <p>
+                    
+                    <span class="text_marker">Beskrivning: </span><div v-html="formattedDescription"></div>
                 </p>
             </div>
         </article>
@@ -264,25 +289,37 @@ const cancelDelete = () => {
 
         <article class="review_list">
             <h3>Vad tyckte andra om "{{ book.title }}"?</h3>  
+
+            <div class="review_by_user" v-if="review.length === 0">
+                <div class="user_review">
+                    <div class="content">
+                        <p>Det finns inga recensioner än</p>
+                    </div>
+                </div>
+            </div>
+                
             <div class="review_by_user" v-for="reviews in review" :key="reviews._id">
                 <div class="line"></div>
 
                 <div class="user_review">
                     <div class="content">
-                        <p>Så här tyckte {{ reviews.name }} om "{{ book.title }}":<br>
-                            {{ reviews.content }}
+                        <p>
+                            <span class="text_marker">Så här tyckte {{ reviews.name }} om "{{ book.title }}"</span>
                         </p>
+                        <p>{{ reviews.content }}</p>
+
                         <div class="stars">
                             <div v-for="index in 5" :key="index" 
                                 class="star" :class="{ filled: index <= reviews.rating }">
                             </div>
                         </div>
-                            <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
+                        
+                        <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
                     </div>
 
                     <div class="buttons" v-if="!(updateMode && updateReviewId === reviews._id)">
-                        <button @click="deleteReview(reviews._id)">Ta bort</button>
-                        <button @click="startUpdate(reviews)">Uppdatera</button>
+                        <button @click="startUpdate(reviews)" :aria-label="'Uppdatera recension från ' + reviews.name">Uppdatera</button>
+                        <button @click="deleteReview(reviews._id)" :aria-label="'Ta bort recension från ' + reviews.name">Ta bort</button>
                     </div>
                 </div>
 
@@ -296,8 +333,8 @@ const cancelDelete = () => {
                         </div>
 
                         <div class="buttons">
-                            <button @click="updateReview">Spara</button>
-                            <button @click="cancelUpdate">Avbryt</button>
+                            <button @click="updateReview" aria-label="Spara uppdaterad recension">Spara</button>
+                            <button @click="cancelUpdate" aria-label="Avbryt uppdatering av recension">Avbryt</button>
                         </div>                
                     </div>
                 </div>
@@ -319,23 +356,23 @@ const cancelDelete = () => {
                     <div v-if="error" class="error">{{ error }}</div>
                     <div v-if="success" class="success">{{ success }}</div>
                     
-                    <label for="name"><p>Ditt namn</p></label>
+                    <label for="name"><span class="text_marker">Ditt namn</span></label>
                     <input type="text" id="name" v-model="name" 
                         placeholder="Ange ditt namn..." required/>
 
-                    <label for="content"><p>Din recension</p></label>
+                    <label for="content"><span class="text_marker">Din recension</span></label>
                     <textarea id="content" v-model="content" 
                         placeholder="Skriv din recension här..." required></textarea>
 
-                    <label for="rating"><p>Sätt betyg (1-5)</p></label>
+                    <label for="rating"><span class="text_marker">Sätt betyg (1-5)</span></label>
                     <input type="number" id="rating" v-model="rating" 
                         min="1" max="5" placeholder="1-5"
                         required/>
 
 
                     <div class="buttons">
-                        <button type="submit">Skicka recension</button>
-                        <button type="button" @click="clearForm">Avbryt</button>
+                        <button type="submit" aria-label="Skicka recension">Skicka recension</button>
+                        <button type="button" @click="clearForm" aria-label="Avbryt uppdatering av recension">Avbryt</button>
                     </div>                  
                 </form>      
             </div>
@@ -344,16 +381,26 @@ const cancelDelete = () => {
 
     <div v-if="deleteModalVisible" class="modal-overlay">
         <div class="modal">
-            <p>Är du säker på att du vill ta bort recensionen?</p>
+            <span class="text_marker">Är du säker på att du vill ta bort recensionen?</span>
             <div class="buttons">
-                <button @click="confirmDelete">Ja</button>
-                <button @click="cancelDelete">Nej</button>
+                <button @click="confirmDelete" aria-label="Bekräfta borttagning av recension">Ja</button>
+                <button @click="cancelDelete" aria-label="Avbryt borttagning av recension">Nej</button>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
+.custom_header {
+  background-color: #fff7e3;
+  padding: 20px;
+}
+
+.book_image {
+  width: 100%;
+  max-height: 200px;
+  height: auto;
+}
 main {
   margin-bottom: 20px;
 }
@@ -384,7 +431,8 @@ aside{
             flex-direction: column;
             gap: 10px;
             width: 100%;
-            padding-left: 10%;
+            padding-left: 0;            
+            padding-right: 0;
         }
 
         .review_by_user{
@@ -409,10 +457,6 @@ aside{
                     display: flex; 
                     flex-direction: column;
                     width: 100%;
-                    gap: 15px;
-                    padding: 10px;
-                    padding-left: 10%;
-                    box-sizing: border-box;
 
                     .stars{
                         display: flex;
@@ -476,7 +520,6 @@ aside{
                 gap: 10px;
                 margin-top: 20px;
                 padding: 0 20px; // Lite mer utrymme på sidorna
-
             }
         }
 
@@ -484,12 +527,12 @@ aside{
             display: flex;
             flex-direction: column;
             margin: 10px 0;
-            padding-left: 10%;
+            padding-left: 0;
 
             .form {
                 display: flex; 
                 flex-direction: column; 
-                width: 80%;
+                width: 100%;
                 gap: 10px;
                 padding: 10px;
                 box-sizing: border-box;
@@ -514,25 +557,43 @@ button{
 }
 
 h2{
-    display: flex;
-    justify-content: center;
     font-family: $H1;
     color: $creamwhite;
     font-size: $mobile_font_size_H2;
     text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: $letter_spacing_H2;
+    margin: 0 auto;
 }
+
 
 h3{
     font-family: $H1;
     color: $creamwhite;
-    font-size: $mobile_font_size_H3;
+    font-size: $mobile_font_size_H2;
     text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: $letter_spacing_H2;
 }
 
 p{
+    width: 100%;
     font-family: $p;
     color: $creamwhite;
     font-size: $mobile_font_size_p;
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: $body-font; 
+    line-height: 1.5;
+}
+
+.text_marker{
+    font-family: $H3;
+    font-size: 1.2em; 
+    margin-bottom: 8px; 
+    color: $creamwhite;
 }
 
 
@@ -568,6 +629,11 @@ p{
 
 
 @media (min-width: 800px) {
+
+    .book-image {
+        max-width: 500px;  /* Minska storleken på mindre skärmar */
+    }
+    
     aside {
     padding: 20px;
   
@@ -576,6 +642,10 @@ p{
         max-width: 90%;
         padding: 30px;
 
+        .review_book {
+            padding-left: 14%;            
+            padding-right: 14%;
+        }
         .review_by_user{
             .user_review{
                 display: flex;
@@ -609,6 +679,7 @@ p{
             display: flex;
             flex-direction: column;
             margin: 10px 0;
+            padding-left: 14%;
 
             .form {
                 display: flex; 
