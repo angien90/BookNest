@@ -68,6 +68,8 @@
   <section class="card">
       <h2>Skapa en ny bok</h2>
       <form @submit.prevent="submit">
+        <div v-if="successMessage" class="success">{{ successMessage }}</div>
+        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
         <label for="title"><p>Titel</p></label>
         <input class="book-form" type="text" id="title" v-model="form.title" placeholder="Ange titel på boken" required/>
 
@@ -90,9 +92,6 @@
           <button type="submit">Lägg till</button>
           <button type="button" @click="clearForm">Avbryt</button>
         </div>
-
-        <div v-if="successMessage" class="success">{{ successMessage }}</div>
-        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
       </form>
     </section>
   </main>
@@ -130,7 +129,7 @@ h2 {
   font-size: $mobile_font_size_H2;
 }
 
-p {
+p, input {
     color: $creamwhite;
     font-family: $body-font;
 }
@@ -161,7 +160,7 @@ p {
     background-color: #e6ffe6;
     text-align: center;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     border-radius: 5px;
 }
 
@@ -170,7 +169,7 @@ p {
     background-color: #ffe6e6;
     text-align: center;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     border-radius: 5px;
 }
 </style>
