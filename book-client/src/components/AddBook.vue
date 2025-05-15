@@ -22,29 +22,29 @@
         }
 
         const submit = async () => {
-            try {
-                await fetch(API_URL + '/books', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(form)
+          try {
+            const response = await fetch(`${API_URL.replace(/\/$/, '')}/books`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(form)
             });
 
             if (!response.ok) {
-                throw new Error("Något gick fel!");
+              throw new Error("Något gick fel!");
             }
 
             successMessage.value = "Boken har lagts till!";
             errorMessage.value = "";
             clearForm();
 
-        } catch (error) {
+          } catch (error) {
             console.error(error);
             successMessage.value = "";
             errorMessage.value = "Kunde inte spara boken. Försök igen.";
-        }
-    };
+          }
+        };
 </script>
 
 <template>

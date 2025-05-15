@@ -1,19 +1,33 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
 const menuOpen = ref(false);
+const router = useRouter();
+const route = useRoute();
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 
-const scrollToSection = (id) => {
+function scrollToSection(id) {
+  menuOpen.value = false;
+
+  if (route.path === '/') {
+    scrollAfterNavigation(id);
+  } else {
+    router.push({ path: '/', query: { scrollTo: id } });
+  }
+}
+
+function scrollAfterNavigation(id) {
   const el = document.getElementById(id);
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    console.warn(`Element med id '${id}' hittades inte`);
   }
-  menuOpen.value = false;
-};
+}
 </script>
 
 <template>
@@ -51,10 +65,12 @@ const scrollToSection = (id) => {
     <!-- Mobile-menu -->
     <nav v-if="menuOpen" class="mobile-menu">
       <ul>
+        <li><RouterLink to="/" exact-active-class="active" @click="menuOpen = false">Hem</RouterLink></li>
         <li @click="scrollToSection('tips')">Månadens tips</li>
         <li @click="scrollToSection('news')">Nyheter</li>
         <li @click="scrollToSection('allbooks')">Alla böcker</li>
       </ul>
+
     </nav>
   </header>
 </template>
@@ -94,7 +110,6 @@ img {
   max-width: 500px;
 
   @media (min-width: 768px) {
-    width: 50%;
     max-width: 800px;
   }
 }
@@ -116,7 +131,7 @@ h1 {
   height: auto;
   flex-shrink: 0;
   font-family: $heading-font;
-  font-size: 2rem;
+  font-size: $mobile_font_size_H1;
   margin: 0 0 5px 0;
   z-index: 1;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -127,7 +142,7 @@ h1 {
 
   @media (min-width: 1280px) {
     margin-left: 9.5rem;
-    font-size: pxtorem(128px);
+    font-size: pxtorem(100px);
     font-style: normal;
     font-weight: 400;
     line-height: 0.54;
@@ -223,6 +238,7 @@ button.menu-icon {
   align-items: flex-end;
   list-style: none;
   padding-right: 20px;
+  padding-top: 50px;
   margin: 0;
 
   @media (min-width: 768px) {
@@ -231,19 +247,16 @@ button.menu-icon {
 }
 
 .mobile-menu li {
-  padding: 10px 0;
+  padding: 20px 0; 
   text-align: right;
-  font-size: 1.1rem;
+  font-size: pxtorem(32px);
   color: $creamwhite;
   width: 216px;
-  height: 54px;
-  font-size: pxtorem(32px);
   font-family: $body-font;
   font-style: normal;
   letter-spacing: -0.792px;
   line-height: 150%;
   font-weight: 400;
-  padding-top: 50px;
 
   @media (min-width: 768px) {
     text-align: left;
@@ -260,7 +273,7 @@ button.menu-icon {
   background-color: $creamwhite;
 }
 
-.mobile-menu a:hover {
+.mobile-menu li:hover {
   text-decoration: underline;
 }
 </style>

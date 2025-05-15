@@ -12,14 +12,26 @@ const routes = [
   { path: "/bookpage/:bookId", component: BookView },
   { path: "/loginpage", component: LoginView },
   { path: "/registerpage", component: RegisterView },
-  { path: "/addbook", component: AddBooksView },
-  { path: "/adminpanelbooks", component: AdminPanelBookView },
-  { path: "/adminpanelusers", component: AdminUserView },
+  { path: "/addbook", component: AddBooksView, meta: { requiresAuth: true }},
+  { path: "/adminpanelbooks", component: AdminPanelBookView, meta: { requiresAuth: true }},
 ];
 
+// ✅ Skapa router först
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
 });
 
+// ✅ Använd router i beforeEach EFTER att den är skapad
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = localStorage.getItem("user");
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next({ path: "/loginpage", query: { redirect: to.fullPath } });
+  } else {
+    next();
+  }
+});
+
 export default router;
+
