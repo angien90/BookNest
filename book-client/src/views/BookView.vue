@@ -6,7 +6,6 @@ import Footer from "../components/Footer.vue";
 
 <template>
     <BookInformation />
-    <Review />
     <Footer />
 </template>
 
