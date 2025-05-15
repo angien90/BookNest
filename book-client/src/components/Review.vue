@@ -251,7 +251,7 @@ const cancelDelete = () => {
         <Header>
             <template #logo>
                 <img 
-                :src="'/images/' + book.image" 
+                :src="'/fed24d-grupp15/public/images/' + book.image" 
                 :alt="book.title"
                 class="book_image"
                 />
