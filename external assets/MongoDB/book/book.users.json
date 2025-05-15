@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "681ac784199ffe856bf3f61a"
+  },
+  "username": "super-user",
+  "password": "$2b$10$RygzXHXSHNoFSAHcvRpHL.92uJfNodenCW/H8LR/T8urwoRpdQZ3O",
+  "is_admin": true,
+  "created_at": {
+    "$date": "2025-05-07T02:37:56.172Z"
+  },
+  "__v": 0
+}]
