@@ -65,7 +65,7 @@ export const loginUser = async (req: Request, res: Response) => {
             return;
         }
 
-        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, is_admin: user.is_admin }, JWT_SECRET, { expiresIn: '1h' });
         res.cookie('accessToken', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
