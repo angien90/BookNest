@@ -264,7 +264,7 @@ const cancelDelete = () => {
 
     <aside class="review" v-if="isLoaded">
         <article class="review_container book">    
-            <RouterLink to="/"> <img src="/assets/arrow_back_24dp_FFF7E3_FILL0_wght400_GRAD0_opsz24.png" alt="bakåtpil" loading="lazy" style="width: 100%; max-width: 50px; height: auto;"  />
+            <RouterLink to="/"> <img src="/fed24d-grupp15/assets/arrow_back_24dp_FFF7E3_FILL0_wght400_GRAD0_opsz24.png" alt="bakåtpil" loading="lazy" style="width: 100%; max-width: 50px; height: auto;"  />
             </RouterLink>
             <div class="review_book">
                 <h2>{{ book.title }}</h2>

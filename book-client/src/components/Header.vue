@@ -34,7 +34,7 @@ function scrollAfterNavigation(id) {
   <header class="header">
     <div class="logo-heading">
       <slot name="logo">
-        <img src="/assets/logo_big.webp" alt="Logo" />
+        <img src="/fed24d-grupp15/assets/logo_big.webp" alt="Logo" />
         <h1><span class="first">Book</span><span class="second">Nest</span></h1>
       </slot>
     </div>

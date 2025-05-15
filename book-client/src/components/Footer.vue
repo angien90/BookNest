@@ -11,7 +11,7 @@
     <span class="social-media">
       <a href="https://www.instagram.com/" target="_blank">
         <img
-          src="/assets/instagram-line.svg"
+          src="/fed24d-grupp15/assets/instagram-line.svg"
           width="30"
           height="30"
           alt="Sociala medier ikon för Instagram"
@@ -20,7 +20,7 @@
       </a>
       <a href="https://www.facebook.com/" target="_blank">
         <img
-          src="/assets/facebook-fill.svg"
+          src="/fed24d-grupp15/assets/facebook-fill.svg"
           width="30"
           height="30"
           alt="Sociala medier ikon för Facebook"
