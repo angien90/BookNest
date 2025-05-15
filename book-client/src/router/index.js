@@ -24,10 +24,10 @@ const router = createRouter({
 
 // ✅ Använd router i beforeEach EFTER att den är skapad
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = localStorage.getItem("user");
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
 
   if (to.meta.requiresAuth && !isLoggedIn) {
-    next({ path: "/loginpage", query: { redirect: to.fullPath } });
+    next('/loginpage'); 
   } else {
     next();
   }

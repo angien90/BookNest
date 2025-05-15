@@ -15,7 +15,7 @@ const login = async () => {
   try {
     const response = await fetch(`${API_URL}auth/login`, {
       method: 'POST',
-      credentials: 'include',
+      credentials: 'include', // viktigt för cookie
       headers: {
         'Content-Type': 'application/json',
       },
@@ -31,12 +31,17 @@ const login = async () => {
       return;
     }
 
-    router.push('/#');
+    // Spara bara inloggad-status, token skickas i cookie, behöver inte sparas manuellt
+    localStorage.setItem('isLoggedIn', 'true');
+
+    router.push('/adminpanelbooks');
+    
   } catch (err) {
     console.error('Login error:', err);
     error.value = 'Kunde inte logga in. Försök igen.';
   }
 };
+
 
 </script>
 

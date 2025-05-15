@@ -83,6 +83,9 @@ Recensioner som hör till specifika böcker:
 - **Ny bok**
   - Formulär med alla fält enligt `books`-strukturen
 
+**Användarnamn: super-admin**
+**Lösenord: 1234**
+
 ### 🌍 Publik vy
 - **Boklista**
   - Innehåll: liten bild, `title`, `author`, `genres`, `published_year`
@@ -124,6 +127,9 @@ För att komma igång med projektet, följ dessa steg:
 2. Installera alla beroenden
 Kör följande kommando för att installera alla nödvändiga paket enligt package.json:
     - npm install
+
+3. Starta localhost 
+Projektet kör nu lokalt på sina respektive portar (t.ex. backend på localhost:3000 och frontend på localhost:5173, beroende på inställningar). Navigera till backend-projektets rotmapp och kör npm run dev och kör sedan kommandot cd book-client & npm run dev i en ny terminal
 
 Exempel på specifika beroenden som används:
   - Node.js, Express, TypeScript – Backend och typning

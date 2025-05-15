@@ -49,9 +49,8 @@ function scrollAfterNavigation(id) {
 
       <div>
         <RouterLink to="adminpanelusers">
-          <button class="admin-icon">
-            <span class="material-symbols-outlined admin-icon"
-              >folder_supervised</span>
+          <button class="admin-icon" aria-label="Gå till adminpanelen för användare">
+            <span class="material-symbols-outlined admin-icon">folder_supervised</span>
           </button>
         </RouterLink>
 

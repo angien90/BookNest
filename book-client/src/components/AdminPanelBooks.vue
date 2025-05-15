@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 const books = ref([]);
 const searchText = ref('');
 const selectedGenre = ref('Alla');
-const genres = ref([]); // Lista för alla tillgängliga kategorier
+const genres = ref([]); 
 const router = useRouter();
 
 const filteredBooks = computed(() => {
@@ -41,39 +41,52 @@ onMounted(async () => {
 
 <template>
   <main>
-    <RouterLink to="/">
+    <RouterLink to="/" aria-label="Gå tillbaka till startsidan">
       <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
     </RouterLink>
 
-    <div class="buttons">
-      <button @click="goToAddBook" class="buttons">Lägg till en ny bok</button>
-    </div>
-
     <section class="card" id="allbooks">
-      <h2>Alla böcker</h2>
+      <h2>Hantera böcker</h2>
+
+      <div class="buttons">
+        <button @click="goToAddBook" class="buttons">Lägg till en ny bok</button>
+      </div>
 
       <div class="filter-bar">
+        <label for="search" class="sr-only">Sök</label>
         <input
+          id="search"
           type="text"
           v-model="searchText"
           placeholder="Sök titel eller författare"
           class="filter-input"
         />
 
-        <select v-model="selectedGenre" class="filter-select">
-          <option>Alla</option>
-          <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
-        </select>
+        <div class="filter-group">
+          <label for="genre-select" class="sr-only">Välj genre</label>
+          <select id="genre-select" v-model="selectedGenre" class="filter-select">
+            <option>Alla</option>
+            <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
+          </select>
+        </div>
       </div>
+
+      
 
       <div class="card-section">
         <section v-for="book in filteredBooks" :key="book._id" class="card-section div">
           <article>
-            <div>
-              <p>{{ book.title }}</p>
+            <div class="book-info">
+              <p class="title">{{ book.title }}</p>
               <p>{{ book.author }}</p>
               <p>{{ book.genres.join(', ') }}</p>
               <p>{{ book.created_at }}</p>
+
+              <!-- Ikoner för ändra och delete (funktion ej påslagen)-->
+              <div class="edit-delete">
+                <span class="material-symbols-outlined action-icon edit-icon" @click="editBook(book._id)" role="button" tabindex="0" aria-label="Ändra bok">edit</span>
+                <span class="material-symbols-outlined action-icon delete-icon" @click="deleteBook(book._id)" role="button" tabindex="0" aria-label="Ta bort bok">delete</span>
+              </div>
             </div>
           </article>
         </section>
@@ -95,7 +108,6 @@ main {
     margin-left: 20px;
 }
 
-/* Knapp för att lägga till en ny bok */
 .buttons {
   display: flex;
   justify-content: flex-end;
@@ -127,6 +139,17 @@ h2 {
   font-size: $mobile_font_size_H2;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .card-section {
   display: flex;
   flex-direction: column;
@@ -147,10 +170,6 @@ h2 {
   transition: background-color 0.3s ease;
   border-radius: 8px;
   border: 1px solid $creamwhite;
-  
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
 
   @media (max-width: 768px) {
     justify-content: center;
@@ -162,6 +181,11 @@ article {
   width: 100%; 
   display: flex;
   flex-direction: column;
+}
+
+.title {
+  font-weight: bold;
+  font-size: $mobile_font_size_H3;
 }
 
 p {
@@ -198,39 +222,27 @@ p {
   font-family: $body_font;
 }
 
-/* Header Controls */
-.header-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin-right: -10px;
-  gap: 0; 
-
-  @media (min-width: 768px) {
-    position: absolute;
-    justify-content: flex-end;
-    z-index: 10; 
-    gap: 10px;
-    right: 20px;
-    top: 10px;
-  }
+/* Ändra och ta bort symbolder */
+.edit-delete {
+  display: flex !important;  
+  flex-direction: row !important;
+  gap: 10px;
+  margin-left: auto;  
+  border: none !important; 
+  padding: 0 !important;
+  background: transparent !important;
 }
 
-/* Filtrerings ikonerna */
-.filter-icon {
-  background: transparent;
-  border: none;
-  cursor: pointer; 
+.action-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: $creamwhite;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.material-symbols-outlined {
-  font-size: 25px;
-  font-variation-settings: "wght" 700;
-  color: $creamwhite; 
-}
-
-.material-symbols-outlined:hover {
-  font-size: 30px; 
+.action-icon:hover {
+  font-size: 1.7rem;
+  color: lighten($creamwhite, 30%);
+  transform: scale(1.2);
 }
 </style>

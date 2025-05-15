@@ -7,7 +7,7 @@
         "title": "",
         "description": "",
         "author": "",
-        "genres": "",
+        "genres": [],
         "images": "",
         "published_year": ""
         })
@@ -22,34 +22,49 @@
         }
 
         const submit = async () => {
-          try {
-            const response = await fetch(`${API_URL.replace(/\/$/, '')}/books`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(form)
-            });
+  try {
+    const payload = {
+      ...form,
+      genres: form.genres.split(',').map(g => g.trim())
+    };
+    console.log("Payload som skickas:", payload);
 
-            if (!response.ok) {
-              throw new Error("Något gick fel!");
-            }
+    const response = await fetch(`${API_URL.replace(/\/$/, '')}/books`, {
+      method: "POST",
+      credentials: 'include', // viktigt för cookie
+      headers: {
+        "Content-Type": "application/json",
+        // Ta bort Authorization header när du använder cookie-token
+      },
+      body: JSON.stringify(payload)
+    });
 
-            successMessage.value = "Boken har lagts till!";
-            errorMessage.value = "";
-            clearForm();
+    console.log("Response status:", response.status);
+    const data = await response.json();
+    console.log("Response data:", data);
 
-          } catch (error) {
-            console.error(error);
-            successMessage.value = "";
-            errorMessage.value = "Kunde inte spara boken. Försök igen.";
-          }
-        };
+    if (!response.ok) {
+      errorMessage.value = data.message || "Något gick fel!";
+      throw new Error(data.message || "Något gick fel!");
+    }
+
+    successMessage.value = "Boken har lagts till!";
+    errorMessage.value = "";
+    clearForm();
+
+  } catch (error) {
+    console.error("Fel vid submit:", error);
+    successMessage.value = "";
+    errorMessage.value = error.message || "Kunde inte spara boken. Försök igen.";
+  }
+};
 </script>
 
 <template>
   <main>
-    <RouterLink to="/adminpanelbooks"><span class="material-symbols-outlined">arrow_back</span></RouterLink>
+    <RouterLink to="/adminpanelbooks" aria-label="Gå tillbaka till startsidan">
+      <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
+    </RouterLink>
   <section class="card">
       <h2>Skapa en ny bok</h2>
       <form @submit.prevent="submit">
@@ -89,7 +104,7 @@ main {
   background-color: $creamwhite;
 }
 
-.material-symbols-outlined {
+#arrow_back {
     color: $green;
     font-weight: 700;
     font-size: 2rem;
@@ -122,6 +137,7 @@ p {
 
 .book-form {
   @include default-input;
+  width: 100%;
 }
 
 .buttons {

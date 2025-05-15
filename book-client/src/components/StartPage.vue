@@ -73,20 +73,20 @@ onMounted(async () => {
       <h2>Månadens tips</h2>
       <div class="card-section">
       <section v-for="book in tipBooks" :key="book._id" class="card-section">
-        <RouterLink :to="`/bookpage/${book._id}`">
-        <article>
-          <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
-            <h3>Titel:</h3>
-            <p>{{ book.title }}</p>
-            <h3>Författare:</h3>
-            <p>{{ book.author }}</p>
-            <h3>År:</h3>
-            <p>{{ book.published_year }}</p>
-            <h3>Genres:</h3>
-            <p>{{ book.genres.join(', ') }}</p>
-          </div>
-        </article>
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
+          <article>
+            <div>
+              <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" width="300" height="400">
+              <h3>Titel:</h3>
+              <p>{{ book.title }}</p>
+              <h3>Författare:</h3>
+              <p>{{ book.author }}</p>
+              <h3>År:</h3>
+              <p>{{ book.published_year }}</p>
+              <h3>Genres:</h3>
+              <p>{{ book.genres.join(', ') }}</p>
+            </div>
+          </article>
         </RouterLink>
       </section>
       </div>
@@ -96,10 +96,10 @@ onMounted(async () => {
       <h2>Nyheter</h2>
       <div class="card-section">
       <section v-for="book in newsBooks" :key="book._id" class="card-section div">
-        <RouterLink :to="`/bookpage/${book._id}`">
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" loading="lazy" width="300" height="400">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -123,25 +123,32 @@ onMounted(async () => {
     </div>
 
     <div class="filter-bar">
-      <input
-        type="text"
-        v-model="searchText"
-        placeholder="Sök titel eller författare"
-        class="filter-input"
-      />
+      <div class="filter-group">
+        <label for="search" class="sr-only">Sök</label>
+        <input
+          id="search-input"
+          type="text"
+          v-model="searchText"
+          placeholder="Sök titel eller författare"
+          class="filter-input"
+        />
+      </div>
 
-      <select v-model="selectedGenre" class="filter-select">
-        <option>Alla</option>
-        <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
-      </select>
+      <div class="filter-group">
+        <label for="genre-select" class="sr-only">Välj genre</label>
+        <select id="genre-select" v-model="selectedGenre" class="filter-select">
+          <option>Alla</option>
+          <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
+        </select>
+      </div>
     </div>
     
     <div class="card-section">
       <section v-for="book in filteredBooks" :key="book._id" class="card-section div">
-        <RouterLink :to="`/bookpage/${book._id}`">
+        <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" loading="lazy" width="300" height="400">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -288,6 +295,17 @@ p {
   font-family: $body_font;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Länk för att lägga till en ny bok */
 .adminpanel {
   display: flex;
@@ -317,5 +335,10 @@ p {
       transform: scale(0.98);
     }
   }
+}
+
+.booklink {
+  text-decoration: none;
+  color: inherit;
 }
 </style>
