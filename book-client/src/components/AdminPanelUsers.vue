@@ -51,6 +51,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <RouterLink to="/" aria-label="Gå tillbaka till startsidan">
+    <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
+  </RouterLink>
+  
   <div class="adminpanel">
     <h2>Adminpanel - Alla användare</h2>
 
@@ -76,11 +80,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .adminpanel {
-  width: 100%;
-  max-width: pxtorem(1000px);
+  position: relative;
+  margin: 10px $spacing;
   border-radius: pxtorem(10px);
   background-color: $green;
-  margin: $spacing auto;
   padding: $spacing;
   color: white;
   font-family: $H3;
@@ -91,6 +94,7 @@ onMounted(() => {
 
 h2 {
   font-family: $H2;
+  font-size: 2rem;
   font-weight: 200;
   text-align: center;
   color: $creamwhite;
@@ -113,13 +117,21 @@ button {
 }
 
 .user {
-    margin-bottom: $spacing;
+  margin-bottom: $spacing;
 
-    p {
-        white-space: normal;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-    }
+  p {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+#arrow_back {
+  color: $green;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-top: 30px;
+  margin-left: 20px;
 }
 
 .error {
