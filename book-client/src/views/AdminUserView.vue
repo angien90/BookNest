@@ -6,7 +6,6 @@ import Footer from '@/components/Footer.vue';
 
 <template>
   <main>
-    <Header />
     <AdminPanelUsers />
     <Footer />
   </main>
