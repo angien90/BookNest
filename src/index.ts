@@ -14,8 +14,8 @@ app.use(compression());
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "https://fed24d-grupp15.vercel.app", 
-  /*origin: "http://localhost:5173",*/         
+  /*origin: "https://fed24d-grupp15.vercel.app", */
+  origin: "http://localhost:5173",         
   credentials: true    // Allows cookies sent to this API
 }));        
 
