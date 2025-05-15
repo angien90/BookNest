@@ -62,11 +62,13 @@ onMounted(async () => {
           class="filter-input"
         />
 
-        <label for="search" class="sr-only">Välj genre</label>
-        <select id="genre" v-model="selectedGenre" class="filter-select">
-          <option>Alla</option>
-          <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
-        </select>
+        <div class="filter-group">
+          <label for="genre-select" class="sr-only">Välj genre</label>
+          <select id="genre-select" v-model="selectedGenre" class="filter-select">
+            <option>Alla</option>
+            <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
+          </select>
+        </div>
       </div>
 
       <div class="card-section">
@@ -98,7 +100,6 @@ main {
     margin-left: 20px;
 }
 
-/* Knapp för att lägga till en ny bok */
 .buttons {
   display: flex;
   justify-content: flex-end;
@@ -210,41 +211,5 @@ p {
   font-size: 1rem;
   background-color: $creamwhite;
   font-family: $body_font;
-}
-
-/* Header Controls */
-.header-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin-right: -10px;
-  gap: 0; 
-
-  @media (min-width: 768px) {
-    position: absolute;
-    justify-content: flex-end;
-    z-index: 10; 
-    gap: 10px;
-    right: 20px;
-    top: 10px;
-  }
-}
-
-/* Filtrerings ikonerna */
-.filter-icon {
-  background: transparent;
-  border: none;
-  cursor: pointer; 
-}
-
-.material-symbols-outlined {
-  font-size: 25px;
-  font-variation-settings: "wght" 700;
-  color: $creamwhite; 
-}
-
-.material-symbols-outlined:hover {
-  font-size: 30px; 
 }
 </style>

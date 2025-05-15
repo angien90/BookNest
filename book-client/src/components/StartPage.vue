@@ -76,7 +76,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
           <article>
             <div>
-              <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+              <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" width="300" height="400">
               <h3>Titel:</h3>
               <p>{{ book.title }}</p>
               <h3>Författare:</h3>
@@ -99,7 +99,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" loading="lazy" width="300" height="400">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -135,7 +135,7 @@ onMounted(async () => {
       </div>
 
       <div class="filter-group">
-        <label for="search" class="sr-only">Välj genre</label>
+        <label for="genre-select" class="sr-only">Välj genre</label>
         <select id="genre-select" v-model="selectedGenre" class="filter-select">
           <option>Alla</option>
           <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
@@ -148,7 +148,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title">
+            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" loading="lazy" width="300" height="400">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>

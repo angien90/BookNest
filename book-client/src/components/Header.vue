@@ -33,7 +33,7 @@ function scrollAfterNavigation(id) {
 <template>
   <header class="header">
     <div class="logo-heading">
-      <img src="/assets/logo_big.webp" alt="Logo" />
+      <img src="/assets/logo_big.webp" alt="Logo" width="300" height="400"/>
       <h1><span class="first">Book</span><span class="second">Nest</span></h1>
     </div>
 

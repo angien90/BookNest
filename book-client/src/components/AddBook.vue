@@ -49,7 +49,9 @@
 
 <template>
   <main>
-    <RouterLink to="/adminpanelbooks" aria-label="Gå tillbaka till bokpanelen"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span></RouterLink>
+    <RouterLink to="/" aria-label="Gå tillbaka till startsidan">
+      <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
+    </RouterLink>
   <section class="card">
       <h2>Skapa en ny bok</h2>
       <form @submit.prevent="submit">
@@ -89,7 +91,7 @@ main {
   background-color: $creamwhite;
 }
 
-.material-symbols-outlined {
+#arrow_back {
     color: $green;
     font-weight: 700;
     font-size: 2rem;

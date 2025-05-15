@@ -3,8 +3,12 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
+import compression from 'compression'; 
 
 const app = express();
+
+// Minskar datamängden 
+app.use(compression());
 
 // Middleware
 app.use(express.json());
