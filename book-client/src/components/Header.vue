@@ -32,11 +32,10 @@ const scrollToSection = (id) => {
       </button>
 
       <div>
-        <RouterLink to="adminusers">
+        <RouterLink to="adminpanelusers">
           <button class="admin-icon">
             <span class="material-symbols-outlined admin-icon"
-              >folder_supervised</span
-            >
+              >folder_supervised</span>
           </button>
         </RouterLink>
 

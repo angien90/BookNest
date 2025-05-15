@@ -14,7 +14,7 @@ const routes = [
   { path: "/registerpage", component: RegisterView },
   { path: "/addbook", component: AddBooksView },
   { path: "/adminpanelbooks", component: AdminPanelBookView },
-  { path: "/adminusers", component: AdminUserView },
+  { path: "/adminpanelusers", component: AdminUserView },
 ];
 
 const router = createRouter({
