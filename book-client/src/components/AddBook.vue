@@ -7,8 +7,8 @@
         "title": "",
         "description": "",
         "author": "",
-        "genres": [],
-        "images": "",
+        "genres": "",
+        "image": "",
         "published_year": ""
         })
 
@@ -80,8 +80,8 @@
         <label for="genres"><p>Genres</p></label>
         <input class="book-form" type="text" id="genres" v-model="form.genres" placeholder="Ange genres på boken" required/>
 
-        <label for="images"><p>Bild</p></label>
-        <input class="book-form" type="text" id="images" v-model="form.images" placeholder="Ange sökväg till bild på boken" required/>
+        <label for="image"><p>Bild</p></label>
+        <input class="book-form" type="text" id="image" v-model="form.image" placeholder="Ange sökväg till bild på boken" required/>
 
         <label for="published_year"><p>Publiseringsår</p></label>
         <input class="book-form" type="number" id="published_year" v-model="form.published_year" placeholder="Ange året då boken skrevs" required/>
