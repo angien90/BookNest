@@ -14,6 +14,7 @@ const routes = [
   { path: "/registerpage", component: RegisterView },
   { path: "/addbook", component: AddBooksView, meta: { requiresAuth: true }},
   { path: "/adminpanelbooks", component: AdminPanelBookView, meta: { requiresAuth: true }},
+  { path: "/adminpanelusers", component: AdminUserView, meta: { requiresAuth: true } }
 ];
 
 // ✅ Skapa router först
