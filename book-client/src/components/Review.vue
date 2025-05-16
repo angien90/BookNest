@@ -265,8 +265,7 @@ const cancelDelete = () => {
 
     <aside class="review" v-if="isLoaded">
         <article class="review_container book" aria-label="Gå tillbaka till startsidan">    
-            <RouterLink to="/"> 
-                <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
+            <RouterLink to="/"> <span class="material-symbols-outlined" id="arrow_back">arrow_back</span>
             </RouterLink>
             <div class="review_book">
                 <h2>{{ book.title }}</h2>
