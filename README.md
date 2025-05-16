@@ -28,31 +28,31 @@ Målet är att skapa ett system som är uppdelat i tydliga ansvarsområden med s
 <details>
 <summary><strong>Skärmdumpar från webbplatsen</strong></summary>
 
-### Startsida
+#### Startsida
 ![Start Page](external-assets/Site%20pictures/start_page.png)
 
-### Navigationsmeny
+#### Navigationsmeny
 ![Nav Bar](external-assets/Site%20pictures/nab_bar.png)
 
-### Boköversikt
+#### Boköversikt
 ![Book Page](external-assets/Site%20pictures/book_page.png)
 
-### Inloggningssida
+#### Inloggningssida
 ![Login Page](external-assets/Site%20pictures/login_page.png)
 
-### Registreringssida
+#### Registreringssida
 ![Register Page](external-assets/Site%20pictures/register_page.png)
 
-### Adminpanel – Användare
+#### Adminpanel – Användare
 ![Admin Panel Users](external-assets/Site%20pictures/admin_panel_users.png)
 
-### Adminpanel – Böcker
+#### Adminpanel – Böcker
 ![Admin Panel Books](external-assets/Site%20pictures/admin_panel_books.png)
 
-### Lägg till bok
+#### Lägg till bok
 ![Add Book Page](external-assets/Site%20pictures/add_book_page.png)
 
-### Redigera bok
+#### Redigera bok
 ![Edit Book Page](external-assets/Site%20pictures/edit_book_page.png)
 </details>
 
