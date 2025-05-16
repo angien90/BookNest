@@ -148,3 +148,32 @@ Exempel på specifika beroenden som används:
 Book API är ett webbaserat system som ger både administratörer och vanliga användare möjlighet att hantera ett digitalt bibliotek. Genom integration med MongoDB och ett rollbaserat skyddssystem kan projektet enkelt utökas med ytterligare funktioner såsom filtrering, sök eller rollstyrd tillgång.
 
 Alla filer relaterade till projektet, såsom Figma-design, Insomnia-export, MongoDB-export, dagboksanteckningar med mera, finns samlade i mappen "External assets". 
+
+## Skärmdumpar från webbplatsen
+
+### Startsida
+![Start Page](external%20assets/Site%20pictures/start_page.png)
+
+### Navigationsmeny
+![Nav Bar](external%20assets/Site%20pictures/nab_bar.png)
+
+### Boköversikt
+![Book Page](external%20assets/Site%20pictures/book_page.png)
+
+### Inloggningssida
+![Login Page](external%20assets/Site%20pictures/login_page.png)
+
+### Registreringssida
+![Register Page](external%20assets/Site%20pictures/register_page.png)
+
+### Adminpanel – Användare
+![Admin Panel Users](external%20assets/Site%20pictures/admin_panel_users.png)
+
+### Adminpanel – Böcker
+![Admin Panel Books](external%20assets/Site%20pictures/admin_panel_books.png)
+
+### Lägg till bok
+![Add Book Page](external%20assets/Site%20pictures/add_book_page.png)
+
+### Redigera bok
+![Edit Book Page](external%20assets/Site%20pictures/edit_book_page.png)
