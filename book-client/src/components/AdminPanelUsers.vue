@@ -37,11 +37,11 @@ const deleteUser = async (id) => {
     if (response.ok) {
       users.value = users.value.filter((user) => user._id !== id);
     } else {
-      error.value = '❌ Kunde inte ta bort användaren';
+      errorMsg.value = '❌ Kunde inte ta bort användaren';
     }
   } catch (err) {
     console.error('Delete error:', err);
-    error.value = '❌ Serverfel vid borttagning';
+    errorMsg.value = '❌ Serverfel vid borttagning';
   }
 };
 
@@ -58,7 +58,7 @@ onMounted(() => {
   <div class="adminpanel">
     <h2>Adminpanel - Alla användare</h2>
 
-    <div v-if="error" class="error">{{ error }}</div>
+    <div v-if="errorMsg" class="error">{{ errorMsg }}</div>
 
     <div v-if="users.length">
       <div v-for="user in users" :key="user._id">
