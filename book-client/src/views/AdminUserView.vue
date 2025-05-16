@@ -1,5 +1,4 @@
 <script setup>
-import Header from '@/components/Header.vue';
 import AdminPanelUsers from '@/components/AdminPanelUsers.vue';
 import Footer from '@/components/Footer.vue';
 </script>
