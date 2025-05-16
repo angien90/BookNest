@@ -40,7 +40,7 @@ const updateBook = async () => {
       headers: {
         "Content-Type": "application/json"
       },
-      credentials: "include", // 🔥 Detta krävs för att accessToken via cookie ska skickas med
+      credentials: "include", 
       body: JSON.stringify(book.value),
     });
 
@@ -54,8 +54,8 @@ const updateBook = async () => {
     successMessage.value = "✅ Boken uppdaterades!";
     errorMessage.value = '';
   } catch (error) {
-    console.error("❌ Kunde inte uppdatera bok:", error.message);
-    errorMessage.value = error.message || "Kunde inte uppdatera boken. Försök igen.";
+    console.error("Fel vid submit:", error.message);
+    errorMessage.value = error.message || "❌ Kunde inte uppdatera boken. Försök igen.";
     successMessage.value = '';
   }
 };
