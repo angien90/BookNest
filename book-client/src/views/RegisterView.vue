@@ -8,12 +8,14 @@ import RegisterForm from '@/components/RegisterForm.vue';
     <main>
         <Header />
         <RegisterForm />
-        <Footer />
     </main>
+    
+    <Footer />    
 </template>
 
 <style lang='scss' scoped>
 main {
+    min-height: 100vh;
     background-color: $creamwhite;
 }
 </style>

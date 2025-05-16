@@ -8,12 +8,14 @@ import LoginForm from '@/components/LoginForm.vue';
     <main>
         <Header />
         <LoginForm />
-        <Footer />        
     </main>
+    
+    <Footer />    
 </template>
 
 <style lang='scss' scoped>
 main {
+    min-height: 100vh;
     background-color: $creamwhite;
 }
 </style>

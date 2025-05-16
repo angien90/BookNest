@@ -118,7 +118,7 @@ const login = async () => {
     text-decoration: underline;
 
     @media (min-width: 768px) {
-      font-size: pxtorem(24px);
+      font-size: pxtorem(18px);
     }
   }
 }
