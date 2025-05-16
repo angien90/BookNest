@@ -83,6 +83,9 @@ Recensioner som hör till specifika böcker:
 - **Ny bok**
   - Formulär med alla fält enligt `books`-strukturen
 
+**Användarnamn: super-admin**
+**Lösenord: 1234**
+
 ### 🌍 Publik vy
 - **Boklista**
   - Innehåll: liten bild, `title`, `author`, `genres`, `published_year`
@@ -106,11 +109,11 @@ Recensioner som hör till specifika böcker:
 
 ## 👥 Projektmedlemmar
 
-| Namn                   | GitHub-länk                              |
-|------------------------|-------------------------------------------|
-| Marie Lenvik           | [github.com/M-Lenvi](https://github.com/M-Lenvik) |
-| Vy Petersson           | [github.com/tgvie](https://github.com/tgvie) |
-| Angelica Nylander      | [github.com/angien90](https://github.com/angien90) |
+| Namn                   | GitHub-länk                              | Ansvarsfördelning 
+|------------------------|-------------------------------------------|-------------------------
+| Vy Petersson           | [github.com/tgvie](https://github.com/tgvie) | Ansvarsområde 1           |
+| Angelica Nylander      | [github.com/angien90](https://github.com/angien90) | Ansvarsområde 2           |
+| Marie Lenvik           | [github.com/M-Lenvi](https://github.com/M-Lenvik) | Ansvarsområde 3           |
 
 ---
 
@@ -124,6 +127,9 @@ För att komma igång med projektet, följ dessa steg:
 2. Installera alla beroenden
 Kör följande kommando för att installera alla nödvändiga paket enligt package.json:
     - npm install
+
+3. Starta localhost 
+Projektet kör nu lokalt på sina respektive portar (t.ex. backend på localhost:3000 och frontend på localhost:5173, beroende på inställningar). Navigera till backend-projektets rotmapp (cd book-api) och kör npm run dev. Öppna en ny terminal och navigera till frontend-projektets rotmapp (cd book-client) och kör npm run dev.
 
 Exempel på specifika beroenden som används:
   - Node.js, Express, TypeScript – Backend och typning
@@ -140,3 +146,5 @@ Exempel på specifika beroenden som används:
 ## 📌 Sammanfattning
 
 Book API är ett webbaserat system som ger både administratörer och vanliga användare möjlighet att hantera ett digitalt bibliotek. Genom integration med MongoDB och ett rollbaserat skyddssystem kan projektet enkelt utökas med ytterligare funktioner såsom filtrering, sök eller rollstyrd tillgång.
+
+Alla filer relaterade till projektet, såsom Figma-design, Insomnia-export, MongoDB-export, dagboksanteckningar med mera, finns samlade i mappen "External assets". 

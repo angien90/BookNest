@@ -1,0 +1,184 @@
+[{
+  "_id": {
+    "$oid": "681a50fe1e028ec32ca8a32d"
+  },
+  "title": "Sagan om ringen",
+  "description": "En episk fantasyberättelse av J.R.R. Tolkien. Hobbiten Frodo har fått ta över den magiska ring hans farbror Bilbo en gång vann av Gollum. Gandalf grå inser att det är den stora ring som en gång smiddes av den onde Sauron och som styr alla andra maktens ringar. Tillsammans med följeslagarna Sam, Merry och Pippin ger sig Frodo ut på en lång färd för att förgöra ringen i Eldsberget i Mordor. Annars kan ondskan snart komma att härska över Midgård.\n\nVid Alvkonungen Elronds stora råd i Riftedal bestäms att Frodo till sin hjälp ska få följeslagare från Midgårds alla goda folkslag. I ringens brödraskap ingår människorna Aragorn och Boromir, alven Legolas, dvärgen Gimli och trollkarlen Gandalf.\n\nPå sin väg över höga berg och genom djupa grottor stöter de på en balrog, orker och de hemska nazgûlerna ringryttarna. Men de får hjälp av alverna i skogsriket Lothlórien och deras drottning Galadriel.",
+  "author": "J.R.R. Tolkien",
+  "genres": [
+    "Fantasy",
+    "Äventyr"
+  ],
+  "image": "Lord_of_the_ring_part1.webp",
+  "published_year": 1954,
+  "reviews": [
+    {
+      "$oid": "681db99a13e7352c37a0b0d0"
+    },
+    {
+      "$oid": "681dbb3113e7352c37a0b0eb"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "681a50fe1e028ec32ca8a32e"
+  },
+  "title": "1984",
+  "description": "En dystopisk roman av George Orwell. 1984 är den klassiska romanen om hur överheten - samhället, staten, strukturerna - härskar över individen genom att kontrollera språket och tänkandet. \"För att regera och fortsätta regera måste man kunna rubba verklighetsuppfattningen.\" Det kontrollerade vansinnet...\n\nFredsministeriet sysslar med krig. Sanningsministeriet sysslar med lögner. Kärleksministeriet sysslar med tortyr. Välståndsministeriet sysslar med svält.\n\nOrwell skrev klart sin roman 1948 och den utkom 1949, ett halvår innan han dog.",
+  "author": "George Orwell",
+  "genres": [
+    "Dystopi",
+    "Science Fiction"
+  ],
+  "image": "1984.webp",
+  "published_year": 1949,
+  "reviews": [
+    {
+      "$oid": "681dbb7113e7352c37a0b0ef"
+    },
+    {
+      "$oid": "6824c9bb14f0516b5074797e"
+    },
+    {
+      "$oid": "6824dc6b2af81b98bf765570"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "681a531a0079c7a5fb29c299"
+  },
+  "title": "To Kill a Mockingbird",
+  "description": "Lilla nioåriga Scout växer upp i amerikanska Södern i en loj småstadsidyll, när ohyggliga och dramatiska händelser vänder upp och ner på livet och hennes föreställningar. En ung svart man blir anklagad för våldtäkt på en vit kvinna, och hans chans att få en rättvis rättegång är försvinnande liten. En vit advokat tar sig an försvaret, men hatet och indignationen i det lilla samhället växer som en lavin.Inför Scouts oskuldsfulla ögon omstörtas den sömniga lilla staden och hon blir seende: hennes berättelse blir till en anklagelse, som ingen av oss undslipper. När Harper Lees Dödssynden (To Kill a Mockingbird) kom ut 1960 i USA var det en händelse som skapade rubriker från kust till kust. Hennes berättelse om rasism och fördomsfullhet är, dessvärre, aktuell på många håll i världen fortfarande idag.",
+  "author": "Harper Lee",
+  "genres": [
+    "Classic",
+    "Historical",
+    "Drama"
+  ],
+  "image": "to_kill_a_mockingbird.webp",
+  "published_year": 1960,
+  "reviews": [
+    {
+      "$oid": "681dbbd813e7352c37a0b0fb"
+    },
+    {
+      "$oid": "681dbc3a13e7352c37a0b109"
+    },
+    {
+      "$oid": "681dbc6813e7352c37a0b111"
+    },
+    {
+      "$oid": "6821937162d42b28ac8caab4"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "681a531a0079c7a5fb29c29a"
+  },
+  "title": "Brave New World",
+  "description": "Brave New World, den kanske mest berömda av alla framtidsskildringar, skrevs redan 1932. I dag har flera av bokens mardrömsscenarier blivit verklighet. Det förefaller som om vi befinner oss närmare romanens dystopi än någonsin.\n\nI framtiden har gentekniken utvecklat människan intill perfektion. I den nya världen finns inga gamla, sjuka eller olyckliga människor. Livet är sorglöst och okomplicerat. Människan har befriats från alla känslomässiga bindningar och kan ohämmat ägna sig åt konsumtion och tillfälliga sexuella kontakter. Tillvaron är inriktad på omedelbar lyckomaximering. Den nya världen är ett sinnenas paradis och skulle något gå fel finns alltid lyckodrogen soma.",
+  "author": "Aldous Huxley",
+  "genres": [
+    "Dystopia",
+    "Science Fiction",
+    "Philosophy"
+  ],
+  "image": "brave_new_world.webp",
+  "published_year": 1932,
+  "reviews": [
+    {
+      "$oid": "681dbc2913e7352c37a0b105"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "681a531a0079c7a5fb29c29b"
+  },
+  "title": "The Catcher in the Rye",
+  "description": "Holden Caufield är 16 år och tycker livet är för jävligt, men ibland också så vackert att man kan dö. Han har just blivit relegerad från skolan och ska möta sina föräldrar i New York. Istället dyker han in i Manhattans storstadsdjungel för att under några hektiska dygn leva som en vuxen. Han hinner gå på nattklubbar, möta före detta flickvänner, misslyckas kapitalt med ett hotelläventyr med en call girl innan familjen obevekligt åter sluter sig kring honom.",
+  "author": "J.D. Salinger",
+  "genres": [
+    "Classic",
+    "Young Adult",
+    "Literary Fiction"
+  ],
+  "image": "the_catcher_in_the_rye.webp",
+  "published_year": 1951,
+  "reviews": []
+},
+{
+  "_id": {
+    "$oid": "681a531a0079c7a5fb29c29c"
+  },
+  "title": "Män som hatar kvinnor",
+  "description": "Första delen i Millennium-serien, en spännande thriller. För fyrtio år sedan försvann den unga Harriet Vanger spårlöst. Den grävande journalisten Mikael Blomkvist får i uppdrag av industrimagnaten Henrik Vanger att ta reda på vad som hände Vangers systerdotter. Blomkvist tar hjälp av Lisbeth Salander - en ung strulig tjej, tatuerad och piercad, men också professionell hacker och med unika egenskaper som gör henne till en oslagbar researcher.",
+  "author": "Stieg Larsson",
+  "genres": [
+    "Thriller",
+    "Deckare",
+    "Svensk litteratur"
+  ],
+  "image": "man_som_hatar_kvinnor.webp",
+  "published_year": 2005,
+  "reviews": [
+    {
+      "$oid": "681dbbbe13e7352c37a0b0f7"
+    },
+    {
+      "$oid": "681dbc4f13e7352c37a0b10d"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "681a531a0079c7a5fb29c29d"
+  },
+  "title": "Harry Potter och de vises sten",
+  "description": "Första boken i serien om den unge trollkarlen Harry Potter. Plötsligt händer det märkliga ting i den lilla staden! Mystiska stjärnskott på himlen och svärmar av ugglor mitt på dagen, katter som läser kartor och underliga människor som står i gathörnen och viskar. De viskar om en viss Harry Potter ...\n\nFöräldralöse Harry Potter bor hos sina elaka styvföräldrar och deras vidrige son. En helt ny värld öppnar sig för Harry när det visar sig att han egentligen är en trollkarl och börjar Hogwarths Skola för Häxkonster och Trolldom, en värld full av magi och spännande äventyr!",
+  "author": "J.K. Rowling",
+  "genres": [
+    "Fantasy",
+    "Äventyr",
+    "Barn"
+  ],
+  "image": "harry_potter_och_de_vises_sten.webp",
+  "published_year": 1997,
+  "reviews": [
+    {
+      "$oid": "681dbc1513e7352c37a0b101"
+    },
+    {
+      "$oid": "6824de0e2af81b98bf7655a2"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "681a531a0079c7a5fb29c29e"
+  },
+  "title": "Den allvarsamma leken",
+  "description": "En klassisk svensk kärleksroman av Hjalmar Söderberg. »Mig får du älska på ett hedniskt vis!« säger Lydia Stille till Arvid Stjärnblom. En gång var hon den oskyldiga flickan han hade kysst bakom syrenhäckarna. Nu är hon gift, liksom han själv, men när slumpen sammanför dem efter tio år flammar deras känslor för varandra upp. Och nu är hon en mogen, självständig kvinna som vågar bejaka lidelsens krav, med konsekvenser som han först bara anar.\n\nDen allvarsamma leken är en roman om kärleken, om illusionen och resignationen, samtidigt som den ekar av världshändelserna i det idylliska tidiga 1900-talets Stockholm.",
+  "author": "Hjalmar Söderberg",
+  "genres": [
+    "Klassiker",
+    "Romantik",
+    "Svensk litteratur"
+  ],
+  "image": "den_allvarsamma_leken.webp",
+  "published_year": 1912,
+  "reviews": [
+    {
+      "$oid": "681dc370f47e923b5e21159f"
+    },
+    {
+      "$oid": "681dc37df47e923b5e2115a3"
+    },
+    {
+      "$oid": "6823962c0ff9a681eda22e04"
+    }
+  ]
+}]

@@ -1,0 +1,272 @@
+[{
+  "_id": {
+    "$oid": "681dbb3113e7352c37a0b0eb"
+  },
+  "name": "Anna",
+  "content": "En klassiker!",
+  "rating": 3,
+  "book": [
+    {
+      "$oid": "681a50fe1e028ec32ca8a32d"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:22:09.527Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbb7113e7352c37a0b0ef"
+  },
+  "name": "Karin",
+  "content": "Den här var seg, jag slutade läsa efter 5e kapitlet.",
+  "rating": 1,
+  "book": [
+    {
+      "$oid": "681a50fe1e028ec32ca8a32e"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:23:13.255Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbbbe13e7352c37a0b0f7"
+  },
+  "name": "Kalle",
+  "content": "Bra bok, jag sträckläste",
+  "rating": 5,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29c"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:24:30.641Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbbd813e7352c37a0b0fb"
+  },
+  "name": "Anders",
+  "content": "Helt ok, men ingen bladvändare",
+  "rating": 2,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c299"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:24:56.365Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbc1513e7352c37a0b101"
+  },
+  "name": "Lisa",
+  "content": "En underbar bok för barn och tonåringar! Jag har läste den tillsammans med min son och nu har han läst vidare på egen hand i serien.",
+  "rating": 5,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29d"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:25:57.661Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbc2913e7352c37a0b105"
+  },
+  "name": "Karin",
+  "content": "Spännande framtidsskildring.",
+  "rating": 3,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29a"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:26:17.275Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbc3a13e7352c37a0b109"
+  },
+  "name": "Anna",
+  "content": "Den tog ett tag att komma in i, men sen!..",
+  "rating": 5,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c299"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:26:34.618Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbc4f13e7352c37a0b10d"
+  },
+  "name": "Anna",
+  "content": "Wow säger jag bara!",
+  "rating": 5,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29c"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:26:55.483Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dbc6813e7352c37a0b111"
+  },
+  "name": "Per",
+  "content": "Varning! Tänk inte ens tanken att läsa denna!",
+  "rating": 1,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c299"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:27:20.499Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dc370f47e923b5e21159f"
+  },
+  "name": "Per",
+  "content": "En vacker kärlekssaga.",
+  "rating": 3,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29e"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:57:20.649Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681dc37df47e923b5e2115a3"
+  },
+  "name": "Anna",
+  "content": "Det är sannerligen en klassisk kärlekshistoria!",
+  "rating": 3,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29e"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-09T08:57:33.163Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6821937162d42b28ac8caab4"
+  },
+  "name": "David",
+  "content": "Så bra!",
+  "rating": 4,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c299"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-12T06:21:37.271Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6823962c0ff9a681eda22e04"
+  },
+  "name": "Hans",
+  "content": "En mycket fin berättelse.",
+  "rating": 5,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29e"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-13T18:57:48.300Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6824c9bb14f0516b5074797e"
+  },
+  "name": "test",
+  "content": "Varning! Tänk inte ens tanken att läsa denna!",
+  "rating": 2,
+  "book": [
+    {
+      "$oid": "681a50fe1e028ec32ca8a32e"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-14T16:50:03.998Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6824dc6b2af81b98bf765570"
+  },
+  "name": "Anders",
+  "content": "En mycket tänkvärd bok",
+  "rating": 4,
+  "book": [
+    {
+      "$oid": "681a50fe1e028ec32ca8a32e"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-14T18:09:47.181Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6824de0e2af81b98bf7655a2"
+  },
+  "name": "Pia",
+  "content": "Det här är en bra bokserie även om man inte är i den direkta målgruppen. Trollkarlar, häxor och magiskt kittlande!",
+  "rating": 4,
+  "book": [
+    {
+      "$oid": "681a531a0079c7a5fb29c29d"
+    }
+  ],
+  "created_at": {
+    "$date": "2025-05-14T18:16:46.146Z"
+  },
+  "__v": 0
+}]
