@@ -1,10 +1,60 @@
 # 📚 Book API – lösenordsskyddat boksystem med MongoDB och användarhantering
 
+| Inlämningar |
+| ----------- |
+| [MongoDB](external-assets/MongoDB) |
+| [Insomnia](external-assets/Insomnia/Insomnia_2025-05-15.yaml) |
+| [API](book-api) |
+| [Klient](book-client) |
+| [Grupp Dagbok](external-assets/Dagbok/API-Grupp-15-Dagbok.pdf) |
+
 ## 🔍 Projektbeskrivning
 
 Detta projekt är ett fullstack-baserat bokhanteringssystem som bygger på **MongoDB** som databas. API:t är lösenordsskyddat och erbjuder funktionalitet för att hantera **användare**, **böcker** och **recensioner**. Projektet har stöd för inloggning, adminpanel samt en besökardel där man kan bläddra bland böcker och lämna recensioner.
 
 Målet är att skapa ett system som är uppdelat i tydliga ansvarsområden med separata API-endpoints för varje datatyp, och där viss funktionalitet kräver autentisering med **JSON Web Tokens (JWT)**.
+
+### Projektets struktur är uppdelad enligt följande
+- `book-api` – innehåller all kod och filer relaterade till API-delen
+- `book-client` – innehåller frontend-applikationen
+- `external-assets` – här finns övrigt material såsom:
+  - Projektdagbok
+  - Figma-design
+  - Insomnia-exporter
+  - Lighthouse-analyser
+  - MongoDB-länkar och exporter
+  - Bilder på den färdiga webbplatsen
+
+<details>
+<summary><strong>Skärmdumpar från webbplatsen</strong></summary>
+
+#### Startsida
+![Start Page](external-assets/Site%20pictures/start_page.png)
+
+#### Navigationsmeny
+![Nav Bar](external-assets/Site%20pictures/nab_bar.png)
+
+#### Boköversikt
+![Book Page](external-assets/Site%20pictures/book_page.png)
+
+#### Inloggningssida
+![Login Page](external-assets/Site%20pictures/login_page.png)
+
+#### Registreringssida
+![Register Page](external-assets/Site%20pictures/register_page.png)
+
+#### Adminpanel – Användare
+![Admin Panel Users](external-assets/Site%20pictures/admin_panel_users.png)
+
+#### Adminpanel – Böcker
+![Admin Panel Books](external-assets/Site%20pictures/admin_panel_books.png)
+
+#### Lägg till bok
+![Add Book Page](external-assets/Site%20pictures/add_book_page.png)
+
+#### Redigera bok
+![Edit Book Page](external-assets/Site%20pictures/edit_book_page.png)
+</details>
 
 ---
 

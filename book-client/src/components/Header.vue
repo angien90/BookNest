@@ -81,8 +81,8 @@ function scrollAfterNavigation(id) {
         <li @click="scrollToSection('tips')"><span>Månadens tips</span></li>
         <li @click="scrollToSection('news')"><span>Nyheter</span></li>
         <li @click="scrollToSection('allbooks')"><span>Alla böcker</span></li>
+                <li><RouterLink to="adminpanelbooks"><span>Hantera Böcker</span></RouterLink></li>
         <li><RouterLink to="adminpanelusers"><span class="admin-only">(admin) Användaren</span></RouterLink></li>
-        <li><RouterLink to="adminpanelbooks"><span class="admin-only">(admin) Böcker</span></RouterLink></li>
       </ul>
     </nav>
   </header>
