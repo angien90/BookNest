@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 
 const users = ref([]);
-const error = ref('');
+const errorMsg = ref('');
 
 const fetchUsers = async () => {
   try {
@@ -11,14 +11,14 @@ const fetchUsers = async () => {
     });
 
     if (!response.ok) {
-      error.value = '❌ Du har inte behörighet (endast admin)';
+      errorMsg.value = '❌ Du har inte behörighet (endast admin)';
       return;
     }
 
     users.value = await response.json();
   } catch (err) {
     console.error('Error fetching users:', err);
-    error.value = '❌ Kunde inte hämta användare';
+    errorMsg.value = '❌ Kunde inte hämta användare';
   }
 };
 
@@ -89,7 +89,7 @@ onMounted(() => {
   font-family: $H3;
   margin-bottom: $spacing;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2),
-    inset 0 -2px 4px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
+              inset 0 -2px 4px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
