@@ -3,6 +3,7 @@ import Header from './Header.vue';
 import { ref, onMounted, watch, toRefs, computed } from 'vue';
 import { useRoute } from "vue-router";
 import { defineProps, defineEmits } from 'vue';
+import { watchEffect } from 'vue';
 
 const props = defineProps({
   bookId: {
@@ -73,9 +74,15 @@ const formatDate = (dateString) => {
     });
 };
 
+const isLoggedIn = ref(false);
 onMounted(() => {
     fetchReviews();
     fetchBook();
+});
+
+watchEffect(() => {
+    isLoggedIn.value = !!localStorage.getItem('isLoggedIn');
+    console.log(localStorage.getItem('isLoggedIn'))
 });
 
 watch(() => props.bookId, (newBookId, oldBookId) => {
@@ -183,6 +190,7 @@ const updateReview = async () => {
                 "Content-Type": "application/json",
             },
             
+            credentials: "include",
             body: JSON.stringify({
                 name: updateName.value,
                 content: updateContent.value,
@@ -222,6 +230,7 @@ const confirmDelete = async () => {
     try {
         const response = await fetch(`${API_URL}review/${reviewToDelete.value}`, {
             method: "DELETE",
+            credentials: 'include'
         });
     
         //Deletes review
@@ -314,11 +323,10 @@ const cancelDelete = () => {
                         
                         <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
                     </div>
-
-                    <div class="buttons" v-if="!(updateMode && updateReviewId === reviews._id)">
-                        <button @click="startUpdate(reviews)" :aria-label="'Uppdatera recension från ' + reviews.name">Uppdatera</button>
-                        <button @click="deleteReview(reviews._id)" :aria-label="'Ta bort recension från ' + reviews.name">Ta bort</button>
-                    </div>
+                        <div class="buttons" v-if="!(updateMode && updateReviewId === reviews._id)">
+                            <button @click="startUpdate(reviews)" :aria-label="'Uppdatera recension från ' + reviews.name">Uppdatera</button>
+                            <button @click="deleteReview(reviews._id)" :aria-label="'Ta bort recension från ' + reviews.name">Ta bort</button>
+                        </div>
                 </div>
 
                 <div class="user_uppdate">

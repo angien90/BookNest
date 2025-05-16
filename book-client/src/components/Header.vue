@@ -59,14 +59,14 @@ function scrollAfterNavigation(id) {
       </button>
 
       <div>
-        <RouterLink to="adminpanelusers">
+        <RouterLink to="/adminpanelusers">
           <button class="admin-icon" aria-label="Gå till adminpanelen för användare">
             <span class="material-symbols-outlined admin-icon">folder_supervised</span>
           </button>
         </RouterLink>
 
         <!-- Ikongubbe (höger) -->
-        <RouterLink to="loginpage">
+        <RouterLink to="/loginpage">
           <button class="user-icon" aria-label="Logga in">
             <span class="material-symbols-outlined user-icon">person</span>
           </button>
