@@ -6,6 +6,7 @@ import RegisterView from "../views/RegisterView.vue";
 import AddBooksView from "../views/AddBooksView.vue";
 import AdminPanelBookView from "../views/AdminPanelBookView.vue";
 import AdminUserView from "../views/AdminUserView.vue";
+import EditBook from "../views/EditBook.vue";
 
 const routes = [
   { path: "/", component: HomeView },
@@ -14,7 +15,8 @@ const routes = [
   { path: "/registerpage", component: RegisterView },
   { path: "/addbook", component: AddBooksView, meta: { requiresAuth: true }},
   { path: "/adminpanelbooks", component: AdminPanelBookView, meta: { requiresAuth: true }},
-  { path: "/adminpanelusers", component: AdminUserView, meta: { requiresAuth: true } }
+  { path: "/adminpanelusers", component: AdminUserView, meta: { requiresAuth: true }},
+  { path: '/editbook/:id', name: 'EditBook', component: () => import('@/views/EditBook.vue')}
 ];
 
 const router = createRouter({

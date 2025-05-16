@@ -6,6 +6,6 @@ export interface IReview {
     name: string;
     content: string;
     rating: number;
-    created_at: string;
+    created_at: Date;
     book: IBook | ObjectId;
 }
