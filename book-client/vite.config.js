@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [vue()],
-  base: "/fed24d-grupp15/",
+  base: "/fed24d-grupp15/", 
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

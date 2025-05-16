@@ -42,10 +42,12 @@ onMounted(async () => {
 
     tipBooks.value = books.value.filter(book => tipIds.includes(book._id));
 
+    // Sortera på nyaste först (descending) och ta de tre senaste
     newsBooks.value = [...books.value]
-      .filter(book => book.created_at)
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-      .slice(0, 3);
+    .filter(book => book.created_at)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .slice(0, 3)
+    .reverse();
 
     // Scrolla först EFTER data och DOM är klar
     const scrollTo = route.query.scrollTo;
@@ -76,7 +78,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
           <article>
             <div>
-              <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" width="300" height="400">
+               <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" width="300" height="400">
               <h3>Titel:</h3>
               <p>{{ book.title }}</p>
               <h3>Författare:</h3>
@@ -99,7 +101,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" loading="lazy" width="300" height="400">
+             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" width="300" height="400">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -126,7 +128,7 @@ onMounted(async () => {
       <div class="filter-group">
         <label for="search" class="sr-only">Sök</label>
         <input
-          id="search-input"
+          id="search"
           type="text"
           v-model="searchText"
           placeholder="Sök titel eller författare"
@@ -148,7 +150,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-            <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" loading="lazy" width="300" height="400">
+             <img :src="'/fed24d-grupp15/images/' + book.image" :alt="book.title" width="300" height="400">
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>

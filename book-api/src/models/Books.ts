@@ -19,7 +19,7 @@ const BookSchema = new Schema<IBook>({
     type: [String],
     required: true
   },
-  images: {
+  image: {
     type: String,
     required: true
   },
