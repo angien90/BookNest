@@ -1,6 +1,13 @@
 <script setup>
-import { ref } from "vue";
-import HomeView from "./views/HomeView.vue";
+import { watch, inject } from 'vue';
+
+const menuOpen = inject('menuOpen', null);
+
+watch(menuOpen, (isOpen) => {
+  if (isOpen !== null) {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+});
 </script>
 
 <template>

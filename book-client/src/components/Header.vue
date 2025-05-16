@@ -1,11 +1,22 @@
 <script setup>
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { onMounted } from 'vue';
 
 const menuOpen = ref(false);
 const router = useRouter();
 const route = useRoute();
 
+onMounted(() => {
+  const observer = new MutationObserver(() => {
+    const menu = document.querySelector('.mobile-menu');
+    document.body.style.overflow = menu ? 'hidden' : '';
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
+provide('menuOpen', menuOpen);
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
