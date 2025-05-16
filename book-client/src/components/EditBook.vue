@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const successMessage = ref('');
 const errorMessage = ref('');
 const route = useRoute();
-const bookId = route.params.id; 
+const bookId = route.params.id;
 const router = useRouter();
 
 const book = ref({
@@ -15,21 +15,29 @@ const book = ref({
   created_at: ''
 });
 
+// Ny ref för strängversion av genres
+const genresStr = ref('');
+
 // Hämta bokinfo vid laddning
 onMounted(async () => {
-  console.log("✅ Param ID från route:", bookId);
-
   try {
     const response = await fetch(`http://localhost:3000/books/${bookId}`, {
       credentials: 'include'
     });
 
     const data = await response.json();
-    console.log("📚 Hämtar bok med ID:", bookId);
     book.value = data;
+
+    // Sätt genresStr när data har laddats
+    genresStr.value = data.genres?.join(', ') || '';
   } catch (error) {
     console.error("❌ Kunde inte hämta bok:", error);
   }
+});
+
+// Håll book.genres i synk med genresStr
+watch(genresStr, (newVal) => {
+  book.value.genres = newVal.split(',').map(g => g.trim()).filter(g => g);
 });
 
 // Uppdatera boken
@@ -40,7 +48,7 @@ const updateBook = async () => {
       headers: {
         "Content-Type": "application/json"
       },
-      credentials: "include", 
+      credentials: "include",
       body: JSON.stringify(book.value),
     });
 
@@ -48,7 +56,7 @@ const updateBook = async () => {
       const data = await response.json();
       errorMessage.value = data.message || `Fel vid uppdatering: ${response.status}`;
       successMessage.value = '';
-      return; // Avbryt vidare körning vid fel
+      return;
     }
 
     successMessage.value = "✅ Boken uppdaterades!";
@@ -71,9 +79,6 @@ const updateBook = async () => {
       <h2>Redigera bok</h2>
 
       <form @submit.prevent="updateBook" v-if="book">
-        <label for="image"><p>Bild</p></label>
-<input class="book-form" type="text" id="image" v-model="book.image" required/>
-
         <label for="title"><p>Titel</p></label>
         <input class="book-form" type="text" id="title" v-model="book.title" required/>
 
