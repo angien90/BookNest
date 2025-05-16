@@ -1,11 +1,22 @@
 <script setup>
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { onMounted } from 'vue';
 
 const menuOpen = ref(false);
 const router = useRouter();
 const route = useRoute();
 
+onMounted(() => {
+  const observer = new MutationObserver(() => {
+    const menu = document.querySelector('.mobile-menu');
+    document.body.style.overflow = menu ? 'hidden' : '';
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
+provide('menuOpen', menuOpen);
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
@@ -32,12 +43,12 @@ function scrollAfterNavigation(id) {
 
 <template>
   <header class="header">
-    <div class="logo-heading">
-      <slot name="logo">
+    <RouterLink to="/" class="logo-heading" aria-label="Gå till startsidan">
+      <slot name="logo"> 
         <img src="/assets/logo_big.webp" alt="Logo" />
         <h1><span class="first">Book</span><span class="second">Nest</span></h1>
       </slot>
-    </div>
+    </RouterLink>
 
     <!-- Menu -->
     <div class="header-controls">
@@ -66,12 +77,13 @@ function scrollAfterNavigation(id) {
     <!-- Mobile-menu -->
     <nav v-if="menuOpen" class="mobile-menu">
       <ul>
-        <li><RouterLink to="/" exact-active-class="active" @click="menuOpen = false">Hem</RouterLink></li>
-        <li @click="scrollToSection('tips')">Månadens tips</li>
-        <li @click="scrollToSection('news')">Nyheter</li>
-        <li @click="scrollToSection('allbooks')">Alla böcker</li>
+        <li><RouterLink to="/" exact-active-class="active" @click="menuOpen = false"><span>Hem</span></RouterLink></li>
+        <li @click="scrollToSection('tips')"><span>Månadens tips</span></li>
+        <li @click="scrollToSection('news')"><span>Nyheter</span></li>
+        <li @click="scrollToSection('allbooks')"><span>Alla böcker</span></li>
+        <li><RouterLink to="adminpanelusers"><span class="admin-only">(admin) Användaren</span></RouterLink></li>
+        <li><RouterLink to="adminpanelbooks"><span class="admin-only">(admin) Böcker</span></RouterLink></li>
       </ul>
-
     </nav>
   </header>
 </template>
@@ -93,16 +105,13 @@ function scrollAfterNavigation(id) {
   align-items: center;
   justify-content: center;
   text-align: center;
+  text-decoration: none;
 }
 
 .logo-heading img,
 .logo-heading h1 {
   margin: 0 auto;
   text-align: center;
-
-  @media (min-width: 768px) {
-    margin-bottom: 20px;
-  }
 }
 
 img {
@@ -111,6 +120,10 @@ img {
   max-width: 500px;
 
   @media (min-width: 768px) {
+    max-width: 600px;
+  }
+
+  @media (min-width: 1280px) {
     max-width: 800px;
   }
 }
@@ -133,23 +146,17 @@ h1 {
   flex-shrink: 0;
   font-family: $heading-font;
   font-size: $mobile_font_size_H1;
-  margin: 0 0 5px 0;
   z-index: 1;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  line-height: 1;
 
   @media (min-width: 768px) {
-    font-size: 4.5rem;
+    font-size: 3rem;
   }
 
   @media (min-width: 1280px) {
-    margin-left: 9.5rem;
-    font-size: pxtorem(100px);
-    font-style: normal;
+    font-size: 4rem;
     font-weight: 400;
-    line-height: 0.54;
-    letter-spacing: -2.816px;
-    overflow: visible;
-    margin-bottom: 50px;
   }
 }
 
@@ -225,6 +232,9 @@ button.menu-icon {
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: $green;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1rem;
@@ -234,13 +244,9 @@ button.menu-icon {
 }
 
 .mobile-menu ul {
-  display: flex;
-  flex-direction: column;
   align-items: flex-end;
   list-style: none;
-  padding-right: 20px;
-  padding-top: 50px;
-  margin: 0;
+  justify-content: center;
 
   @media (min-width: 768px) {
     align-items: flex-start;
@@ -248,33 +254,65 @@ button.menu-icon {
 }
 
 .mobile-menu li {
-  padding: 20px 0; 
+  padding: $spacing $spacing 0 0; 
   text-align: right;
   font-size: pxtorem(32px);
   color: $creamwhite;
-  width: 216px;
   font-family: $body-font;
-  font-style: normal;
-  letter-spacing: -0.792px;
-  line-height: 150%;
-  font-weight: 400;
+  letter-spacing: -0.7px;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+  span {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0; // align with text-align: right
+    height: 2px;
+    width: 0%;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      font-size: pxtorem(40px);
+      text-align: left;
+
+      &::after {
+        left: 0;
+        right: auto;
+      }
+    }
+  }
 
   @media (min-width: 768px) {
+    font-size: pxtorem(40px);
     text-align: left;
+    padding-left: $spacing;
+  }
+
+  .admin-only {
+    font-size: 1rem;
   }
 }
 
-.mobile-menu a {
-  text-decoration: none;
-  color: $creamwhite;
-}
 
 .menu-icon.open .bar:nth-child(1),
 .menu-icon.open .bar:nth-child(3) {
   background-color: $creamwhite;
-}
-
-.mobile-menu li:hover {
-  text-decoration: underline;
 }
 </style>

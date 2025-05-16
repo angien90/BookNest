@@ -1,5 +1,4 @@
 <script setup>
-import Header from '@/components/Header.vue';
 import AdminPanelUsers from '@/components/AdminPanelUsers.vue';
 import Footer from '@/components/Footer.vue';
 </script>
@@ -7,12 +6,14 @@ import Footer from '@/components/Footer.vue';
 <template>
   <main>
     <AdminPanelUsers />
-    <Footer />
-  </main>
+    </main>
+    
+    <Footer />    
 </template>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 main {
-  background-color: $creamwhite;
+    min-height: 100vh;
+    background-color: $creamwhite;
 }
 </style>

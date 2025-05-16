@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 
 const users = ref([]);
-const error = ref('');
+const errorMsg = ref('');
 
 const fetchUsers = async () => {
   try {
@@ -11,14 +11,14 @@ const fetchUsers = async () => {
     });
 
     if (!response.ok) {
-      error.value = '❌ Du har inte behörighet (endast admin)';
+      errorMsg.value = '❌ Du har inte behörighet (endast admin)';
       return;
     }
 
     users.value = await response.json();
   } catch (err) {
     console.error('Error fetching users:', err);
-    error.value = '❌ Kunde inte hämta användare';
+    errorMsg.value = '❌ Kunde inte hämta användare';
   }
 };
 
@@ -37,11 +37,11 @@ const deleteUser = async (id) => {
     if (response.ok) {
       users.value = users.value.filter((user) => user._id !== id);
     } else {
-      error.value = '❌ Kunde inte ta bort användaren';
+      errorMsg.value = '❌ Kunde inte ta bort användaren';
     }
   } catch (err) {
     console.error('Delete error:', err);
-    error.value = '❌ Serverfel vid borttagning';
+    errorMsg.value = '❌ Serverfel vid borttagning';
   }
 };
 
@@ -58,7 +58,7 @@ onMounted(() => {
   <div class="adminpanel">
     <h2>Adminpanel - Alla användare</h2>
 
-    <div v-if="error" class="error">{{ error }}</div>
+    <div v-if="errorMsg" class="error">{{ errorMsg }}</div>
 
     <div v-if="users.length">
       <div v-for="user in users" :key="user._id">
@@ -89,7 +89,7 @@ onMounted(() => {
   font-family: $H3;
   margin-bottom: $spacing;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2),
-    inset 0 -2px 4px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
+              inset 0 -2px 4px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
