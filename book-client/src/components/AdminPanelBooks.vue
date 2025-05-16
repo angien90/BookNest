@@ -25,6 +25,29 @@ const goToAddBook = () => {
   router.push('/addbook');
 };
 
+const editBook = (id) => {
+  router.push(`/editbook/${id}`);
+};
+
+const deleteBook = async (id) => {
+  if (!confirm('Är du säker?')) return;
+
+  try {
+    const response = await fetch(`http://localhost:3000/books/${id}`, {
+      method: 'DELETE',
+      credentials: 'include'  // här!
+    });
+
+    if (response.ok) {
+      books.value = books.value.filter(book => book._id !== id);
+    } else {
+      alert('Misslyckades med att ta bort boken');
+    }
+  } catch (error) {
+    alert('Något gick fel vid borttagningen');
+  }
+};
+
 onMounted(async () => {
   try {
     const response = await fetch('http://localhost:3000/books');
@@ -82,7 +105,6 @@ onMounted(async () => {
               <p>{{ book.genres.join(', ') }}</p>
               <p>{{ book.created_at }}</p>
 
-              <!-- Ikoner för ändra och delete (funktion ej påslagen)-->
               <div class="edit-delete">
                 <span class="material-symbols-outlined action-icon edit-icon" @click="editBook(book._id)" role="button" tabindex="0" aria-label="Ändra bok">edit</span>
                 <span class="material-symbols-outlined action-icon delete-icon" @click="deleteBook(book._id)" role="button" tabindex="0" aria-label="Ta bort bok">delete</span>

@@ -31,10 +31,9 @@
 
     const response = await fetch(`${API_URL.replace(/\/$/, '')}/books`, {
       method: "POST",
-      credentials: 'include', // viktigt för cookie
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        // Ta bort Authorization header när du använder cookie-token
       },
       body: JSON.stringify(payload)
     });
@@ -48,14 +47,14 @@
       throw new Error(data.message || "Något gick fel!");
     }
 
-    successMessage.value = "Boken har lagts till!";
+    successMessage.value = "✅ Boken har lagts till!";
     errorMessage.value = "";
     clearForm();
 
   } catch (error) {
     console.error("Fel vid submit:", error);
     successMessage.value = "";
-    errorMessage.value = error.message || "Kunde inte spara boken. Försök igen.";
+    errorMessage.value = error.message || "❌ Kunde inte spara boken. Försök igen.";
   }
 };
 </script>
