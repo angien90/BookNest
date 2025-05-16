@@ -6,5 +6,12 @@ import EditBook from "../components/EditBook.vue";
     <EditBook />
 </template>
 
-<style>
+<style lang="scss" scoped>
+main {
+  background-color: $creamwhite;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 </style>
