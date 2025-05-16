@@ -32,12 +32,12 @@ function scrollAfterNavigation(id) {
 
 <template>
   <header class="header">
-    <div class="logo-heading">
-      <slot name="logo">
+    <RouterLink to="/" class="logo-heading" aria-label="Gå till startsidan">
+      <slot name="logo"> 
         <img src="/assets/logo_big.webp" alt="Logo" />
         <h1><span class="first">Book</span><span class="second">Nest</span></h1>
       </slot>
-    </div>
+    </RouterLink>
 
     <!-- Menu -->
     <div class="header-controls">
@@ -93,16 +93,13 @@ function scrollAfterNavigation(id) {
   align-items: center;
   justify-content: center;
   text-align: center;
+  text-decoration: none;
 }
 
 .logo-heading img,
 .logo-heading h1 {
   margin: 0 auto;
   text-align: center;
-
-  @media (min-width: 768px) {
-    margin-bottom: 20px;
-  }
 }
 
 img {
@@ -111,6 +108,10 @@ img {
   max-width: 500px;
 
   @media (min-width: 768px) {
+    max-width: 600px;
+  }
+
+  @media (min-width: 1280px) {
     max-width: 800px;
   }
 }
@@ -133,23 +134,17 @@ h1 {
   flex-shrink: 0;
   font-family: $heading-font;
   font-size: $mobile_font_size_H1;
-  margin: 0 0 5px 0;
   z-index: 1;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  line-height: 1;
 
   @media (min-width: 768px) {
-    font-size: 4.5rem;
+    font-size: 3rem;
   }
 
   @media (min-width: 1280px) {
-    margin-left: 9.5rem;
-    font-size: pxtorem(100px);
-    font-style: normal;
+    font-size: 4rem;
     font-weight: 400;
-    line-height: 0.54;
-    letter-spacing: -2.816px;
-    overflow: visible;
-    margin-bottom: 50px;
   }
 }
 
