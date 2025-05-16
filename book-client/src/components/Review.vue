@@ -323,10 +323,10 @@ const cancelDelete = () => {
                         
                         <p>Recensionen gjordes {{ formatDate(reviews.created_at) }}</p>
                     </div>
-                    <div class="buttons" v-if="isLoggedIn && !(updateMode && updateReviewId === reviews._id)">
-                        <button @click="startUpdate(reviews)" :aria-label="'Uppdatera recension från ' + reviews.name">Uppdatera</button>
-                        <button @click="deleteReview(reviews._id)" :aria-label="'Ta bort recension från ' + reviews.name">Ta bort</button>
-                    </div>
+                        <div class="buttons" v-if="!(updateMode && updateReviewId === reviews._id)">
+                            <button @click="startUpdate(reviews)" :aria-label="'Uppdatera recension från ' + reviews.name">Uppdatera</button>
+                            <button @click="deleteReview(reviews._id)" :aria-label="'Ta bort recension från ' + reviews.name">Ta bort</button>
+                        </div>
                 </div>
 
                 <div class="user_uppdate">
