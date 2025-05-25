@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [vue()],
-  base: "/fed24d-grupp15/", 
+  base: "/BookNest/", 
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -17,4 +17,12 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    proxy: {
+      '/books': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      }
+    }
+  }
 });

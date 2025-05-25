@@ -1,5 +1,5 @@
 {
-  "name": "fed24d-grupp15",
+  "name": "booknest",
   "version": "1.0.0",
   "description": "Detta projekt är ett fullstack-baserat bokhanteringssystem som bygger på **MongoDB** som databas. API:t är lösenordsskyddat och erbjuder funktionalitet för att hantera **användare**, **böcker** och **recensioner**. Projektet har stöd för inloggning, adminpanel samt en besökardel där man kan bläddra bland böcker och lämna recensioner.",
   "main": "index.js",
@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Medieinstitutet/fed24d-grupp15.git"
+    "url": "git+https://github.com/angien90/BookNest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Medieinstitutet/fed24d-grupp15/issues"
+    "url": "https://github.com/angien90/BookNest/issues"
   },
-  "homepage": "https://github.com/Medieinstitutet/fed24d-grupp15#readme",
+  "homepage": "https://github.com/angien90/BookNest#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "compression": "^1.8.0",

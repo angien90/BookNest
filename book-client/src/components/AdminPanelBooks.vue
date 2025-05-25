@@ -33,7 +33,7 @@ const deleteBook = async (id) => {
   if (!confirm('Är du säker?')) return;
 
   try {
-    const response = await fetch(`http://localhost:3000/books/${id}`, {
+      const response = await fetch(`/books/${id}`, {
       method: 'DELETE',
       credentials: 'include'  // här!
     });
@@ -50,11 +50,11 @@ const deleteBook = async (id) => {
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:3000/books');
+    const response = await fetch(`/books/${id}`);
     const data = await response.json();
     books.value = data;
 
-    // Extrahera un lista med unika genrer
+    // Extrahera en lista med unika genrer
     genres.value = [...new Set(books.value.flatMap(book => book.genres))];
   } catch (error) {
     console.log("Fel vid hämtning av böcker:", error);
