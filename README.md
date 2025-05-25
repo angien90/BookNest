@@ -25,8 +25,7 @@ Målet är att skapa ett system som är uppdelat i tydliga ansvarsområden med s
   - MongoDB-länkar och exporter
   - Bilder på den färdiga webbplatsen
 
-<details>
-<summary><strong>Skärmdumpar från webbplatsen</strong></summary>
+---
 
 #### Startsida
 ![Start Page](external-assets/Site%20pictures/start_page.png)
