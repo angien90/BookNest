@@ -6,7 +6,7 @@ const errorMsg = ref('');
 
 const fetchUsers = async () => {
   try {
-    const response = await fetch('http://localhost:3000/users', {
+    const response = await fetch('/users', {
       credentials: 'include',
     });
 
@@ -29,7 +29,7 @@ const deleteUser = async (id) => {
   if (!confirmDelete) return;
 
   try {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`/users/${id}`, {
       method: 'DELETE',
       credentials: 'include',
     });

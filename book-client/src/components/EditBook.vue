@@ -21,7 +21,7 @@ const genresStr = ref('');
 // Hämta bokinfo vid laddning
 onMounted(async () => {
   try {
-    const response = await fetch(`http://localhost:3000/books/${bookId}`, {
+    const response = await fetch(`/books/${bookId}`, {
       credentials: 'include'
     });
 
@@ -43,7 +43,7 @@ watch(genresStr, (newVal) => {
 // Uppdatera boken
 const updateBook = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/books/${bookId}`, {
+    const response = await fetch(`/books/${bookId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
