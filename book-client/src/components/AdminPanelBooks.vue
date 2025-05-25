@@ -50,12 +50,11 @@ const deleteBook = async (id) => {
 
 onMounted(async () => {
   try {
-        const response = await fetch(`/books/${id}`, {
+    const response = await fetch(`/books/${id}`);
     const data = await response.json();
     books.value = data;
-    });
 
-    // Extrahera un lista med unika genrer
+    // Extrahera en lista med unika genrer
     genres.value = [...new Set(books.value.flatMap(book => book.genres))];
   } catch (error) {
     console.log("Fel vid hämtning av böcker:", error);
