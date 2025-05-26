@@ -21,7 +21,7 @@ const genresStr = ref('');
 // Hämta bokinfo vid laddning
 onMounted(async () => {
   try {
-    const response = await fetch(`/books/${bookId}`, {
+    const response = await fetch(`https://book-nest-client-three.vercel.app/${bookId}`, {
       credentials: 'include'
     });
 
@@ -43,7 +43,7 @@ watch(genresStr, (newVal) => {
 // Uppdatera boken
 const updateBook = async () => {
   try {
-    const response = await fetch(`/books/${bookId}`, {
+    const response = await fetch(`https://book-nest-client-three.vercel.app/${bookId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"

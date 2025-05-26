@@ -32,7 +32,7 @@ const filteredBooks = computed(() => {
 
 onMounted(async () => {
   try {
-    const response = await fetch('/books');
+    const response = await fetch('https://book-nest-client-three.vercel.app/books');
     const data = await response.json();
 
     books.value = data;
