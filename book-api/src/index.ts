@@ -42,10 +42,7 @@ app.use('/auth', authRouter);
 // --- Async function för att ansluta till MongoDB ---
 async function connectDB() {
   try {
-    await mongoose.connect(process.env.MONGODB_URL || "", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URL || "");
     console.log('✅ MongoDB connected');
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
