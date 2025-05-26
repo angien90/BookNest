@@ -259,11 +259,7 @@ const cancelDelete = () => {
     <div class="custom_header">
         <Header>
             <template #logo>
-                <img 
-                :src="`/images/${book.image}`" 
-                :alt="book.title"
-                class="book_image"
-                />
+                <img src="/images/1984.webp" alt="1984" />
             </template>
             <template #extra>
                 <RouterLink to="/" class="back-link">Tillbaka</RouterLink>
