@@ -84,7 +84,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
           <article>
             <div>
-              <img :src="'/BookNest/public/images/' + book.image"  :alt="book.title" width="300" height="400" fetchpriority="high">
+              <img :src="`/images/${book.image}`" :alt="book.title" width="300" height="400" fetchpriority="high" />
               <h3>Titel:</h3>
               <p>{{ book.title }}</p>
               <h3>Författare:</h3>
@@ -107,7 +107,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-             <img :src="'/BookNest/public/images/' + book.image"  :alt="book.title" width="300" height="400" fetchpriority="high">
+             <img :src="`/images/${book.image}`" :alt="book.title" width="300" height="400" fetchpriority="high" />
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
@@ -156,7 +156,7 @@ onMounted(async () => {
         <RouterLink :to="`/bookpage/${book._id}`" class="booklink" :aria-label="`Visa detaljer för boken ${book.title} av ${book.author}`">
         <article>
           <div>
-             <img :src="'/BookNest/public/images/' + book.image"  :alt="book.title" width="300" height="400" fetchpriority="high">
+             <img :src="`/images/${book.image}`" :alt="book.title" width="300" height="400" fetchpriority="high" />
             <h3>Titel:</h3>
             <p>{{ book.title }}</p>
             <h3>Författare:</h3>
