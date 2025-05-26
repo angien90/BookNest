@@ -7,19 +7,28 @@ import compression from 'compression';
 
 const app = express();
 
-// Minskar datamängden 
+// --- Middleware ---
 app.use(compression());
-
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://book-nest-client-three.vercel.app'
+];
+
 app.use(cors({
-  origin: "https://book-nest-client-three.vercel.app",
-  /* origin: "http://localhost:5173", */
-  credentials: true    // Tillåter cookies skickas till API:et
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
 
-// Routes
+// --- Routes ---
 import bookRouter from './routes/books';
 import userRouter from './routes/users';
 import reviewRouter from './routes/review';
@@ -30,7 +39,7 @@ app.use('/users', userRouter);
 app.use('/review', reviewRouter);
 app.use('/auth', authRouter);
 
-// Async function för att koppla upp mot MongoDB
+// --- Async function för att ansluta till MongoDB ---
 async function connectDB() {
   try {
     await mongoose.connect(process.env.MONGODB_URL || "", {
@@ -40,14 +49,14 @@ async function connectDB() {
     console.log('✅ MongoDB connected');
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
-    process.exit(1); // Avslutar servern om den inte kan koppla upp sig
+    process.exit(1);
   }
 }
 
-// Koppla upp mot databasen och starta sedan servern
+// --- Anslut till DB, starta sedan servern ---
 connectDB().then(() => {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log(`🚀 Server is running at http://localhost:${PORT}`);
+    console.log(`🚀 Server is running on http://localhost:${PORT}`);
   });
 });
