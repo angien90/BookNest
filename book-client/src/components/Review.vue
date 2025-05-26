@@ -260,7 +260,7 @@ const cancelDelete = () => {
         <Header>
             <template #logo>
                 <img 
-                :src="'/public/images/' + book.image" 
+                :src="'/BookNest/public/images/' + book.image" 
                 :alt="book.title"
                 class="book_image"
                 />
