@@ -7,36 +7,19 @@ import compression from 'compression';
 
 const app = express();
 
-// --- Middleware ---
-
-// Komprimera svar för att spara bandbredd
+// Minskar datamängden 
 app.use(compression());
 
-// Tillåt JSON i request body
+// Middleware
 app.use(express.json());
-
-// Läs cookies från inkommande requests
 app.use(cookieParser());
-
-// Dynamiskt tillåtna origins för CORS (lokalt + prod)
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://book-nest-client-three.vercel.app'
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    // Tillåt även curl/postman (ingen origin)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
+  origin: "https://book-nest-client-three.vercel.app",
+  /* origin: "http://localhost:5173", */
+  credentials: true    // Tillåter cookies skickas till API:et
 }));
 
-// --- Routes ---
+// Routes
 import bookRouter from './routes/books';
 import userRouter from './routes/users';
 import reviewRouter from './routes/review';
@@ -47,19 +30,24 @@ app.use('/users', userRouter);
 app.use('/review', reviewRouter);
 app.use('/auth', authRouter);
 
-// --- MongoDB ---
-mongoose.connect(process.env.MONGODB_URL || "", {
-  // Dessa kan hjälpa vid varningar (valfritt beroende på din mongoose-version)
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true
-}).then(() => {
-  console.log('✅ MongoDB connected');
-}).catch((err) => {
-  console.error('❌ MongoDB connection error:', err);
-});
+// Async function för att koppla upp mot MongoDB
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URL || "", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('✅ MongoDB connected');
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error);
+    process.exit(1); // Avslutar servern om den inte kan koppla upp sig
+  }
+}
 
-// --- Start server ---
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+// Koppla upp mot databasen och starta sedan servern
+connectDB().then(() => {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running at http://localhost:${PORT}`);
+  });
 });
