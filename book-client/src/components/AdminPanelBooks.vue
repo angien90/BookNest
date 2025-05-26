@@ -33,7 +33,7 @@ const deleteBook = async (id) => {
   if (!confirm('Är du säker?')) return;
 
   try {
-      const response = await fetch(`https://book-nest-client-three.vercel.app/books/${id}`, {
+      const response = await fetch(`${API_URL.replace(/\/$/, '')}/books/${id}`, {
       method: 'DELETE',
       credentials: 'include'  // här!
     });
@@ -50,12 +50,19 @@ const deleteBook = async (id) => {
 
 onMounted(async () => {
   try {
-    const response = await fetch(`https://book-nest-client-three.vercel.app/books/${id}`);
+    const response = await fetch(`${API_URL.replace(/\/$/, '')}/books/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
     const data = await response.json();
     books.value = data;
 
     // Extrahera en lista med unika genrer
     genres.value = [...new Set(books.value.flatMap(book => book.genres))];
+
   } catch (error) {
     console.log("Fel vid hämtning av böcker:", error);
   }

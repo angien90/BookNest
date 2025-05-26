@@ -6,7 +6,7 @@ const errorMsg = ref('');
 
 const fetchUsers = async () => {
   try {
-      const response = await fetch('https://book-nest-client-three.vercel.app/users', {
+      const response = await fetch(`${API_URL.replace(/\/$/, '')}/users`, {
       credentials: 'include',
     });
 
@@ -29,7 +29,7 @@ const deleteUser = async (id) => {
   if (!confirmDelete) return;
 
   try {
-      const response = await fetch('https://book-nest-client-three.vercel.app/users', {
+      const response = await fetch(`${API_URL.replace(/\/$/, '')}/users`, {
       method: 'DELETE',
       credentials: 'include',
     });

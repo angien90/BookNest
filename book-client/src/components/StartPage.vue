@@ -32,9 +32,14 @@ const filteredBooks = computed(() => {
 
 onMounted(async () => {
   try {
-    const response = await fetch('/api/books');
+    const response = await fetch(`${API_URL.replace(/\/$/, '')}/books`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
     const data = await response.json();
-
     books.value = data;
 
     // Extrahera un lista med unika genrer
