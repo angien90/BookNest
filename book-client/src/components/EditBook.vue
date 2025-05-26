@@ -2,6 +2,8 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const successMessage = ref('');
 const errorMessage = ref('');
 const route = useRoute();

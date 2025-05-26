@@ -2,6 +2,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const books = ref([]);
 const searchText = ref('');
 const selectedGenre = ref('Alla');

@@ -3,6 +3,8 @@ import { ref, computed, onMounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const route = useRoute();
 const tipBooks = ref([]);
 const newsBooks = ref([]);
@@ -38,7 +40,7 @@ onMounted(async () => {
         'Content-Type': 'application/json'
       }
     });
-    
+
     const data = await response.json();
     books.value = data;
 
