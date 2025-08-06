@@ -197,3 +197,8 @@ Exempel på specifika beroenden som används:
 Book API är ett webbaserat system som ger både administratörer och vanliga användare möjlighet att hantera ett digitalt bibliotek. Genom integration med MongoDB och ett rollbaserat skyddssystem kan projektet enkelt utökas med ytterligare funktioner såsom filtrering, sök eller rollstyrd tillgång.
 
 Alla filer relaterade till projektet, såsom Figma-design, Insomnia-export, MongoDB-export, dagboksanteckningar med mera, finns samlade i mappen "External assets". 
+
+## Betyg
+<img width="635" height="373" alt="betyg" src="https://github.com/user-attachments/assets/85801dd2-352e-47b1-b83a-ef813f327b2f" />
+
+G är det högsta som går att få på grupparbeten.
